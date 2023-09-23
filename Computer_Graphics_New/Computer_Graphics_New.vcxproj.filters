@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\pch">
+      <UniqueIdentifier>{1b1e6358-eb1d-478a-b378-c55f53eafdda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Object">
+      <UniqueIdentifier>{2a90000a-c4eb-4d74-9d93-67e35089a3c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Object\Rect">
+      <UniqueIdentifier>{a7774e67-3d6d-44f1-9e76-d07961a95e3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\enum, struct, const">
+      <UniqueIdentifier>{2a29d9b7-2026-4fa2-832d-2464e2642e3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Utills">
+      <UniqueIdentifier>{e484a2be-7e32-4682-ac75-47be4a902798}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="6.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일\pch</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>소스 파일\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="GL_Rect.cpp">
+      <Filter>소스 파일\Object\Rect</Filter>
+    </ClCompile>
+    <ClCompile Include="Utills.cpp">
+      <Filter>소스 파일\Utills</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>소스 파일\pch</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>소스 파일\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="GL_Rect.h">
+      <Filter>소스 파일\Object\Rect</Filter>
+    </ClInclude>
+    <ClInclude Include="__struct.h">
+      <Filter>소스 파일\enum, struct, const</Filter>
+    </ClInclude>
+    <ClInclude Include="Utills.h">
+      <Filter>소스 파일\Utills</Filter>
+    </ClInclude>
+    <ClInclude Include="__enum.h">
+      <Filter>소스 파일\enum, struct, const</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
