@@ -30,7 +30,7 @@ GL_Rect::GL_Rect(GLfloat x, GLfloat y, GLfloat size, GLclampf Red, GLclampf Gree
 	this->color.Blue = Blue;
 	this->isValid = true;
 
-	SetSplitType(BOTH);
+	SetSplitType(static_cast<SPLIT_TYPE>(rand() % 3));
 	SetCenter();
 	SetPoint();
 }
