@@ -1,10 +1,6 @@
 #include "pch.h"
 using namespace std;
 
-// 현재 문제점 : 애니매이션 동시에 재생불가
-// 아마도 split을 전역으로 사용하고 있기 때문으로 보임
-// 애니매이션도 5개가 다 같은게 나올때가 많은데 씨ㅣㅣㅣ발 rand함수는 좆병신씨발장애인새끼인게 분명하다
-
 GL_Rect* rectList[5];
 GLboolean AnimSwitch;
 
