@@ -135,12 +135,12 @@ GLvoid Mouse(int button, int state, int x, int y)
 			if (rectList[i]->MouseClickCheck(current))
 			{
 				if (rectList[i]->GetValidFlag() == false)
-					break;
-				
+					continue;
+
 				rectList[i]->SplitRect();
 				rectList[i]->SetValidFlag(false);
-
 				AnimStop = false;
+
 				switch (rectList[i]->GetSplitType())
 				{
 				case STRAIGHT:
@@ -156,9 +156,14 @@ GLvoid Mouse(int button, int state, int x, int y)
 					glutTimerFunc(0, AnimBoth, i);
 				}
 
-				return;
 			}
 		}
+	}
+	else if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
+	{
+		AnimStop = true;
+		SetScreen();
+		glutPostRedisplay();
 	}
 	
 	glutPostRedisplay();
