@@ -213,5 +213,4 @@ int main(int argc, char** argv)
 	glutKeyboardFunc(Keyboard);
 	glutMainLoop();
 
-	// 현재 대충 클래스로 사각형까지 그려짐
 }
