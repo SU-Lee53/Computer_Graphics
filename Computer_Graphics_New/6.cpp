@@ -2,185 +2,48 @@
 using namespace std;
 
 GL_Rect* rectList[5];
-GLboolean AnimSwitch;
+GLboolean AnimStop;
 
 GLvoid AnimBoth(int value)
 {
-	if (AnimSwitch == true)
-	{
+	if(AnimStop == false) {
 		
-		// 1단계 : 크기를 줄여 직사각형으로 만들자
-		// 축소
-		rectList[value]->GetSplitList().at(0)->SetCoord2({rectList[value]->GetSplitList().at(0)->GetCoord2().x - 0.02f, rectList[value]->GetSplitList().at(0)->GetCoord2().y});
-		rectList[value]->GetSplitList().at(1)->SetCoord2({ rectList[value]->GetSplitList().at(1)->GetCoord2().x, rectList[value]->GetSplitList().at(1)->GetCoord2().y + 0.02f });
-		rectList[value]->GetSplitList().at(2)->SetCoord1({ rectList[value]->GetSplitList().at(2)->GetCoord1().x, rectList[value]->GetSplitList().at(2)->GetCoord1().y - 0.02f });
-		rectList[value]->GetSplitList().at(3)->SetCoord1({ rectList[value]->GetSplitList().at(3)->GetCoord1().x + 0.02f, rectList[value]->GetSplitList().at(3)->GetCoord1().y });
-
-		glutPostRedisplay();
-
-		if ((rectList[value]->GetSplitList().at(0)->GetCoord2().x - rectList[value]->GetSplitList().at(0)->GetCoord1().x) * 2 >= (rectList[value]->GetSplitList().at(0)->GetCoord1().y - rectList[value]->GetSplitList().at(0)->GetCoord2().y))
-			glutTimerFunc(60, AnimBoth, value);
-		else
-		{
-			// 2단계 : rectList[value]->GetSplitList()의 직사각형을 또 나눠서 8개로 만들자
-			GL_Rect* s1 = rectList[value]->GetSplitList().at(0);
-			GL_Rect* s2 = rectList[value]->GetSplitList().at(1);
-			GL_Rect* s3 = rectList[value]->GetSplitList().at(2);
-			GL_Rect* s4 = rectList[value]->GetSplitList().at(3);
-
-			rectList[value]->ClearSplitList();	// rectList[value]->GetSplitList() 벡터 초기화
-
-			// 대각선으로 날아갈 놈들부터 r1, r2, r3, r4
-			GL_Rect* r1 = new GL_Rect(s1->GetCoord1().x, s1->GetCoord1().y, s1->GetCoord2().x, s1->GetCenter().y, s1->GetColor().Red, s1->GetColor().Green, s1->GetColor().Blue);
-			GL_Rect* r2 = new GL_Rect(s2->GetCenter().x, s2->GetCoord1().y, s2->GetCoord2().x, s2->GetCoord2().y, s2->GetColor().Red, s2->GetColor().Green, s2->GetColor().Blue);
-			GL_Rect* r3 = new GL_Rect(s3->GetCoord1().x, s3->GetCoord1().y, s3->GetCenter().x, s3->GetCoord2().y, s3->GetColor().Red, s3->GetColor().Green, s3->GetColor().Blue);
-			GL_Rect* r4 = new GL_Rect(s4->GetCoord1().x, s4->GetCenter().y, s4->GetCoord2().x, s4->GetCoord2().y, s4->GetColor().Red, s4->GetColor().Green, s4->GetColor().Blue);
-
-			// 직선으로 날아갈 놈들은 r5, r6, r7, r8
-			GL_Rect* r5 = new GL_Rect(s1->GetCoord1().x, s1->GetCenter().y, s1->GetCoord2().x, s1->GetCoord2().y, s1->GetColor().Red, s1->GetColor().Green, s1->GetColor().Blue);
-			GL_Rect* r6 = new GL_Rect(s2->GetCoord1().x, s2->GetCoord1().y, s2->GetCenter().x, s2->GetCoord2().y, s2->GetColor().Red, s2->GetColor().Green, s2->GetColor().Blue);
-			GL_Rect* r7 = new GL_Rect(s3->GetCenter().x, s3->GetCoord1().y, s3->GetCoord2().x, s3->GetCoord2().y, s3->GetColor().Red, s3->GetColor().Green, s3->GetColor().Blue);
-			GL_Rect* r8 = new GL_Rect(s4->GetCoord1().x, s4->GetCoord1().y, s4->GetCoord2().x, s4->GetCenter().y, s4->GetColor().Red, s4->GetColor().Green, s4->GetColor().Blue);
-
-			rectList[value]->PushSplitList(r1);
-			rectList[value]->PushSplitList(r2);
-			rectList[value]->PushSplitList(r3);
-			rectList[value]->PushSplitList(r4);
-			rectList[value]->PushSplitList(r5);
-			rectList[value]->PushSplitList(r6);
-			rectList[value]->PushSplitList(r7);
-			rectList[value]->PushSplitList(r8);
-
-
-
-			AnimSwitch = false;
-			glutTimerFunc(60, AnimBoth, value);
-		}
-	}
-	else
-	{
-		// 1. 대각 이동
-		// 좌상단 이동
-		rectList[value]->GetSplitList().at(0)->SetCoord1({ rectList[value]->GetSplitList().at(0)->GetCoord1().x - 0.03f, rectList[value]->GetSplitList().at(0)->GetCoord1().y + 0.03f });
-		rectList[value]->GetSplitList().at(0)->SetCoord2({ rectList[value]->GetSplitList().at(0)->GetCoord2().x - 0.03f, rectList[value]->GetSplitList().at(0)->GetCoord2().y + 0.03f });
-
-		// 우상단 이동
-		rectList[value]->GetSplitList().at(1)->SetCoord1({ rectList[value]->GetSplitList().at(1)->GetCoord1().x + 0.03f, rectList[value]->GetSplitList().at(1)->GetCoord1().y + 0.03f });
-		rectList[value]->GetSplitList().at(1)->SetCoord2({ rectList[value]->GetSplitList().at(1)->GetCoord2().x + 0.03f, rectList[value]->GetSplitList().at(1)->GetCoord2().y + 0.03f });
-
-		// 좌하단 이동
-		rectList[value]->GetSplitList().at(2)->SetCoord1({ rectList[value]->GetSplitList().at(2)->GetCoord1().x - 0.03f, rectList[value]->GetSplitList().at(2)->GetCoord1().y - 0.03f });
-		rectList[value]->GetSplitList().at(2)->SetCoord2({ rectList[value]->GetSplitList().at(2)->GetCoord2().x - 0.03f, rectList[value]->GetSplitList().at(2)->GetCoord2().y - 0.03f });
-
-		// 우하단 이동
-		rectList[value]->GetSplitList().at(3)->SetCoord1({ rectList[value]->GetSplitList().at(3)->GetCoord1().x + 0.03f, rectList[value]->GetSplitList().at(3)->GetCoord1().y - 0.03f });
-		rectList[value]->GetSplitList().at(3)->SetCoord2({ rectList[value]->GetSplitList().at(3)->GetCoord2().x + 0.03f, rectList[value]->GetSplitList().at(3)->GetCoord2().y - 0.03f });
-
-		// 축소
-		rectList[value]->GetSplitList().at(0)->SetCoord1({ rectList[value]->GetSplitList().at(0)->GetCoord1().x + 0.01f, rectList[value]->GetSplitList().at(0)->GetCoord1().y - 0.01f });
-		rectList[value]->GetSplitList().at(1)->SetCoord1({ rectList[value]->GetSplitList().at(1)->GetCoord1().x + 0.01f, rectList[value]->GetSplitList().at(1)->GetCoord1().y - 0.01f });
-		rectList[value]->GetSplitList().at(2)->SetCoord1({ rectList[value]->GetSplitList().at(2)->GetCoord1().x + 0.01f, rectList[value]->GetSplitList().at(2)->GetCoord1().y - 0.01f });
-		rectList[value]->GetSplitList().at(3)->SetCoord1({ rectList[value]->GetSplitList().at(3)->GetCoord1().x + 0.01f, rectList[value]->GetSplitList().at(3)->GetCoord1().y - 0.01f });
-
-		// 2. 직선 이동
-		// 좌상단 이동
-		rectList[value]->GetSplitList().at(4)->SetCoord1({ rectList[value]->GetSplitList().at(4)->GetCoord1().x - 0.03f, rectList[value]->GetSplitList().at(4)->GetCoord1().y });
-		rectList[value]->GetSplitList().at(4)->SetCoord2({ rectList[value]->GetSplitList().at(4)->GetCoord2().x - 0.03f, rectList[value]->GetSplitList().at(4)->GetCoord2().y });
-
-		// 우상단 이동
-		rectList[value]->GetSplitList().at(5)->SetCoord1({ rectList[value]->GetSplitList().at(5)->GetCoord1().x, rectList[value]->GetSplitList().at(5)->GetCoord1().y + 0.03f });
-		rectList[value]->GetSplitList().at(5)->SetCoord2({ rectList[value]->GetSplitList().at(5)->GetCoord2().x, rectList[value]->GetSplitList().at(5)->GetCoord2().y + 0.03f });
-
-		// 좌하단 이동
-		rectList[value]->GetSplitList().at(6)->SetCoord1({ rectList[value]->GetSplitList().at(6)->GetCoord1().x, rectList[value]->GetSplitList().at(6)->GetCoord1().y - 0.03f });
-		rectList[value]->GetSplitList().at(6)->SetCoord2({ rectList[value]->GetSplitList().at(6)->GetCoord2().x, rectList[value]->GetSplitList().at(6)->GetCoord2().y - 0.03f });
-
-		// 우하단 이동
-		rectList[value]->GetSplitList().at(7)->SetCoord1({ rectList[value]->GetSplitList().at(7)->GetCoord1().x + 0.03f, rectList[value]->GetSplitList().at(7)->GetCoord1().y });
-		rectList[value]->GetSplitList().at(7)->SetCoord2({ rectList[value]->GetSplitList().at(7)->GetCoord2().x + 0.03f, rectList[value]->GetSplitList().at(7)->GetCoord2().y });
-
-		// 축소
-		rectList[value]->GetSplitList().at(4)->SetCoord1({ rectList[value]->GetSplitList().at(4)->GetCoord1().x + 0.01f, rectList[value]->GetSplitList().at(4)->GetCoord1().y - 0.01f });
-		rectList[value]->GetSplitList().at(5)->SetCoord1({ rectList[value]->GetSplitList().at(5)->GetCoord1().x + 0.01f, rectList[value]->GetSplitList().at(5)->GetCoord1().y - 0.01f });
-		rectList[value]->GetSplitList().at(6)->SetCoord1({ rectList[value]->GetSplitList().at(6)->GetCoord1().x + 0.01f, rectList[value]->GetSplitList().at(6)->GetCoord1().y - 0.01f });
-		rectList[value]->GetSplitList().at(7)->SetCoord1({ rectList[value]->GetSplitList().at(7)->GetCoord1().x + 0.01f, rectList[value]->GetSplitList().at(7)->GetCoord1().y - 0.01f });
-
-		glutPostRedisplay();
-
+		rectList[value]->AnimBoth();
 
 		if ((rectList[value]->GetSplitList().at(0)->GetCoord2().x - rectList[value]->GetSplitList().at(0)->GetCoord1().x) >= 0)
 			glutTimerFunc(60, AnimBoth, value);
 		else
 			rectList[value]->ClearSplitList();
-
 	}
 }
 
 GLvoid AnimStraight(int value)
 {
-	// 좌상단 이동
-	rectList[value]->GetSplitList().at(0)->SetCoord1({ rectList[value]->GetSplitList().at(0)->GetCoord1().x - 0.05f, rectList[value]->GetSplitList().at(0)->GetCoord1().y });
-	rectList[value]->GetSplitList().at(0)->SetCoord2({ rectList[value]->GetSplitList().at(0)->GetCoord2().x - 0.05f, rectList[value]->GetSplitList().at(0)->GetCoord2().y });
+	if(AnimStop == false) {
+		
+		rectList[value]->AnimStraight();
 
-	// 우상단 이동
-	rectList[value]->GetSplitList().at(1)->SetCoord1({ rectList[value]->GetSplitList().at(1)->GetCoord1().x, rectList[value]->GetSplitList().at(1)->GetCoord1().y + 0.05f });
-	rectList[value]->GetSplitList().at(1)->SetCoord2({ rectList[value]->GetSplitList().at(1)->GetCoord2().x, rectList[value]->GetSplitList().at(1)->GetCoord2().y + 0.05f });
-
-	// 좌하단 이동
-	rectList[value]->GetSplitList().at(2)->SetCoord1({ rectList[value]->GetSplitList().at(2)->GetCoord1().x, rectList[value]->GetSplitList().at(2)->GetCoord1().y - 0.05f });
-	rectList[value]->GetSplitList().at(2)->SetCoord2({ rectList[value]->GetSplitList().at(2)->GetCoord2().x, rectList[value]->GetSplitList().at(2)->GetCoord2().y - 0.05f });
-
-	// 우하단 이동
-	rectList[value]->GetSplitList().at(3)->SetCoord1({ rectList[value]->GetSplitList().at(3)->GetCoord1().x + 0.05f, rectList[value]->GetSplitList().at(3)->GetCoord1().y });
-	rectList[value]->GetSplitList().at(3)->SetCoord2({ rectList[value]->GetSplitList().at(3)->GetCoord2().x + 0.05f, rectList[value]->GetSplitList().at(3)->GetCoord2().y });
-
-	// 축소
-	rectList[value]->GetSplitList().at(0)->SetCoord1({ rectList[value]->GetSplitList().at(0)->GetCoord1().x + 0.02f, rectList[value]->GetSplitList().at(0)->GetCoord1().y - 0.02f });
-	rectList[value]->GetSplitList().at(1)->SetCoord1({ rectList[value]->GetSplitList().at(1)->GetCoord1().x + 0.02f, rectList[value]->GetSplitList().at(1)->GetCoord1().y - 0.02f });
-	rectList[value]->GetSplitList().at(2)->SetCoord1({ rectList[value]->GetSplitList().at(2)->GetCoord1().x + 0.02f, rectList[value]->GetSplitList().at(2)->GetCoord1().y - 0.02f });
-	rectList[value]->GetSplitList().at(3)->SetCoord1({ rectList[value]->GetSplitList().at(3)->GetCoord1().x + 0.02f, rectList[value]->GetSplitList().at(3)->GetCoord1().y - 0.02f });
-
-	glutPostRedisplay();
-
-	if ((rectList[value]->GetSplitList().at(0)->GetCoord2().x - rectList[value]->GetSplitList().at(0)->GetCoord1().x) > 0)
-		glutTimerFunc(60, AnimStraight, value);
-	else
-		rectList[value]->ClearSplitList();
+		if ((rectList[value]->GetSplitList().at(0)->GetCoord2().x - rectList[value]->GetSplitList().at(0)->GetCoord1().x) > 0)
+			glutTimerFunc(60, AnimStraight, value);
+		else
+			rectList[value]->ClearSplitList();
+	}
 
 }
 
 GLvoid AnimDiagnoal(int value)
 {
 
-	// 좌상단 이동
-	rectList[value]->GetSplitList().at(0)->SetCoord1({ rectList[value]->GetSplitList().at(0)->GetCoord1().x - 0.05f, rectList[value]->GetSplitList().at(0)->GetCoord1().y + 0.05f });
-	rectList[value]->GetSplitList().at(0)->SetCoord2({ rectList[value]->GetSplitList().at(0)->GetCoord2().x - 0.05f, rectList[value]->GetSplitList().at(0)->GetCoord2().y + 0.05f });
+	if(AnimStop == false) {
+		
+		rectList[value]->AnimDiagnoal();
 
-	// 우상단 이동
-	rectList[value]->GetSplitList().at(1)->SetCoord1({ rectList[value]->GetSplitList().at(1)->GetCoord1().x + 0.05f, rectList[value]->GetSplitList().at(1)->GetCoord1().y + 0.05f });
-	rectList[value]->GetSplitList().at(1)->SetCoord2({ rectList[value]->GetSplitList().at(1)->GetCoord2().x + 0.05f, rectList[value]->GetSplitList().at(1)->GetCoord2().y + 0.05f });
+		if ((rectList[value]->GetSplitList().at(0)->GetCoord2().x - rectList[value]->GetSplitList().at(0)->GetCoord1().x) > 0)
+			glutTimerFunc(60, AnimDiagnoal, value);
+		else
+			rectList[value]->ClearSplitList();
 
-	// 좌하단 이동
-	rectList[value]->GetSplitList().at(2)->SetCoord1({ rectList[value]->GetSplitList().at(2)->GetCoord1().x - 0.05f, rectList[value]->GetSplitList().at(2)->GetCoord1().y - 0.05f });
-	rectList[value]->GetSplitList().at(2)->SetCoord2({ rectList[value]->GetSplitList().at(2)->GetCoord2().x - 0.05f, rectList[value]->GetSplitList().at(2)->GetCoord2().y - 0.05f });
-
-	// 우하단 이동
-	rectList[value]->GetSplitList().at(3)->SetCoord1({ rectList[value]->GetSplitList().at(3)->GetCoord1().x + 0.05f, rectList[value]->GetSplitList().at(3)->GetCoord1().y - 0.05f });
-	rectList[value]->GetSplitList().at(3)->SetCoord2({ rectList[value]->GetSplitList().at(3)->GetCoord2().x + 0.05f, rectList[value]->GetSplitList().at(3)->GetCoord2().y - 0.05f });
-
-	// 축소
-	rectList[value]->GetSplitList().at(0)->SetCoord1({ rectList[value]->GetSplitList().at(0)->GetCoord1().x + 0.02f, rectList[value]->GetSplitList().at(0)->GetCoord1().y - 0.02f });
-	rectList[value]->GetSplitList().at(1)->SetCoord1({ rectList[value]->GetSplitList().at(1)->GetCoord1().x + 0.02f, rectList[value]->GetSplitList().at(1)->GetCoord1().y - 0.02f });
-	rectList[value]->GetSplitList().at(2)->SetCoord1({ rectList[value]->GetSplitList().at(2)->GetCoord1().x + 0.02f, rectList[value]->GetSplitList().at(2)->GetCoord1().y - 0.02f });
-	rectList[value]->GetSplitList().at(3)->SetCoord1({ rectList[value]->GetSplitList().at(3)->GetCoord1().x + 0.02f, rectList[value]->GetSplitList().at(3)->GetCoord1().y - 0.02f });
-
-	glutPostRedisplay();
-
-	if ((rectList[value]->GetSplitList().at(0)->GetCoord2().x - rectList[value]->GetSplitList().at(0)->GetCoord1().x) > 0)
-		glutTimerFunc(60, AnimDiagnoal, value);
-	else
-		rectList[value]->ClearSplitList();
-	
+	}
 }
 
 GLvoid SetScreen()
@@ -242,8 +105,10 @@ GLvoid drawScene()
 
 	for (int i = 0; i < 5; i++)
 	{
-		if(rectList[i]->GetValidFlag() == true)
+		if (rectList[i]->GetValidFlag() == true)
+		{
 			rectList[i]->DrawRect();
+		}
 
 		for (int j = 0; j < rectList[i]->GetSplitList().size(); j++)
 		{
@@ -265,7 +130,7 @@ GLvoid Mouse(int button, int state, int x, int y)
 
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
-		for (int i = 0; i < 5; i++)
+		for (int i = 4; i >= 0; i--)
 		{
 			if (rectList[i]->MouseClickCheck(current))
 			{
@@ -275,6 +140,7 @@ GLvoid Mouse(int button, int state, int x, int y)
 				rectList[i]->SplitRect();
 				rectList[i]->SetValidFlag(false);
 
+				AnimStop = false;
 				switch (rectList[i]->GetSplitType())
 				{
 				case STRAIGHT:
@@ -286,9 +152,11 @@ GLvoid Mouse(int button, int state, int x, int y)
 					break;
 
 				case BOTH:
-					AnimSwitch = true;
+					rectList[i]->SetAnimSwitch(true);
 					glutTimerFunc(0, AnimBoth, i);
 				}
+
+				return;
 			}
 		}
 	}
@@ -300,6 +168,7 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 {
 	if (key == 'r')
 	{
+		AnimStop = true;
 		SetScreen();
 		glutPostRedisplay();
 	}

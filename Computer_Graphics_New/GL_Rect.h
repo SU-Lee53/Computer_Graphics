@@ -27,8 +27,6 @@ public:
 	GLvoid SetCoord1(GL_Coord coord) { this->coord1 = coord; }
 	GLvoid SetCoord2(GL_Coord coord) { this->coord2 = coord; }
 	GLvoid SplitRect();
-	GLvoid SetValidFlag(GLboolean b) { isValid = b; }
-	GLboolean GetValidFlag() { return isValid; }
 	GL_Coord GetCenter() { return center; }
 
 public:
@@ -41,6 +39,10 @@ public:
 	GLboolean CollitionCheck(GL_Rect* r1, GL_Rect* r2);
 	GLboolean MouseClickCheck(GL_Coord Clicked);
 
+	GLvoid AnimStraight();
+	GLvoid AnimDiagnoal();
+	GLvoid AnimBoth();
+	GLvoid SetAnimSwitch(GLboolean flag) { AnimSwitch = flag; }
 private:
 	GLvoid SetPoint();
 	GLvoid SetCenter();
@@ -55,8 +57,10 @@ protected:
 	// 사각형의 꼭짓점입니다. 0부터 좌상, 우상, 좌하, 우하 입니다.
 	GL_Coord point[4];
 
-	GLboolean isValid;
 	SPLIT_TYPE splitType;
 	vector <GL_Rect*> splitList;
+
+	GLboolean AnimSwitch;
+
 };
 

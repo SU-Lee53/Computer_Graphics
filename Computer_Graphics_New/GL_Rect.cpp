@@ -109,12 +109,6 @@ GLvoid GL_Rect::SizeRandomize()
 	SetPoint();
 }
 
-GLvoid GL_Rect::SetCenter()
-{
-	center.x = (coord1.x + coord2.x) / 2;
-	center.y = (coord1.y + coord2.y) / 2;
-}
-
 GLvoid GL_Rect::SetSplitType(SPLIT_TYPE st)
 {
 	splitType = st;
@@ -197,6 +191,164 @@ GLboolean GL_Rect::MouseClickCheck(GL_Coord Clicked)
 
 }
 
+GLvoid GL_Rect::AnimStraight()
+{
+	// 좌상단 이동
+	splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x - 0.05f, splitList.at(0)->GetCoord1().y });
+	splitList.at(0)->SetCoord2({ splitList.at(0)->GetCoord2().x - 0.05f, splitList.at(0)->GetCoord2().y });
+
+	// 우상단 이동
+	splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x, splitList.at(1)->GetCoord1().y + 0.05f });
+	splitList.at(1)->SetCoord2({ splitList.at(1)->GetCoord2().x, splitList.at(1)->GetCoord2().y + 0.05f });
+
+	// 좌하단 이동
+	splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x, splitList.at(2)->GetCoord1().y - 0.05f });
+	splitList.at(2)->SetCoord2({ splitList.at(2)->GetCoord2().x, splitList.at(2)->GetCoord2().y - 0.05f });
+
+	// 우하단 이동
+	splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.05f, splitList.at(3)->GetCoord1().y });
+	splitList.at(3)->SetCoord2({ splitList.at(3)->GetCoord2().x + 0.05f, splitList.at(3)->GetCoord2().y });
+
+	// 축소
+	splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x + 0.02f, splitList.at(0)->GetCoord1().y - 0.02f });
+	splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x + 0.02f, splitList.at(1)->GetCoord1().y - 0.02f });
+	splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x + 0.02f, splitList.at(2)->GetCoord1().y - 0.02f });
+	splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.02f, splitList.at(3)->GetCoord1().y - 0.02f });
+
+	glutPostRedisplay();
+
+}
+
+GLvoid GL_Rect::AnimDiagnoal()
+{
+	// 좌상단 이동
+	splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x - 0.05f, splitList.at(0)->GetCoord1().y + 0.05f });
+	splitList.at(0)->SetCoord2({ splitList.at(0)->GetCoord2().x - 0.05f, splitList.at(0)->GetCoord2().y + 0.05f });
+
+	// 우상단 이동
+	splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x + 0.05f, splitList.at(1)->GetCoord1().y + 0.05f });
+	splitList.at(1)->SetCoord2({ splitList.at(1)->GetCoord2().x + 0.05f, splitList.at(1)->GetCoord2().y + 0.05f });
+
+	// 좌하단 이동
+	splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x - 0.05f, splitList.at(2)->GetCoord1().y - 0.05f });
+	splitList.at(2)->SetCoord2({ splitList.at(2)->GetCoord2().x - 0.05f, splitList.at(2)->GetCoord2().y - 0.05f });
+
+	// 우하단 이동
+	splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.05f, splitList.at(3)->GetCoord1().y - 0.05f });
+	splitList.at(3)->SetCoord2({ splitList.at(3)->GetCoord2().x + 0.05f, splitList.at(3)->GetCoord2().y - 0.05f });
+
+	// 축소
+	splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x + 0.02f, splitList.at(0)->GetCoord1().y - 0.02f });
+	splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x + 0.02f, splitList.at(1)->GetCoord1().y - 0.02f });
+	splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x + 0.02f, splitList.at(2)->GetCoord1().y - 0.02f });
+	splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.02f, splitList.at(3)->GetCoord1().y - 0.02f });
+
+	glutPostRedisplay();
+}
+
+GLvoid GL_Rect::AnimBoth()
+{
+	if (AnimSwitch == true)
+	{
+
+		// 1단계 : 크기를 줄여 직사각형으로 만들자
+		// 축소
+		splitList.at(0)->SetCoord2({ splitList.at(0)->GetCoord2().x - 0.02f, splitList.at(0)->GetCoord2().y });
+		splitList.at(1)->SetCoord2({ splitList.at(1)->GetCoord2().x, splitList.at(1)->GetCoord2().y + 0.02f });
+		splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x, splitList.at(2)->GetCoord1().y - 0.02f });
+		splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.02f, splitList.at(3)->GetCoord1().y });
+
+		glutPostRedisplay();
+
+		if ((splitList.at(0)->GetCoord2().x - splitList.at(0)->GetCoord1().x) * 2 < (splitList.at(0)->GetCoord1().y - splitList.at(0)->GetCoord2().y))
+
+		{
+			// 2단계 : splitList의 직사각형을 또 나눠서 8개로 만들자
+			GL_Rect* s1 = splitList.at(0);
+			GL_Rect* s2 = splitList.at(1);
+			GL_Rect* s3 = splitList.at(2);
+			GL_Rect* s4 = splitList.at(3);
+
+			splitList.clear();		// splitList 벡터 초기화
+
+			// 대각선으로 날아갈 놈들부터 r1, r2, r3, r4
+			GL_Rect* r1 = new GL_Rect(s1->GetCoord1().x, s1->GetCoord1().y, s1->GetCoord2().x, s1->GetCenter().y, s1->GetColor().Red, s1->GetColor().Green, s1->GetColor().Blue);
+			GL_Rect* r2 = new GL_Rect(s2->GetCenter().x, s2->GetCoord1().y, s2->GetCoord2().x, s2->GetCoord2().y, s2->GetColor().Red, s2->GetColor().Green, s2->GetColor().Blue);
+			GL_Rect* r3 = new GL_Rect(s3->GetCoord1().x, s3->GetCoord1().y, s3->GetCenter().x, s3->GetCoord2().y, s3->GetColor().Red, s3->GetColor().Green, s3->GetColor().Blue);
+			GL_Rect* r4 = new GL_Rect(s4->GetCoord1().x, s4->GetCenter().y, s4->GetCoord2().x, s4->GetCoord2().y, s4->GetColor().Red, s4->GetColor().Green, s4->GetColor().Blue);
+
+			// 직선으로 날아갈 놈들은 r5, r6, r7, r8
+			GL_Rect* r5 = new GL_Rect(s1->GetCoord1().x, s1->GetCenter().y, s1->GetCoord2().x, s1->GetCoord2().y, s1->GetColor().Red, s1->GetColor().Green, s1->GetColor().Blue);
+			GL_Rect* r6 = new GL_Rect(s2->GetCoord1().x, s2->GetCoord1().y, s2->GetCenter().x, s2->GetCoord2().y, s2->GetColor().Red, s2->GetColor().Green, s2->GetColor().Blue);
+			GL_Rect* r7 = new GL_Rect(s3->GetCenter().x, s3->GetCoord1().y, s3->GetCoord2().x, s3->GetCoord2().y, s3->GetColor().Red, s3->GetColor().Green, s3->GetColor().Blue);
+			GL_Rect* r8 = new GL_Rect(s4->GetCoord1().x, s4->GetCoord1().y, s4->GetCoord2().x, s4->GetCenter().y, s4->GetColor().Red, s4->GetColor().Green, s4->GetColor().Blue);
+
+			splitList.push_back(r1);
+			splitList.push_back(r2);
+			splitList.push_back(r3);
+			splitList.push_back(r4);
+			splitList.push_back(r5);
+			splitList.push_back(r6);
+			splitList.push_back(r7);
+			splitList.push_back(r8);
+
+			AnimSwitch = false;
+
+		}
+	}
+	else
+	{
+		// 1. 대각 이동
+		// 좌상단 이동
+		splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x - 0.03f, splitList.at(0)->GetCoord1().y + 0.03f });
+		splitList.at(0)->SetCoord2({ splitList.at(0)->GetCoord2().x - 0.03f, splitList.at(0)->GetCoord2().y + 0.03f });
+
+		// 우상단 이동
+		splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x + 0.03f, splitList.at(1)->GetCoord1().y + 0.03f });
+		splitList.at(1)->SetCoord2({ splitList.at(1)->GetCoord2().x + 0.03f, splitList.at(1)->GetCoord2().y + 0.03f });
+
+		// 좌하단 이동
+		splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x - 0.03f, splitList.at(2)->GetCoord1().y - 0.03f });
+		splitList.at(2)->SetCoord2({ splitList.at(2)->GetCoord2().x - 0.03f, splitList.at(2)->GetCoord2().y - 0.03f });
+
+		// 우하단 이동
+		splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.03f, splitList.at(3)->GetCoord1().y - 0.03f });
+		splitList.at(3)->SetCoord2({ splitList.at(3)->GetCoord2().x + 0.03f, splitList.at(3)->GetCoord2().y - 0.03f });
+
+		// 축소
+		splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x + 0.01f, splitList.at(0)->GetCoord1().y - 0.01f });
+		splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x + 0.01f, splitList.at(1)->GetCoord1().y - 0.01f });
+		splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x + 0.01f, splitList.at(2)->GetCoord1().y - 0.01f });
+		splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.01f, splitList.at(3)->GetCoord1().y - 0.01f });
+
+		// 2. 직선 이동
+		// 좌상단 이동
+		splitList.at(4)->SetCoord1({ splitList.at(4)->GetCoord1().x - 0.03f, splitList.at(4)->GetCoord1().y });
+		splitList.at(4)->SetCoord2({ splitList.at(4)->GetCoord2().x - 0.03f, splitList.at(4)->GetCoord2().y });
+
+		// 우상단 이동
+		splitList.at(5)->SetCoord1({ splitList.at(5)->GetCoord1().x, splitList.at(5)->GetCoord1().y + 0.03f });
+		splitList.at(5)->SetCoord2({ splitList.at(5)->GetCoord2().x, splitList.at(5)->GetCoord2().y + 0.03f });
+
+		// 좌하단 이동
+		splitList.at(6)->SetCoord1({ splitList.at(6)->GetCoord1().x, splitList.at(6)->GetCoord1().y - 0.03f });
+		splitList.at(6)->SetCoord2({ splitList.at(6)->GetCoord2().x, splitList.at(6)->GetCoord2().y - 0.03f });
+
+		// 우하단 이동
+		splitList.at(7)->SetCoord1({ splitList.at(7)->GetCoord1().x + 0.03f, splitList.at(7)->GetCoord1().y });
+		splitList.at(7)->SetCoord2({ splitList.at(7)->GetCoord2().x + 0.03f, splitList.at(7)->GetCoord2().y });
+
+		// 축소
+		splitList.at(4)->SetCoord1({ splitList.at(4)->GetCoord1().x + 0.01f, splitList.at(4)->GetCoord1().y - 0.01f });
+		splitList.at(5)->SetCoord1({ splitList.at(5)->GetCoord1().x + 0.01f, splitList.at(5)->GetCoord1().y - 0.01f });
+		splitList.at(6)->SetCoord1({ splitList.at(6)->GetCoord1().x + 0.01f, splitList.at(6)->GetCoord1().y - 0.01f });
+		splitList.at(7)->SetCoord1({ splitList.at(7)->GetCoord1().x + 0.01f, splitList.at(7)->GetCoord1().y - 0.01f });
+
+		glutPostRedisplay();
+
+	}
+}
+
 GLvoid GL_Rect::SetPoint()
 {
 	point[0] = coord1;
@@ -205,4 +357,8 @@ GLvoid GL_Rect::SetPoint()
 	point[3] = coord2;
 }
 
-
+GLvoid GL_Rect::SetCenter()
+{
+	center.x = (coord1.x + coord2.x) / 2;
+	center.y = (coord1.y + coord2.y) / 2;
+}
