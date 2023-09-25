@@ -10,6 +10,8 @@
 #include "__enum.h"
 #include "__struct.h"
 #include "Utills.h"
+#include "Shaders.h"
 
 #include "Object.h"
-#include "GL_Rect.h"
+#include "Rect.h"
+#include "Anims.h"

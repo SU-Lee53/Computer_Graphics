@@ -5,14 +5,14 @@ Object::~Object()
 {
 }
 
-GLvoid Object::ColorChange(GLclampf Red, GLclampf Green, GLclampf Blue)
+void Object::ColorChange(GLclampf Red, GLclampf Green, GLclampf Blue)
 {
 	color.Red = Red;
 	color.Green = Green;
 	color.Blue = Blue;
 }
 
-GLvoid Object::ColorRandomize()
+void Object::ColorRandomize()
 {
 	srand(time(0));
 

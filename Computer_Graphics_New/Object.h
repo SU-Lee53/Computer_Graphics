@@ -10,23 +10,27 @@ public:
 	RGB GetColor() { return color; };
 
 	// 지정된 색상으로 변경합니다. 
-	GLvoid ColorChange(GLclampf Red, GLclampf Green, GLclampf Blue);
+	void ColorChange(GLclampf Red, GLclampf Green, GLclampf Blue);
 
 	// 색상을 랜덤으로 변경합니다.
-	GLvoid ColorRandomize();
+	void ColorRandomize();
 
 	// 지정된 크기만큼 사이즈를 변경합니다.
-	virtual GLvoid SizeChange(GLfloat dx, GLfloat dy) = 0;
+	virtual void SizeChange(GLfloat dx, GLfloat dy) = 0;
 
 	// 사이즈를 랜덤으로 변경합니다.
-	virtual GLvoid SizeRandomize() = 0;
+	virtual void SizeRandomize() = 0;
 
-	GLvoid SetValidFlag(GLboolean flag) { isValid = flag; }
-	GLboolean GetValidFlag() { return isValid; }
+	void SetValidFlag(bool flag) { isValid = flag; }
+	bool GetValidFlag() { return isValid; }
+
+private:
+	virtual void SetPoint() = 0;
+	virtual void SetCenter() = 0;
 
 protected:
 	RGB color;
-	GL_Coord center;
-	GLboolean isValid;
+	Coord center;
+	bool isValid;
 };
 

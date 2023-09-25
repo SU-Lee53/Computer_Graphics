@@ -1,49 +1,47 @@
 #include "pch.h"
 using namespace std;
 
-GL_Rect* rectList[5];
-GLboolean AnimStop;
+Rect* rectList[5];
+bool AnimStop;
 
-GLvoid AnimBoth(int value)
+void AnimBoth(int value)
 {
-	if(AnimStop == false) {
-		
-		rectList[value]->AnimBoth();
+	if (AnimStop == false) {
 
-		if ((rectList[value]->GetSplitList().at(0)->GetCoord2().x - rectList[value]->GetSplitList().at(0)->GetCoord1().x) >= 0)
+		Anims::GetInstance()->AnimBoth();
+
+		if (Anims::GetInstance()->GetEndFlag() == false)
 			glutTimerFunc(60, AnimBoth, value);
-		else
-			rectList[value]->ClearSplitList();
 	}
+
+	glutPostRedisplay();
 }
 
-GLvoid AnimStraight(int value)
+void AnimStraight(int value)
 {
 	if(AnimStop == false) {
 		
-		rectList[value]->AnimStraight();
+		Anims::GetInstance()->AnimStraight();
 
-		if ((rectList[value]->GetSplitList().at(0)->GetCoord2().x - rectList[value]->GetSplitList().at(0)->GetCoord1().x) > 0)
+		if (Anims::GetInstance()->GetSplitList().size() != 0)
 			glutTimerFunc(60, AnimStraight, value);
-		else
-			rectList[value]->ClearSplitList();
 	}
 
+	glutPostRedisplay();
 }
 
-GLvoid AnimDiagnoal(int value)
+void AnimDiagnoal(int value)
 {
-
 	if(AnimStop == false) {
 		
-		rectList[value]->AnimDiagnoal();
+		Anims::GetInstance()->AnimDiagnoal();
 
-		if ((rectList[value]->GetSplitList().at(0)->GetCoord2().x - rectList[value]->GetSplitList().at(0)->GetCoord1().x) > 0)
+		if (Anims::GetInstance()->GetSplitList().size() != 0)
 			glutTimerFunc(60, AnimDiagnoal, value);
-		else
-			rectList[value]->ClearSplitList();
 
 	}
+
+	glutPostRedisplay();
 }
 
 GLvoid SetScreen()
@@ -52,8 +50,8 @@ GLvoid SetScreen()
 	
 	for (int i = 0; i < 5; i++)
 	{
-		GL_Coord c1;
-		GL_Coord c2;
+		Coord c1;
+		Coord c2;
 		RGB color;
 		while (true)
 		{
@@ -93,7 +91,7 @@ GLvoid SetScreen()
 					break;
 		}
 
-		GL_Rect* r = new GL_Rect(c1.x, c1.y, c2.x, c2.y, color.Red, color.Green, color.Blue);
+		Rect* r = new Rect(c1.x, c1.y, c2.x, c2.y, color.Red, color.Green, color.Blue);
 		rectList[i] = r;
 	}
 }
@@ -109,12 +107,18 @@ GLvoid drawScene()
 		{
 			rectList[i]->DrawRect();
 		}
-
-		for (int j = 0; j < rectList[i]->GetSplitList().size(); j++)
-		{
-			rectList[i]->GetSplitList().at(j)->DrawRect();
-		}
 	}
+
+	for (int i = 0; i < Anims::GetInstance()->GetSplitList().size(); i++)
+	{
+		Anims::GetInstance()->GetSplitList().at(i)->DrawRect();
+	}
+
+	for (int i = 0; i < Anims::GetInstance()->GetReSplitList().size(); i++)
+	{
+		Anims::GetInstance()->GetReSplitList().at(i)->DrawRect();
+	}
+
 
 	glutSwapBuffers();
 }
@@ -126,7 +130,7 @@ GLvoid Reshape(int w, int h)
 
 GLvoid Mouse(int button, int state, int x, int y)
 {
-	GL_Coord current = AdjustMouseCoordinate({ static_cast<GLfloat>(x), static_cast<GLfloat>(y) });
+	Coord current = AdjustMouseCoordinate({ static_cast<GLfloat>(x), static_cast<GLfloat>(y) });
 
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
@@ -144,15 +148,19 @@ GLvoid Mouse(int button, int state, int x, int y)
 				switch (rectList[i]->GetSplitType())
 				{
 				case STRAIGHT:
+					Anims::GetInstance()->SetSplitList(rectList[i]);
 					glutTimerFunc(0, AnimStraight, i);
 					break;
 
 				case DIAGNOAL:
+					Anims::GetInstance()->SetSplitList(rectList[i]);
 					glutTimerFunc(0, AnimDiagnoal, i);
 					break;
 
 				case BOTH:
-					rectList[i]->SetAnimSwitch(true);
+					Anims::GetInstance()->SetSplitList(rectList[i]);
+					Anims::GetInstance()->SetSwitchFlag(true);
+					Anims::GetInstance()->SetEndFlag(false);
 					glutTimerFunc(0, AnimBoth, i);
 				}
 
@@ -188,7 +196,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(800, 800);
 	glutCreateWindow("½Ç½À4");
 
-	glewExperimental = GL_TRUE;
+	glewExperimental = TRUE;
 	if (glewInit() != GLEW_OK)
 	{
 		cerr << "Unable to initalize GLEW" << endl;

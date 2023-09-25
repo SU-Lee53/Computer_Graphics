@@ -1,4 +1,5 @@
 #pragma once
 
-GL_Coord AdjustMouseCoordinate(GL_Coord coord);
+Coord AdjustMouseCoordinate(Coord coord);
 
+char* filetobuf(const char* filename);
