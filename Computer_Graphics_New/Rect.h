@@ -16,8 +16,8 @@ public:
 
 	virtual ~Rect();
 	
-	virtual GLvoid SizeChange(GLfloat dx, GLfloat dy) override;
-	virtual GLvoid SizeRandomize() override;
+	virtual void SizeChange(float dx, float dy) override;
+	virtual void SizeRandomize() override;
 
 
 	void SetSplitType(SPLIT_TYPE st);
@@ -37,8 +37,8 @@ public:
 	bool MouseClickCheck(Coord Clicked);
 
 private:
-	virtual GLvoid SetPoint() override;
-	virtual GLvoid SetCenter() override;
+	virtual void SetPoint() override;
+	virtual void SetCenter() override;
 
 protected:
 	// coord1은 사각형의 좌상단 좌표입니다.

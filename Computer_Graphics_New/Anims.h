@@ -7,10 +7,10 @@ public:
 	Anims();
 	Anims(Rect* r);
 	~Anims();
+
 	void AnimStraight();
 	void AnimDiagnoal();
 	void AnimBoth();
-	static Anims* GetInstance();
 	void SetSplitList(Rect* rect);
 	vector<Rect*> GetSplitList() { return splitList; }
 	void SetSwitchFlag(bool flag) { AnimSwitch = flag; }

@@ -1,9 +1,9 @@
-#include "pch.h"
 #include "Anims.h"
+#include "pch.h"
 
-Anims::Anims() : current(nullptr), AnimSwitch(true), AnimEnd(false)
+Anims::Anims()
 {
-	splitList.clear();
+
 }
 
 Anims::Anims(Rect* r) : AnimSwitch(true), AnimEnd(false)
@@ -211,8 +211,3 @@ void Anims::SetSplitList(Rect* rect)
 	splitList = rect->SplitRect();
 }
 
-void Anims::SetSplitList(Rect* rect)
-{
-	splitList = rect->SplitRect();
-
-}

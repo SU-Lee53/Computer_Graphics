@@ -131,12 +131,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="6.cpp" />
+    <ClCompile Include="Anims.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Utills.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Anims.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Rect.h" />
