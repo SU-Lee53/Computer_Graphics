@@ -24,15 +24,6 @@
     <Filter Include="소스 파일\Utills">
       <UniqueIdentifier>{e484a2be-7e32-4682-ac75-47be4a902798}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Shader">
-      <UniqueIdentifier>{7e41a9c0-2385-4b9f-831f-1d5f4007a058}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Shader\glsl">
-      <UniqueIdentifier>{a47d1bf5-ca25-4fe1-b6f3-268abd39b95d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Anim">
-      <UniqueIdentifier>{f1e1c062-0e9d-4870-9e88-c6325e170143}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="6.cpp">
@@ -44,20 +35,11 @@
     <ClCompile Include="Object.cpp">
       <Filter>소스 파일\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Rect.cpp">
+    <ClCompile Include="GL_Rect.cpp">
       <Filter>소스 파일\Object\Rect</Filter>
     </ClCompile>
     <ClCompile Include="Utills.cpp">
       <Filter>소스 파일\Utills</Filter>
-    </ClCompile>
-    <ClCompile Include="shader_test.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Shaders.cpp">
-      <Filter>소스 파일\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="Anims.cpp">
-      <Filter>소스 파일\Anim</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -67,7 +49,7 @@
     <ClInclude Include="Object.h">
       <Filter>소스 파일\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Rect.h">
+    <ClInclude Include="GL_Rect.h">
       <Filter>소스 파일\Object\Rect</Filter>
     </ClInclude>
     <ClInclude Include="__struct.h">
@@ -79,19 +61,5 @@
     <ClInclude Include="__enum.h">
       <Filter>소스 파일\enum, struct, const</Filter>
     </ClInclude>
-    <ClInclude Include="Shaders.h">
-      <Filter>소스 파일\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="Anims.h">
-      <Filter>소스 파일\Anim</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="vertex.glsl">
-      <Filter>소스 파일\Shader\glsl</Filter>
-    </None>
-    <None Include="fragment.glsl">
-      <Filter>소스 파일\Shader\glsl</Filter>
-    </None>
   </ItemGroup>
 </Project>

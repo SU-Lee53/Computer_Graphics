@@ -130,32 +130,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="6.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Anims.cpp" />
-    <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="6.cpp" />
+    <ClCompile Include="GL_Rect.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Shaders.cpp" />
-    <ClCompile Include="shader_test.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="Utills.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Anims.h" />
-    <ClInclude Include="Rect.h" />
+    <ClInclude Include="GL_Rect.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Shaders.h" />
     <ClInclude Include="Utills.h" />
     <ClInclude Include="__enum.h" />
     <ClInclude Include="__struct.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="fragment.glsl" />
-    <None Include="vertex.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
