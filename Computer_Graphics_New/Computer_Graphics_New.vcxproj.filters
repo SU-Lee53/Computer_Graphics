@@ -24,6 +24,9 @@
     <Filter Include="소스 파일\Utills">
       <UniqueIdentifier>{e484a2be-7e32-4682-ac75-47be4a902798}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Anims">
+      <UniqueIdentifier>{8d3e9e51-5e70-4383-ada8-003057c0d5ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="6.cpp">
@@ -35,11 +38,14 @@
     <ClCompile Include="Object.cpp">
       <Filter>소스 파일\Object</Filter>
     </ClCompile>
-    <ClCompile Include="GL_Rect.cpp">
-      <Filter>소스 파일\Object\Rect</Filter>
-    </ClCompile>
     <ClCompile Include="Utills.cpp">
       <Filter>소스 파일\Utills</Filter>
+    </ClCompile>
+    <ClCompile Include="Anims.cpp">
+      <Filter>소스 파일\Anims</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>소스 파일\Object\Rect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -49,9 +55,6 @@
     <ClInclude Include="Object.h">
       <Filter>소스 파일\Object</Filter>
     </ClInclude>
-    <ClInclude Include="GL_Rect.h">
-      <Filter>소스 파일\Object\Rect</Filter>
-    </ClInclude>
     <ClInclude Include="__struct.h">
       <Filter>소스 파일\enum, struct, const</Filter>
     </ClInclude>
@@ -60,6 +63,12 @@
     </ClInclude>
     <ClInclude Include="__enum.h">
       <Filter>소스 파일\enum, struct, const</Filter>
+    </ClInclude>
+    <ClInclude Include="Anims.h">
+      <Filter>소스 파일\Anims</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>소스 파일\Object\Rect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
