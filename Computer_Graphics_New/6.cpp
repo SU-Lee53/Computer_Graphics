@@ -17,7 +17,7 @@ void AnimBoth(int value)
 		list.at(value).anim->AnimBoth();
 
 		if (list.at(value).anim->GetEndFlag() == false)
-			glutTimerFunc(60, AnimBoth, value);
+			glutTimerFunc(17, AnimBoth, value);
 	}
 
 	glutPostRedisplay();
@@ -31,7 +31,7 @@ void AnimStraight(int value)
 		list.at(value).anim->AnimStraight();
 
 		if (list.at(value).anim->GetSplitList().size() != 0)
-			glutTimerFunc(60, AnimStraight, value);
+			glutTimerFunc(17, AnimStraight, value);
 	}
 
 	glutPostRedisplay();
@@ -44,7 +44,7 @@ void AnimDiagnoal(int value)
 		list.at(value).anim->AnimDiagnoal();
 
 		if (list.at(value).anim->GetSplitList().size() != 0)
-			glutTimerFunc(60, AnimDiagnoal, value);
+			glutTimerFunc(17, AnimDiagnoal, value);
 	}
 
 	glutPostRedisplay();

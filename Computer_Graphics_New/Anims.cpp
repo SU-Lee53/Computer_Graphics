@@ -20,26 +20,26 @@ Anims::~Anims()
 void Anims::AnimStraight()
 {
 	// 좌상단 이동
-	splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x - 0.05f, splitList.at(0)->GetCoord1().y });
-	splitList.at(0)->SetCoord2({ splitList.at(0)->GetCoord2().x - 0.05f, splitList.at(0)->GetCoord2().y });
+	splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x - 0.005f, splitList.at(0)->GetCoord1().y });
+	splitList.at(0)->SetCoord2({ splitList.at(0)->GetCoord2().x - 0.005f, splitList.at(0)->GetCoord2().y });
 
 	// 우상단 이동
-	splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x, splitList.at(1)->GetCoord1().y + 0.05f });
-	splitList.at(1)->SetCoord2({ splitList.at(1)->GetCoord2().x, splitList.at(1)->GetCoord2().y + 0.05f });
+	splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x, splitList.at(1)->GetCoord1().y + 0.005f });
+	splitList.at(1)->SetCoord2({ splitList.at(1)->GetCoord2().x, splitList.at(1)->GetCoord2().y + 0.005f });
 
 	// 좌하단 이동
-	splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x, splitList.at(2)->GetCoord1().y - 0.05f });
-	splitList.at(2)->SetCoord2({ splitList.at(2)->GetCoord2().x, splitList.at(2)->GetCoord2().y - 0.05f });
+	splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x, splitList.at(2)->GetCoord1().y - 0.005f });
+	splitList.at(2)->SetCoord2({ splitList.at(2)->GetCoord2().x, splitList.at(2)->GetCoord2().y - 0.005f });
 
 	// 우하단 이동
-	splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.05f, splitList.at(3)->GetCoord1().y });
-	splitList.at(3)->SetCoord2({ splitList.at(3)->GetCoord2().x + 0.05f, splitList.at(3)->GetCoord2().y });
+	splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.005f, splitList.at(3)->GetCoord1().y });
+	splitList.at(3)->SetCoord2({ splitList.at(3)->GetCoord2().x + 0.005f, splitList.at(3)->GetCoord2().y });
 
 	// 축소
-	splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x + 0.02f, splitList.at(0)->GetCoord1().y - 0.02f });
-	splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x + 0.02f, splitList.at(1)->GetCoord1().y - 0.02f });
-	splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x + 0.02f, splitList.at(2)->GetCoord1().y - 0.02f });
-	splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.02f, splitList.at(3)->GetCoord1().y - 0.02f });
+	splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x + 0.002f, splitList.at(0)->GetCoord1().y - 0.002f });
+	splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x + 0.002f, splitList.at(1)->GetCoord1().y - 0.002f });
+	splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x + 0.002f, splitList.at(2)->GetCoord1().y - 0.002f });
+	splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.002f, splitList.at(3)->GetCoord1().y - 0.002f });
 
 	if (splitList.at(0)->GetCoord2().x - splitList.at(0)->GetCoord1().x <= 0)
 	{
@@ -55,26 +55,26 @@ void Anims::AnimStraight()
 void Anims::AnimDiagnoal()
 {
 	// 좌상단 이동
-	splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x - 0.05f, splitList.at(0)->GetCoord1().y + 0.05f });
-	splitList.at(0)->SetCoord2({ splitList.at(0)->GetCoord2().x - 0.05f, splitList.at(0)->GetCoord2().y + 0.05f });
+	splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x - 0.005f, splitList.at(0)->GetCoord1().y + 0.005f });
+	splitList.at(0)->SetCoord2({ splitList.at(0)->GetCoord2().x - 0.005f, splitList.at(0)->GetCoord2().y + 0.005f });
 
 	// 우상단 이동
-	splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x + 0.05f, splitList.at(1)->GetCoord1().y + 0.05f });
-	splitList.at(1)->SetCoord2({ splitList.at(1)->GetCoord2().x + 0.05f, splitList.at(1)->GetCoord2().y + 0.05f });
+	splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x + 0.005f, splitList.at(1)->GetCoord1().y + 0.005f });
+	splitList.at(1)->SetCoord2({ splitList.at(1)->GetCoord2().x + 0.005f, splitList.at(1)->GetCoord2().y + 0.005f });
 
 	// 좌하단 이동
-	splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x - 0.05f, splitList.at(2)->GetCoord1().y - 0.05f });
-	splitList.at(2)->SetCoord2({ splitList.at(2)->GetCoord2().x - 0.05f, splitList.at(2)->GetCoord2().y - 0.05f });
+	splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x - 0.005f, splitList.at(2)->GetCoord1().y - 0.005f });
+	splitList.at(2)->SetCoord2({ splitList.at(2)->GetCoord2().x - 0.005f, splitList.at(2)->GetCoord2().y - 0.005f });
 
 	// 우하단 이동
-	splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.05f, splitList.at(3)->GetCoord1().y - 0.05f });
-	splitList.at(3)->SetCoord2({ splitList.at(3)->GetCoord2().x + 0.05f, splitList.at(3)->GetCoord2().y - 0.05f });
+	splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.005f, splitList.at(3)->GetCoord1().y - 0.005f });
+	splitList.at(3)->SetCoord2({ splitList.at(3)->GetCoord2().x + 0.005f, splitList.at(3)->GetCoord2().y - 0.005f });
 
 	// 축소
-	splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x + 0.02f, splitList.at(0)->GetCoord1().y - 0.02f });
-	splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x + 0.02f, splitList.at(1)->GetCoord1().y - 0.02f });
-	splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x + 0.02f, splitList.at(2)->GetCoord1().y - 0.02f });
-	splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.02f, splitList.at(3)->GetCoord1().y - 0.02f });
+	splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x + 0.002f, splitList.at(0)->GetCoord1().y - 0.002f });
+	splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x + 0.002f, splitList.at(1)->GetCoord1().y - 0.002f });
+	splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x + 0.002f, splitList.at(2)->GetCoord1().y - 0.002f });
+	splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.002f, splitList.at(3)->GetCoord1().y - 0.002f });
 
 	if (splitList.at(0)->GetCoord2().x - splitList.at(0)->GetCoord1().x <= 0)
 	{
@@ -95,10 +95,10 @@ void Anims::AnimBoth()
 
 		// 1단계 : 크기를 줄여 직사각형으로 만들자
 		// 축소
-		splitList.at(0)->SetCoord2({ splitList.at(0)->GetCoord2().x - 0.02f, splitList.at(0)->GetCoord2().y });
-		splitList.at(1)->SetCoord2({ splitList.at(1)->GetCoord2().x, splitList.at(1)->GetCoord2().y + 0.02f });
-		splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x, splitList.at(2)->GetCoord1().y - 0.02f });
-		splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.02f, splitList.at(3)->GetCoord1().y });
+		splitList.at(0)->SetCoord2({ splitList.at(0)->GetCoord2().x - 0.005f, splitList.at(0)->GetCoord2().y });
+		splitList.at(1)->SetCoord2({ splitList.at(1)->GetCoord2().x, splitList.at(1)->GetCoord2().y + 0.005f });
+		splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x, splitList.at(2)->GetCoord1().y - 0.005f });
+		splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.005f, splitList.at(3)->GetCoord1().y });
 
 		glutPostRedisplay();
 
@@ -150,49 +150,49 @@ void Anims::AnimBoth()
 	{
 		// 1. 대각 이동
 		// 좌상단 이동
-		splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x - 0.03f, splitList.at(0)->GetCoord1().y + 0.03f });
-		splitList.at(0)->SetCoord2({ splitList.at(0)->GetCoord2().x - 0.03f, splitList.at(0)->GetCoord2().y + 0.03f });
+		splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x - 0.003f, splitList.at(0)->GetCoord1().y + 0.003f });
+		splitList.at(0)->SetCoord2({ splitList.at(0)->GetCoord2().x - 0.003f, splitList.at(0)->GetCoord2().y + 0.003f });
 
 		// 우상단 이동
-		splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x + 0.03f, splitList.at(1)->GetCoord1().y + 0.03f });
-		splitList.at(1)->SetCoord2({ splitList.at(1)->GetCoord2().x + 0.03f, splitList.at(1)->GetCoord2().y + 0.03f });
+		splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x + 0.003f, splitList.at(1)->GetCoord1().y + 0.003f });
+		splitList.at(1)->SetCoord2({ splitList.at(1)->GetCoord2().x + 0.003f, splitList.at(1)->GetCoord2().y + 0.003f });
 
 		// 좌하단 이동
-		splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x - 0.03f, splitList.at(2)->GetCoord1().y - 0.03f });
-		splitList.at(2)->SetCoord2({ splitList.at(2)->GetCoord2().x - 0.03f, splitList.at(2)->GetCoord2().y - 0.03f });
+		splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x - 0.003f, splitList.at(2)->GetCoord1().y - 0.003f });
+		splitList.at(2)->SetCoord2({ splitList.at(2)->GetCoord2().x - 0.003f, splitList.at(2)->GetCoord2().y - 0.003f });
 
 		// 우하단 이동
-		splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.03f, splitList.at(3)->GetCoord1().y - 0.03f });
-		splitList.at(3)->SetCoord2({ splitList.at(3)->GetCoord2().x + 0.03f, splitList.at(3)->GetCoord2().y - 0.03f });
+		splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.003f, splitList.at(3)->GetCoord1().y - 0.003f });
+		splitList.at(3)->SetCoord2({ splitList.at(3)->GetCoord2().x + 0.003f, splitList.at(3)->GetCoord2().y - 0.003f });
 
 		// 축소
-		splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x + 0.01f, splitList.at(0)->GetCoord1().y - 0.01f });
-		splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x + 0.01f, splitList.at(1)->GetCoord1().y - 0.01f });
-		splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x + 0.01f, splitList.at(2)->GetCoord1().y - 0.01f });
-		splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.01f, splitList.at(3)->GetCoord1().y - 0.01f });
+		splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x + 0.001f, splitList.at(0)->GetCoord1().y - 0.001f });
+		splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x + 0.001f, splitList.at(1)->GetCoord1().y - 0.001f });
+		splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x + 0.001f, splitList.at(2)->GetCoord1().y - 0.001f });
+		splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.001f, splitList.at(3)->GetCoord1().y - 0.001f });
 
 		// 2. 직선 이동
 		// 좌상단 이동
-		splitList.at(4)->SetCoord1({ splitList.at(4)->GetCoord1().x - 0.03f, splitList.at(4)->GetCoord1().y });
-		splitList.at(4)->SetCoord2({ splitList.at(4)->GetCoord2().x - 0.03f, splitList.at(4)->GetCoord2().y });
+		splitList.at(4)->SetCoord1({ splitList.at(4)->GetCoord1().x - 0.003f, splitList.at(4)->GetCoord1().y });
+		splitList.at(4)->SetCoord2({ splitList.at(4)->GetCoord2().x - 0.003f, splitList.at(4)->GetCoord2().y });
 
 		// 우상단 이동
-		splitList.at(5)->SetCoord1({ splitList.at(5)->GetCoord1().x, splitList.at(5)->GetCoord1().y + 0.03f });
-		splitList.at(5)->SetCoord2({ splitList.at(5)->GetCoord2().x, splitList.at(5)->GetCoord2().y + 0.03f });
+		splitList.at(5)->SetCoord1({ splitList.at(5)->GetCoord1().x, splitList.at(5)->GetCoord1().y + 0.003f });
+		splitList.at(5)->SetCoord2({ splitList.at(5)->GetCoord2().x, splitList.at(5)->GetCoord2().y + 0.003f });
 
 		// 좌하단 이동
-		splitList.at(6)->SetCoord1({ splitList.at(6)->GetCoord1().x, splitList.at(6)->GetCoord1().y - 0.03f });
-		splitList.at(6)->SetCoord2({ splitList.at(6)->GetCoord2().x, splitList.at(6)->GetCoord2().y - 0.03f });
+		splitList.at(6)->SetCoord1({ splitList.at(6)->GetCoord1().x, splitList.at(6)->GetCoord1().y - 0.003f });
+		splitList.at(6)->SetCoord2({ splitList.at(6)->GetCoord2().x, splitList.at(6)->GetCoord2().y - 0.003f });
 
 		// 우하단 이동
-		splitList.at(7)->SetCoord1({ splitList.at(7)->GetCoord1().x + 0.03f, splitList.at(7)->GetCoord1().y });
-		splitList.at(7)->SetCoord2({ splitList.at(7)->GetCoord2().x + 0.03f, splitList.at(7)->GetCoord2().y });
+		splitList.at(7)->SetCoord1({ splitList.at(7)->GetCoord1().x + 0.003f, splitList.at(7)->GetCoord1().y });
+		splitList.at(7)->SetCoord2({ splitList.at(7)->GetCoord2().x + 0.003f, splitList.at(7)->GetCoord2().y });
 
 		// 축소
-		splitList.at(4)->SetCoord1({ splitList.at(4)->GetCoord1().x + 0.01f, splitList.at(4)->GetCoord1().y - 0.01f });
-		splitList.at(5)->SetCoord1({ splitList.at(5)->GetCoord1().x + 0.01f, splitList.at(5)->GetCoord1().y - 0.01f });
-		splitList.at(6)->SetCoord1({ splitList.at(6)->GetCoord1().x + 0.01f, splitList.at(6)->GetCoord1().y - 0.01f });
-		splitList.at(7)->SetCoord1({ splitList.at(7)->GetCoord1().x + 0.01f, splitList.at(7)->GetCoord1().y - 0.01f });
+		splitList.at(4)->SetCoord1({ splitList.at(4)->GetCoord1().x + 0.001f, splitList.at(4)->GetCoord1().y - 0.001f });
+		splitList.at(5)->SetCoord1({ splitList.at(5)->GetCoord1().x + 0.001f, splitList.at(5)->GetCoord1().y - 0.001f });
+		splitList.at(6)->SetCoord1({ splitList.at(6)->GetCoord1().x + 0.001f, splitList.at(6)->GetCoord1().y - 0.001f });
+		splitList.at(7)->SetCoord1({ splitList.at(7)->GetCoord1().x + 0.001f, splitList.at(7)->GetCoord1().y - 0.001f });
 
 		if (splitList.at(0)->GetCoord2().x - splitList.at(0)->GetCoord1().x <= 0)
 		{
