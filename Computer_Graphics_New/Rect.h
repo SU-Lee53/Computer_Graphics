@@ -52,7 +52,6 @@ protected:
 
 	SPLIT_TYPE splitType;
 
-
 	bool AnimSwitch;
 
 };

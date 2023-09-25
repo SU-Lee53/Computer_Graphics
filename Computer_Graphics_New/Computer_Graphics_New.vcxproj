@@ -131,15 +131,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="6.cpp" />
-    <ClCompile Include="GL_Rect.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Utills.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GL_Rect.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Rect.h" />
     <ClInclude Include="Utills.h" />
     <ClInclude Include="__enum.h" />
     <ClInclude Include="__struct.h" />

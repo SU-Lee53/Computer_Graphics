@@ -1,29 +1,38 @@
 #include "pch.h"
 using namespace std;
 
-Rect* rectList[5];
+struct rectSet
+{
+	Rect* rect;
+	Anims* anim;
+};
+
+vector<rectSet> list;
 bool AnimStop;
+
+
 
 void AnimBoth(int value)
 {
 	if (AnimStop == false) {
 
-		Anims::GetInstance()->AnimBoth();
+		list.at(value).anim->AnimBoth();
 
-		if (Anims::GetInstance()->GetEndFlag() == false)
+		if (list.at(value).anim->GetEndFlag() == false)
 			glutTimerFunc(60, AnimBoth, value);
 	}
 
 	glutPostRedisplay();
+
 }
 
 void AnimStraight(int value)
 {
 	if(AnimStop == false) {
-		
-		Anims::GetInstance()->AnimStraight();
 
-		if (Anims::GetInstance()->GetSplitList().size() != 0)
+		list.at(value).anim->AnimStraight();
+
+		if (list.at(value).anim->GetSplitList().size() != 0)
 			glutTimerFunc(60, AnimStraight, value);
 	}
 
@@ -33,12 +42,11 @@ void AnimStraight(int value)
 void AnimDiagnoal(int value)
 {
 	if(AnimStop == false) {
-		
-		Anims::GetInstance()->AnimDiagnoal();
 
-		if (Anims::GetInstance()->GetSplitList().size() != 0)
+		list.at(value).anim->AnimDiagnoal();
+
+		if (list.at(value).anim->GetSplitList().size() != 0)
 			glutTimerFunc(60, AnimDiagnoal, value);
-
 	}
 
 	glutPostRedisplay();
@@ -48,6 +56,14 @@ GLvoid SetScreen()
 {
 	srand(time(0));
 	
+	for (int i = 0; i < list.size(); i++)
+	{
+		list.at(i).rect->~Rect();
+		list.at(i).anim->~Anims();
+	}
+
+	list.clear();
+
 	for (int i = 0; i < 5; i++)
 	{
 		Coord c1;
@@ -62,9 +78,9 @@ GLvoid SetScreen()
 			bool overlapped = false;
 			for (int j = 0; j < i; j++)
 			{
-				if (rectList[j]->GetColor().Red == color.Red
-					|| rectList[j]->GetColor().Green == color.Green
-					|| rectList[j]->GetColor().Blue == color.Blue)
+				if (list.at(j).rect->GetColor().Red == color.Red
+					|| list.at(j).rect->GetColor().Green == color.Green
+					|| list.at(j).rect->GetColor().Blue == color.Blue)
 					overlapped = true;
 			}
 
@@ -82,17 +98,18 @@ GLvoid SetScreen()
 			bool overlapped = false;
 			for (int j = 0; j < i; j++)
 			{
-				if (rectList[j]->GetCoord1().x == c1.x)
+				if (list.at(j).rect->GetCoord1().x == c1.x)
 					overlapped = true;
 			}
 
-			if(overlapped == false)
+			if (overlapped == false)
 				if (c2.x <= 1.0f && c2.y >= -1.0f)
 					break;
 		}
 
 		Rect* r = new Rect(c1.x, c1.y, c2.x, c2.y, color.Red, color.Green, color.Blue);
-		rectList[i] = r;
+		Anims* a = new Anims(r);
+		list.push_back({ r,a });
 	}
 }
 
@@ -103,22 +120,19 @@ GLvoid drawScene()
 
 	for (int i = 0; i < 5; i++)
 	{
-		if (rectList[i]->GetValidFlag() == true)
+		if (list.at(i).rect->GetValidFlag() == true)
 		{
-			rectList[i]->DrawRect();
+			list.at(i).rect->DrawRect();
 		}
-	}
+		else 
+		{
+			for (int j = 0; j < list.at(i).anim->GetSplitList().size(); j++)
+			{
+				list.at(i).anim->GetSplitList().at(j)->DrawRect();
+			}
+		}
 
-	for (int i = 0; i < Anims::GetInstance()->GetSplitList().size(); i++)
-	{
-		Anims::GetInstance()->GetSplitList().at(i)->DrawRect();
 	}
-
-	for (int i = 0; i < Anims::GetInstance()->GetReSplitList().size(); i++)
-	{
-		Anims::GetInstance()->GetReSplitList().at(i)->DrawRect();
-	}
-
 
 	glutSwapBuffers();
 }
@@ -136,31 +150,25 @@ GLvoid Mouse(int button, int state, int x, int y)
 	{
 		for (int i = 4; i >= 0; i--)
 		{
-			if (rectList[i]->MouseClickCheck(current))
+			if (list.at(i).rect->MouseClickCheck(current))
 			{
-				if (rectList[i]->GetValidFlag() == false)
+				if (list.at(i).rect->GetValidFlag() == false)
 					continue;
 
-				rectList[i]->SplitRect();
-				rectList[i]->SetValidFlag(false);
+				list.at(i).rect->SetValidFlag(false);
 				AnimStop = false;
 
-				switch (rectList[i]->GetSplitType())
+				switch (list.at(i).rect->GetSplitType())
 				{
 				case STRAIGHT:
-					Anims::GetInstance()->SetSplitList(rectList[i]);
 					glutTimerFunc(0, AnimStraight, i);
 					break;
 
 				case DIAGNOAL:
-					Anims::GetInstance()->SetSplitList(rectList[i]);
 					glutTimerFunc(0, AnimDiagnoal, i);
 					break;
 
 				case BOTH:
-					Anims::GetInstance()->SetSplitList(rectList[i]);
-					Anims::GetInstance()->SetSwitchFlag(true);
-					Anims::GetInstance()->SetEndFlag(false);
 					glutTimerFunc(0, AnimBoth, i);
 				}
 
