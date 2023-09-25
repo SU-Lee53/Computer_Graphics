@@ -10,8 +10,6 @@ struct rectSet
 vector<rectSet> list;
 bool AnimStop;
 
-
-
 void AnimBoth(int value)
 {
 	if (AnimStop == false) {

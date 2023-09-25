@@ -131,17 +131,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="6.cpp" />
-    <ClCompile Include="Anims.cpp" />
+    <ClCompile Include="Anims.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="Rect.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Utills.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Anims.h" />
+    <ClInclude Include="Anims.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Object.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Rect.h" />
+    <ClInclude Include="Rect.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Utills.h" />
     <ClInclude Include="__enum.h" />
     <ClInclude Include="__struct.h" />
