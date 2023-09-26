@@ -6,6 +6,10 @@ Shaders::Shaders()
 {
 }
 
+Shaders::~Shaders()
+{
+}
+
 void Shaders::makeVertexShaders()
 {
 	GLchar* vertexSource;
