@@ -8,6 +8,8 @@ struct Coord
 
 };
 
+
+
 struct RGB
 {
 	

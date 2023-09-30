@@ -6,12 +6,13 @@
 #include <gl/freeglut_ext.h>
 
 #include <vector>
+#include <string>
+
 
 #include "__enum.h"
 #include "__struct.h"
 #include "Utills.h"
-#include "Shaders.h"
 
-#include "Object.h"
-#include "Rect.h"
-#include "Anims.h"
+#include "Shaders.h"
+#include "Objects.h"
+

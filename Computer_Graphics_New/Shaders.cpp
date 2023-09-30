@@ -57,7 +57,10 @@ void Shaders::makeFragmentShaders()
 
 GLuint Shaders::makeShaderProgram()
 {
-	GLuint shaderID;
+	
+	makeVertexShaders();
+	makeFragmentShaders();
+
 	shaderID = glCreateProgram();
 
 	glAttachShader(shaderID, vertexShader);
@@ -83,3 +86,4 @@ GLuint Shaders::makeShaderProgram()
 	return shaderID;
 
 }
+

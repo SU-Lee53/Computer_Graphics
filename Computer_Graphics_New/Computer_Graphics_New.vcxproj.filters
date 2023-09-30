@@ -30,6 +30,12 @@
     <Filter Include="소스 파일\Shaders">
       <UniqueIdentifier>{f4fd67de-7751-4d64-8fbf-086ec1003f5f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\GLSL">
+      <UniqueIdentifier>{a6b3f779-c34f-46b6-9e3f-3a58ad27e83f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\GLSL_Objects">
+      <UniqueIdentifier>{2feaceb3-0a58-4be2-9acb-e0950afb1fb5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="6.cpp">
@@ -50,11 +56,20 @@
     <ClCompile Include="Rect.cpp">
       <Filter>소스 파일\Object\Rect</Filter>
     </ClCompile>
+    <ClCompile Include="shader_test.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderTest2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="7.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="Shaders.cpp">
       <Filter>소스 파일\Shaders</Filter>
     </ClCompile>
-    <ClCompile Include="shader_test.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="Objects.cpp">
+      <Filter>소스 파일\GLSL_Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -82,13 +97,22 @@
     <ClInclude Include="Shaders.h">
       <Filter>소스 파일\Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="Objects.h">
+      <Filter>소스 파일\GLSL_Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertex.glsl">
-      <Filter>소스 파일\Shaders</Filter>
+      <Filter>소스 파일\GLSL</Filter>
+    </None>
+    <None Include="vertex7.glsl">
+      <Filter>소스 파일\GLSL</Filter>
+    </None>
+    <None Include="fragment7.glsl">
+      <Filter>소스 파일\GLSL</Filter>
     </None>
     <None Include="fragment.glsl">
-      <Filter>소스 파일\Shaders</Filter>
+      <Filter>소스 파일\GLSL</Filter>
     </None>
   </ItemGroup>
 </Project>

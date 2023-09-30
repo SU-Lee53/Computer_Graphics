@@ -1,8 +1,9 @@
 #pragma once
 
-typedef enum SPLIT_TYPE
+enum Dir
 {
-	STRAIGHT = 0,
-	DIAGNOAL,
-	BOTH
-}SPLIT_TYPE;
+	UP = 0,
+	DOWN,
+	LEFT,
+	RIGHT
+};
