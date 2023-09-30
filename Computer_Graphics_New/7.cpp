@@ -49,6 +49,7 @@ GLvoid drawScene()
 
 	for (int i = 0; i < objectCount; i++)
 	{
+		list[i]->InitBuffer();
 		list[i]->RenderObject();
 
 	}
@@ -71,6 +72,8 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 	{
 	case 'p':
 	{
+		if (objectCount >= MAX_SIZE)
+			break;
 		Objects* o = new Objects(OBJ_POINT, pos);
 		list[objectCount] = o;
 		objectCount++;
@@ -78,6 +81,8 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 	}
 	case 'l':
 	{
+		if (objectCount >= MAX_SIZE)
+			break;
 		Objects* o = new Objects(OBJ_LINE, pos);
 		list[objectCount] = o;
 		objectCount++;
@@ -85,6 +90,8 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 	}
 	case 't':
 	{
+		if (objectCount >= MAX_SIZE)
+			break;
 		Objects* o = new Objects(OBJ_TRIANGLE, pos);
 		list[objectCount] = o;
 		objectCount++;
@@ -92,6 +99,8 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 	}
 	case 'r':
 	{
+		if (objectCount >= MAX_SIZE)
+			break;
 		Objects* o = new Objects(OBJ_RECTANGLE, pos);
 		list[objectCount] = o;
 		objectCount++;
@@ -124,6 +133,11 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 		}
 		break;
 
+	case 'c':
+		for (int i = 0; i < objectCount; i++)
+			delete list[i];
+
+		objectCount = 0;
 	}
 
 	glutPostRedisplay();

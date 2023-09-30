@@ -4,7 +4,7 @@
 
 Objects::Objects(OBJ_SHAPE shape, Coord pos) : shape(shape)
 {
-	CreateObject(shape, pos);
+	CreateObject(this->shape, pos);
 }
 
 Objects::~Objects()
@@ -18,7 +18,7 @@ void Objects::CreateObject(OBJ_SHAPE shape, Coord pos)
 	{
 	case OBJ_POINT:
 	{
-		GLfloat vertex[] = { pos.x, pos.y, 0.0 };
+		float vertex[] = {pos.x, pos.y, 0.0};
 		GLfloat color[] = { 0.0f, 0.0f, 1.0f };
 		vertexBuf = vertex;
 		colorBuf = color;
@@ -86,14 +86,10 @@ void Objects::CreateObject(OBJ_SHAPE shape, Coord pos)
 	}
 
 	StoreBufferData();
-
-	InitBuffer();
 }
 
 void Objects::MoveObject(Dir d)
 {
-	LoadBufferData();
-
 	int vertexCount;
 	switch (shape)
 	{
@@ -143,8 +139,6 @@ void Objects::MoveObject(Dir d)
 
 	}
 
-	StoreBufferData();
-	InitBuffer();
 }
 
 void Objects::RenderObject()
@@ -158,7 +152,8 @@ void Objects::RenderObject()
 		break;
 
 	case OBJ_LINE:
-		glDrawArrays(GL_LINE, 0, 2);
+		glLineWidth(3.0);
+		glDrawArrays(GL_LINES, 0, 2);
 		break;
 
 	case OBJ_TRIANGLE:
@@ -264,21 +259,22 @@ void Objects::StoreBufferData()
 		break;
 	}
 
-	vertexStore.clear();
-	colorStore.clear();
-	elementStore.clear();
-
-
 	for (int i = 0; i < count; i++)
 	{
-		vertexStore.push_back(vertexBuf[i]);
-		colorStore.push_back(colorBuf[i]);
-		if (shape == OBJ_RECTANGLE)
-		{
-			elementStore.push_back(elementBuf[i]);
-		}
+		vertexStore[i] = vertexBuf[i];
+		colorStore[i] = colorBuf[i];
 	}
 
+	vertexBuf = vertexStore;
+	colorBuf = colorStore;
+
+	if (shape == OBJ_RECTANGLE)
+	{
+		for(int i = 0; i < 6; i++)
+			elementStore[i] = elementBuf[i];
+
+		elementBuf = elementStore;
+	}
 
 }
 
@@ -306,11 +302,11 @@ void Objects::LoadBufferData()
 
 	for (int i = 0; i < count; i++)
 	{
-		vertexBuf[i] = vertexStore.at(i);
-		colorBuf[i] = colorStore.at(i);
+		vertexBuf[i] = vertexStore[i];
+		colorBuf[i] = colorStore[i];
 		if (shape == OBJ_RECTANGLE)
 		{
-			elementBuf[i] = elementStore.at(i);
+			elementBuf[i] = elementStore[i];
 		}
 	}
 }

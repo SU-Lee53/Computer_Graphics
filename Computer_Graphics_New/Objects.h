@@ -32,9 +32,9 @@ protected:
 	unsigned int* elementBuf;
 
 	// 버퍼를 여기다 옮겨담아서 저장하고 필요할때 꺼내씀
-	vector<float> vertexStore;
-	vector<float> colorStore;
-	vector<unsigned int> elementStore;
+	float vertexStore[12];
+	float colorStore[12];
+	unsigned int elementStore[6];
 
 	OBJ_SHAPE shape;
 	GLuint vao;
