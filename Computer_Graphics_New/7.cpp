@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(800, 600);
-	glutCreateWindow("실습6");
+	glutCreateWindow("실습7");
 
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK)
@@ -45,29 +45,11 @@ GLvoid drawScene()
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	glUseProgram(shaderID);
+
 	for (int i = 0; i < objectCount; i++)
 	{
-
-		glBindVertexArray(list[i]->GetVAO());
-		switch (list[i]->GetShape())
-		{
-		case OBJ_POINT:
-			glPointSize(5.0);
-			glDrawArrays(GL_POINTS, 0, 1);
-			break;
-
-		case OBJ_LINE:
-			glDrawArrays(GL_LINE, 0, 2);
-			break;
-
-		case OBJ_TRIANGLE:
-			glDrawArrays(GL_TRIANGLES, 0, 3);
-			break;
-
-		case OBJ_RECTANGLE:
-			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-			break;
-		}
+		list[i]->RenderObject();
 
 	}
 

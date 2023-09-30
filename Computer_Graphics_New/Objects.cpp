@@ -1,9 +1,14 @@
 #include "pch.h"
 #include "Objects.h"
 
-Objects::Objects(OBJ_SHAPE s, Coord pos) : shape(s)
+
+Objects::Objects(OBJ_SHAPE shape, Coord pos) : shape(shape)
 {
 	CreateObject(shape, pos);
+}
+
+Objects::~Objects()
+{
 }
 
 void Objects::CreateObject(OBJ_SHAPE shape, Coord pos)
@@ -80,12 +85,14 @@ void Objects::CreateObject(OBJ_SHAPE shape, Coord pos)
 
 	}
 
-	InitBuffer();
+	StoreBufferData();
 
+	InitBuffer();
 }
 
 void Objects::MoveObject(Dir d)
 {
+	LoadBufferData();
 
 	int vertexCount;
 	switch (shape)
@@ -136,13 +143,12 @@ void Objects::MoveObject(Dir d)
 
 	}
 
+	StoreBufferData();
+	InitBuffer();
 }
 
-void Objects::renderObject(unsigned int ShaderID)
+void Objects::RenderObject()
 {
-
-	glUseProgram(ShaderID);
-
 	glBindVertexArray(vao);
 	switch (shape)
 	{
@@ -168,26 +174,25 @@ void Objects::renderObject(unsigned int ShaderID)
 
 void Objects::InitBuffer()
 {
-
-	glGenBuffers(1, &vao);
+	
+	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 	glGenBuffers(2, vbo);
-
 
 	// 정점 데이터를 쉐입에 따라서 다르게 넣는다.
 	switch (shape)
 	{
 	case OBJ_POINT:
 	{
-		// vboPosition에 정점 데이터 복사
+		// vbo[0]에 정점 데이터 복사
 		glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-		glBufferData(GL_ARRAY_BUFFER, 3 * sizeof(GLfloat), vertexBuf, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, 3 * sizeof(GLfloat), vertexBuf, GL_DYNAMIC_DRAW);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 		glEnableVertexAttribArray(0);
 
-		// vboColor에 색상 데이터 복사
+		// vbo[1]에 색상 데이터 복사
 		glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-		glBufferData(GL_ARRAY_BUFFER, 3 * sizeof(GLfloat), colorBuf, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, 3 * sizeof(GLfloat), colorBuf, GL_DYNAMIC_DRAW);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),	0);
 		glEnableVertexAttribArray(1);
 		break;
@@ -195,12 +200,12 @@ void Objects::InitBuffer()
 	case OBJ_LINE:
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-		glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(GLfloat), vertexBuf, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(GLfloat), vertexBuf, GL_DYNAMIC_DRAW);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 		glEnableVertexAttribArray(0);
 
 		glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-		glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(GLfloat), colorBuf, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(GLfloat), colorBuf, GL_DYNAMIC_DRAW);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 		glEnableVertexAttribArray(1);
 		break;
@@ -208,12 +213,12 @@ void Objects::InitBuffer()
 	case OBJ_TRIANGLE:
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-		glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(GLfloat), vertexBuf, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(GLfloat), vertexBuf, GL_DYNAMIC_DRAW);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 		glEnableVertexAttribArray(0);
 
 		glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-		glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(GLfloat), colorBuf, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(GLfloat), colorBuf, GL_DYNAMIC_DRAW);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 		glEnableVertexAttribArray(1);
 		break;
@@ -221,16 +226,16 @@ void Objects::InitBuffer()
 	case OBJ_RECTANGLE:
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-		glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(GLfloat), vertexBuf, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(GLfloat), vertexBuf, GL_DYNAMIC_DRAW);
 
 		glGenBuffers(1, &ebo);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 12 * sizeof(GLuint), elementBuf, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 12 * sizeof(GLuint), elementBuf, GL_DYNAMIC_DRAW);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 		glEnableVertexAttribArray(0);
 
 		glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-		glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(GLfloat), colorBuf, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(GLfloat), colorBuf, GL_DYNAMIC_DRAW);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 		glEnableVertexAttribArray(1);
 	}

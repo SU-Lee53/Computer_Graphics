@@ -12,10 +12,11 @@ enum OBJ_SHAPE
 class Objects
 {
 public:
-	Objects(OBJ_SHAPE s, Coord pos);
+	Objects(OBJ_SHAPE shape, Coord pos);
+	~Objects();
 	void CreateObject(OBJ_SHAPE shape, Coord pos);
 	void MoveObject(Dir d);
-	void renderObject(unsigned int ShaderID);
+	void RenderObject();
 	void InitBuffer();
 	
 	GLuint GetVAO() { return vao; }
@@ -24,7 +25,8 @@ public:
 	void StoreBufferData();
 	void LoadBufferData();
 
-private:
+protected:
+
 	GLfloat* vertexBuf;
 	GLfloat* colorBuf;
 	unsigned int* elementBuf;

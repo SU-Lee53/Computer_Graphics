@@ -12,12 +12,6 @@
     <Filter Include="소스 파일\pch">
       <UniqueIdentifier>{1b1e6358-eb1d-478a-b378-c55f53eafdda}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Object">
-      <UniqueIdentifier>{2a90000a-c4eb-4d74-9d93-67e35089a3c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\Object\Rect">
-      <UniqueIdentifier>{a7774e67-3d6d-44f1-9e76-d07961a95e3b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\enum, struct, const">
       <UniqueIdentifier>{2a29d9b7-2026-4fa2-832d-2464e2642e3e}</UniqueIdentifier>
     </Filter>
@@ -36,6 +30,9 @@
     <Filter Include="소스 파일\GLSL_Objects">
       <UniqueIdentifier>{2feaceb3-0a58-4be2-9acb-e0950afb1fb5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\GLSL_Objects\Shapes">
+      <UniqueIdentifier>{a33ba779-b415-454f-8570-a2ab68bb084d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="6.cpp">
@@ -44,17 +41,11 @@
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일\pch</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>소스 파일\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Utills.cpp">
       <Filter>소스 파일\Utills</Filter>
     </ClCompile>
     <ClCompile Include="Anims.cpp">
       <Filter>소스 파일\Anims</Filter>
-    </ClCompile>
-    <ClCompile Include="Rect.cpp">
-      <Filter>소스 파일\Object\Rect</Filter>
     </ClCompile>
     <ClCompile Include="shader_test.cpp">
       <Filter>소스 파일</Filter>
@@ -76,9 +67,6 @@
     <ClInclude Include="pch.h">
       <Filter>소스 파일\pch</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>소스 파일\Object</Filter>
-    </ClInclude>
     <ClInclude Include="__struct.h">
       <Filter>소스 파일\enum, struct, const</Filter>
     </ClInclude>
@@ -90,9 +78,6 @@
     </ClInclude>
     <ClInclude Include="Anims.h">
       <Filter>소스 파일\Anims</Filter>
-    </ClInclude>
-    <ClInclude Include="Rect.h">
-      <Filter>소스 파일\Object\Rect</Filter>
     </ClInclude>
     <ClInclude Include="Shaders.h">
       <Filter>소스 파일\Shaders</Filter>
