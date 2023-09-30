@@ -17,7 +17,7 @@ public:
 	void CreateObject(OBJ_SHAPE shape, Coord pos, float size);
 	void SetRGB(RGB rgb);
 	void SetVertexPos(Coord pos, float size);
-	void MoveObject(Dir d);
+	void MoveObject(Dir d, float distance);
 	void RenderObject();
 	void InitBuffer();
 	
@@ -27,7 +27,7 @@ public:
 	void StoreBufferData();
 	void LoadBufferData();
 
-	void CheckOutOfScreen();
+	Dir CheckOutOfScreen();
 
 protected:
 

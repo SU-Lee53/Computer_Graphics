@@ -168,7 +168,7 @@ void Objects::SetVertexPos(Coord pos, float size)
 	StoreBufferData();
 }
 
-void Objects::MoveObject(Dir d)
+void Objects::MoveObject(Dir d, float distance)
 {
 	int vertexCount;
 	switch (shape)
@@ -192,28 +192,28 @@ void Objects::MoveObject(Dir d)
 	case UP:
 		for (int i = 1; i < vertexCount; i += 3)
 		{
-			vertexBuf[i] += 0.1f;
+			vertexBuf[i] += distance;
 		}
 		break;
 
 	case DOWN:
 		for (int i = 1; i < vertexCount; i += 3)
 		{
-			vertexBuf[i] -= 0.1f;
+			vertexBuf[i] -= distance;
 		}
 		break;
 
 	case LEFT:
 		for (int i = 0; i < vertexCount; i += 3)
 		{
-			vertexBuf[i] -= 0.1f;
+			vertexBuf[i] -= distance;
 		}
 		break;
 
 	case RIGHT:
 		for (int i = 0; i < vertexCount; i += 3)
 		{
-			vertexBuf[i] += 0.1f;
+			vertexBuf[i] += distance;
 		}
 		break;
 
@@ -391,18 +391,53 @@ void Objects::LoadBufferData()
 	}
 }
 
-void Objects::CheckOutOfScreen()
+Dir Objects::CheckOutOfScreen()
 {
-	if (shape != OBJ_TRIANGLE)
-		return;
-
-	int index;
-	for (index = 0; index < 9; index++)
+	int count;
+	switch (shape)
 	{
-		if (vertexBuf[index] >= 1.0f || vertexBuf[index] <= 1.0f)
-			break;
+	case OBJ_POINT:
+		count = 3;
+		break;
+
+	case OBJ_LINE:
+		count = 6;
+		break;
+
+	case OBJ_TRIANGLE:
+		count = 9;
+		break;
+
+	case OBJ_RECTANGLE:
+		count = 12;
+		break;
 	}
 
+
+	for (int i = 0; i < count; i++)
+	{
+		// ÇÊ¿ä¾ø´Â zÁÂÇ¥´Â ½ºÅµ
+		if (i % 3 == 2)
+		{
+			continue;
+		}
+		else if (i % 3 == 0)
+		{
+			if (vertexBuf[i] >= 1.0f)
+				return RIGHT;
+			else if (vertexBuf[i] <= -1.0f)
+				return LEFT;
+		}
+		else if (i % 3 == 1)
+		{
+			if (vertexBuf[i] >= 1.0f)
+				return	UP;
+			else if (vertexBuf[i] <= -1.0f)
+				return DOWN;
+		}
+	}
+
+	return NONE;
 	
 
 }

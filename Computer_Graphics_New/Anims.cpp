@@ -1,214 +1,92 @@
 #include "pch.h"
 #include "Anims.h"
 
-
-Anims::Anims()
+Anims::Anims(Objects* obj) : obj(obj)
 {
-
-}
-
-Anims::Anims(Rect* r) : AnimSwitch(true), AnimEnd(false)
-{
-	current = r;
-	SetSplitList(r);
 }
 
 Anims::~Anims()
 {
 }
 
-void Anims::AnimStraight()
+void Anims::Bounce()
 {
-	// 좌상단 이동
-	splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x - 0.005f, splitList.at(0)->GetCoord1().y });
-	splitList.at(0)->SetCoord2({ splitList.at(0)->GetCoord2().x - 0.005f, splitList.at(0)->GetCoord2().y });
-
-	// 우상단 이동
-	splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x, splitList.at(1)->GetCoord1().y + 0.005f });
-	splitList.at(1)->SetCoord2({ splitList.at(1)->GetCoord2().x, splitList.at(1)->GetCoord2().y + 0.005f });
-
-	// 좌하단 이동
-	splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x, splitList.at(2)->GetCoord1().y - 0.005f });
-	splitList.at(2)->SetCoord2({ splitList.at(2)->GetCoord2().x, splitList.at(2)->GetCoord2().y - 0.005f });
-
-	// 우하단 이동
-	splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.005f, splitList.at(3)->GetCoord1().y });
-	splitList.at(3)->SetCoord2({ splitList.at(3)->GetCoord2().x + 0.005f, splitList.at(3)->GetCoord2().y });
-
-	// 축소
-	splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x + 0.002f, splitList.at(0)->GetCoord1().y - 0.002f });
-	splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x + 0.002f, splitList.at(1)->GetCoord1().y - 0.002f });
-	splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x + 0.002f, splitList.at(2)->GetCoord1().y - 0.002f });
-	splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.002f, splitList.at(3)->GetCoord1().y - 0.002f });
-
-	if (splitList.at(0)->GetCoord2().x - splitList.at(0)->GetCoord1().x <= 0)
+	switch (bounceDir)
 	{
-		for (int i = 0; i < splitList.size(); i++)
-		{
-			splitList.at(i)->~Rect();
-		}
+	case NW:
+		obj->MoveObject(UP, 0.01f);
+		obj->MoveObject(LEFT, 0.01f);
+		break;
+	case NE:
+		obj->MoveObject(UP, 0.01f);
+		obj->MoveObject(RIGHT, 0.01f);
+		break;
+	case SE:
+		obj->MoveObject(DOWN, 0.01f);
+		obj->MoveObject(RIGHT, 0.01f);
+		break;
+	case SW:
+		obj->MoveObject(DOWN, 0.01f);
+		obj->MoveObject(LEFT, 0.01f);
+		break;
 
-		splitList.clear();
-	}
-}
-
-void Anims::AnimDiagnoal()
-{
-	// 좌상단 이동
-	splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x - 0.005f, splitList.at(0)->GetCoord1().y + 0.005f });
-	splitList.at(0)->SetCoord2({ splitList.at(0)->GetCoord2().x - 0.005f, splitList.at(0)->GetCoord2().y + 0.005f });
-
-	// 우상단 이동
-	splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x + 0.005f, splitList.at(1)->GetCoord1().y + 0.005f });
-	splitList.at(1)->SetCoord2({ splitList.at(1)->GetCoord2().x + 0.005f, splitList.at(1)->GetCoord2().y + 0.005f });
-
-	// 좌하단 이동
-	splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x - 0.005f, splitList.at(2)->GetCoord1().y - 0.005f });
-	splitList.at(2)->SetCoord2({ splitList.at(2)->GetCoord2().x - 0.005f, splitList.at(2)->GetCoord2().y - 0.005f });
-
-	// 우하단 이동
-	splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.005f, splitList.at(3)->GetCoord1().y - 0.005f });
-	splitList.at(3)->SetCoord2({ splitList.at(3)->GetCoord2().x + 0.005f, splitList.at(3)->GetCoord2().y - 0.005f });
-
-	// 축소
-	splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x + 0.002f, splitList.at(0)->GetCoord1().y - 0.002f });
-	splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x + 0.002f, splitList.at(1)->GetCoord1().y - 0.002f });
-	splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x + 0.002f, splitList.at(2)->GetCoord1().y - 0.002f });
-	splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.002f, splitList.at(3)->GetCoord1().y - 0.002f });
-
-	if (splitList.at(0)->GetCoord2().x - splitList.at(0)->GetCoord1().x <= 0)
-	{
-		for (int i = 0; i < splitList.size(); i++)
-		{
-			splitList.at(i)->~Rect();
-		}
-
-		splitList.clear();
 	}
 
-}
+	Dir isOut = obj->CheckOutOfScreen();
 
-void Anims::AnimBoth()
-{
-	if (AnimSwitch == true)
+	switch (isOut)
 	{
-
-		// 1단계 : 크기를 줄여 직사각형으로 만들자
-		// 축소
-		splitList.at(0)->SetCoord2({ splitList.at(0)->GetCoord2().x - 0.005f, splitList.at(0)->GetCoord2().y });
-		splitList.at(1)->SetCoord2({ splitList.at(1)->GetCoord2().x, splitList.at(1)->GetCoord2().y + 0.005f });
-		splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x, splitList.at(2)->GetCoord1().y - 0.005f });
-		splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.005f, splitList.at(3)->GetCoord1().y });
-
-		glutPostRedisplay();
-
-		if ((splitList.at(0)->GetCoord2().x - splitList.at(0)->GetCoord1().x) * 2 < (splitList.at(0)->GetCoord1().y - splitList.at(0)->GetCoord2().y))
-		{
-			// 2단계 : splitList의 직사각형을 또 나눠서 8개로 만들자
-			Rect* s1 = splitList.at(0);
-			Rect* s2 = splitList.at(1);
-			Rect* s3 = splitList.at(2);
-			Rect* s4 = splitList.at(3);
-
-
-
-			for (int i = 0; i < splitList.size(); i++)
-			{
-				splitList.at(i)->~Rect();
-			}
-
-
-			splitList.clear();		// splitList 벡터 초기화
-
-			// 대각선으로 날아갈 놈들부터 r1, r2, r3, r4
-			Rect* r1 = new Rect(s1->GetCoord1().x, s1->GetCoord1().y, s1->GetCoord2().x, s1->GetCenter().y, s1->GetColor().Red, s1->GetColor().Green, s1->GetColor().Blue);
-			Rect* r2 = new Rect(s2->GetCenter().x, s2->GetCoord1().y, s2->GetCoord2().x, s2->GetCoord2().y, s2->GetColor().Red, s2->GetColor().Green, s2->GetColor().Blue);
-			Rect* r3 = new Rect(s3->GetCoord1().x, s3->GetCoord1().y, s3->GetCenter().x, s3->GetCoord2().y, s3->GetColor().Red, s3->GetColor().Green, s3->GetColor().Blue);
-			Rect* r4 = new Rect(s4->GetCoord1().x, s4->GetCenter().y, s4->GetCoord2().x, s4->GetCoord2().y, s4->GetColor().Red, s4->GetColor().Green, s4->GetColor().Blue);
-
-			// 직선으로 날아갈 놈들은 r5, r6, r7, r8
-			Rect* r5 = new Rect(s1->GetCoord1().x, s1->GetCenter().y, s1->GetCoord2().x, s1->GetCoord2().y, s1->GetColor().Red, s1->GetColor().Green, s1->GetColor().Blue);
-			Rect* r6 = new Rect(s2->GetCoord1().x, s2->GetCoord1().y, s2->GetCenter().x, s2->GetCoord2().y, s2->GetColor().Red, s2->GetColor().Green, s2->GetColor().Blue);
-			Rect* r7 = new Rect(s3->GetCenter().x, s3->GetCoord1().y, s3->GetCoord2().x, s3->GetCoord2().y, s3->GetColor().Red, s3->GetColor().Green, s3->GetColor().Blue);
-			Rect* r8 = new Rect(s4->GetCoord1().x, s4->GetCoord1().y, s4->GetCoord2().x, s4->GetCenter().y, s4->GetColor().Red, s4->GetColor().Green, s4->GetColor().Blue);
-
-			splitList.push_back(r1);
-			splitList.push_back(r2);
-			splitList.push_back(r3);
-			splitList.push_back(r4);
-			splitList.push_back(r5);
-			splitList.push_back(r6);
-			splitList.push_back(r7);
-			splitList.push_back(r8);
-
-
-			AnimSwitch = false;
-
-		}
-	}
-	else
+	case UP:
 	{
-		// 1. 대각 이동
-		// 좌상단 이동
-		splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x - 0.003f, splitList.at(0)->GetCoord1().y + 0.003f });
-		splitList.at(0)->SetCoord2({ splitList.at(0)->GetCoord2().x - 0.003f, splitList.at(0)->GetCoord2().y + 0.003f });
+		if (bounceDir == NW)
+			bounceDir = SW;
+		else if (bounceDir == NE)
+			bounceDir = SE;
 
-		// 우상단 이동
-		splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x + 0.003f, splitList.at(1)->GetCoord1().y + 0.003f });
-		splitList.at(1)->SetCoord2({ splitList.at(1)->GetCoord2().x + 0.003f, splitList.at(1)->GetCoord2().y + 0.003f });
-
-		// 좌하단 이동
-		splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x - 0.003f, splitList.at(2)->GetCoord1().y - 0.003f });
-		splitList.at(2)->SetCoord2({ splitList.at(2)->GetCoord2().x - 0.003f, splitList.at(2)->GetCoord2().y - 0.003f });
-
-		// 우하단 이동
-		splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.003f, splitList.at(3)->GetCoord1().y - 0.003f });
-		splitList.at(3)->SetCoord2({ splitList.at(3)->GetCoord2().x + 0.003f, splitList.at(3)->GetCoord2().y - 0.003f });
-
-		// 축소
-		splitList.at(0)->SetCoord1({ splitList.at(0)->GetCoord1().x + 0.001f, splitList.at(0)->GetCoord1().y - 0.001f });
-		splitList.at(1)->SetCoord1({ splitList.at(1)->GetCoord1().x + 0.001f, splitList.at(1)->GetCoord1().y - 0.001f });
-		splitList.at(2)->SetCoord1({ splitList.at(2)->GetCoord1().x + 0.001f, splitList.at(2)->GetCoord1().y - 0.001f });
-		splitList.at(3)->SetCoord1({ splitList.at(3)->GetCoord1().x + 0.001f, splitList.at(3)->GetCoord1().y - 0.001f });
-
-		// 2. 직선 이동
-		// 좌상단 이동
-		splitList.at(4)->SetCoord1({ splitList.at(4)->GetCoord1().x - 0.003f, splitList.at(4)->GetCoord1().y });
-		splitList.at(4)->SetCoord2({ splitList.at(4)->GetCoord2().x - 0.003f, splitList.at(4)->GetCoord2().y });
-
-		// 우상단 이동
-		splitList.at(5)->SetCoord1({ splitList.at(5)->GetCoord1().x, splitList.at(5)->GetCoord1().y + 0.003f });
-		splitList.at(5)->SetCoord2({ splitList.at(5)->GetCoord2().x, splitList.at(5)->GetCoord2().y + 0.003f });
-
-		// 좌하단 이동
-		splitList.at(6)->SetCoord1({ splitList.at(6)->GetCoord1().x, splitList.at(6)->GetCoord1().y - 0.003f });
-		splitList.at(6)->SetCoord2({ splitList.at(6)->GetCoord2().x, splitList.at(6)->GetCoord2().y - 0.003f });
-
-		// 우하단 이동
-		splitList.at(7)->SetCoord1({ splitList.at(7)->GetCoord1().x + 0.003f, splitList.at(7)->GetCoord1().y });
-		splitList.at(7)->SetCoord2({ splitList.at(7)->GetCoord2().x + 0.003f, splitList.at(7)->GetCoord2().y });
-
-		// 축소
-		splitList.at(4)->SetCoord1({ splitList.at(4)->GetCoord1().x + 0.001f, splitList.at(4)->GetCoord1().y - 0.001f });
-		splitList.at(5)->SetCoord1({ splitList.at(5)->GetCoord1().x + 0.001f, splitList.at(5)->GetCoord1().y - 0.001f });
-		splitList.at(6)->SetCoord1({ splitList.at(6)->GetCoord1().x + 0.001f, splitList.at(6)->GetCoord1().y - 0.001f });
-		splitList.at(7)->SetCoord1({ splitList.at(7)->GetCoord1().x + 0.001f, splitList.at(7)->GetCoord1().y - 0.001f });
-
-		if (splitList.at(0)->GetCoord2().x - splitList.at(0)->GetCoord1().x <= 0)
-		{
-			for (int i = 0; i < splitList.size(); i++)
-			{
-				splitList.at(i)->~Rect();
-			}
-			splitList.clear();
-
-			AnimEnd = true;
-		}
+		break;
 	}
+
+	case DOWN:
+	{
+		if (bounceDir == SW)
+			bounceDir = NW;
+		else if (bounceDir == SE)
+			bounceDir = NE;
+
+		break;
+	}
+
+	case RIGHT:
+	{
+		if (bounceDir == NE)
+			bounceDir = NW;
+		if (bounceDir == SE)
+			bounceDir = SW;
+
+		break;
+	}
+
+	case LEFT:
+	{
+		if (bounceDir == NW)
+			bounceDir = NE;
+		if (bounceDir == SW)
+			bounceDir = SE;
+
+		break;
+	}
+
+	case NONE:
+		break;
+	}
+
 }
 
-void Anims::SetSplitList(Rect* rect)
+void Anims::SetBounceDir()
 {
-	splitList = rect->SplitRect();
-}
+	srand(time(0));
 
+	int temp = rand() % 4;
+	bounceDir = static_cast<ANIM_DIR>(temp);
+
+}

@@ -110,26 +110,26 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 	case 'w':
 		for (int i = 0; i < objectCount; i++)
 		{
-			list[i]->MoveObject(UP);
+			list[i]->MoveObject(UP, 0.05f);
 		}
 		break;
 
 	case 's':
 		for (int i = 0; i < objectCount; i++)
 		{
-			list[i]->MoveObject(DOWN);
+			list[i]->MoveObject(DOWN, 0.05f);
 		}
 		break;
 	case 'a':
 		for (int i = 0; i < objectCount; i++)
 		{
-			list[i]->MoveObject(LEFT);
+			list[i]->MoveObject(LEFT, 0.05f);
 		}
 		break;
 	case 'd':
 		for (int i = 0; i < objectCount; i++)
 		{
-			list[i]->MoveObject(RIGHT);
+			list[i]->MoveObject(RIGHT, 0.05f);
 		}
 		break;
 

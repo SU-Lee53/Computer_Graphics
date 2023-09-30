@@ -1,28 +1,42 @@
 #pragma once
 
+enum ANIM_TYPE
+{
+	ANIM_BOUNCE = 0,
+	ANIM_ZIGZAG,
+	ANIM_RSPIRAL,
+	ANIM_CSPIRAL
+};
+
+enum ANIM_DIR
+{
+	NW = 0,
+	NE,
+	SE,
+	SW,
+	N,
+	E,
+	S,
+	W
+};
 
 class Anims
 {
 public:
-	Anims();
-	Anims(Rect* r);
+	Anims(Objects* obj);
 	~Anims();
 
-	void AnimStraight();
-	void AnimDiagnoal();
-	void AnimBoth();
-	void SetSplitList(Rect* rect);
-	vector<Rect*> GetSplitList() { return splitList; }
-	void SetSwitchFlag(bool flag) { AnimSwitch = flag; }
-	void SetEndFlag(bool flag) { AnimEnd = flag; }
-	bool GetSwitchFlag() { return AnimSwitch; }
-	bool GetEndFlag() { return AnimEnd; }
+	void Bounce();
+	void Zigzag();
+	void RSpiral();
+	void CSpiral();
+
+	void SetBounceDir();
+
 
 private:
-	Rect* current;
-	vector<Rect*> splitList;
-	// 아래 2개의 플래그는 BOTH 애니메이션에서만 사용함
-	bool AnimSwitch;
-	bool AnimEnd;
+	Objects* obj;
+	ANIM_TYPE type;
+	ANIM_DIR bounceDir;
 };
 
