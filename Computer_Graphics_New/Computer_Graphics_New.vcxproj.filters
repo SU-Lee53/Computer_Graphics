@@ -62,6 +62,12 @@
     <ClCompile Include="Objects.cpp">
       <Filter>소스 파일\GLSL_Objects</Filter>
     </ClCompile>
+    <ClCompile Include="9.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="8.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">

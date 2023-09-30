@@ -12,9 +12,11 @@ enum OBJ_SHAPE
 class Objects
 {
 public:
-	Objects(OBJ_SHAPE shape, Coord pos);
+	Objects(OBJ_SHAPE shape, Coord pos, float size);
 	~Objects();
-	void CreateObject(OBJ_SHAPE shape, Coord pos);
+	void CreateObject(OBJ_SHAPE shape, Coord pos, float size);
+	void SetRGB(RGB rgb);
+	void SetVertexPos(Coord pos, float size);
 	void MoveObject(Dir d);
 	void RenderObject();
 	void InitBuffer();
@@ -24,6 +26,8 @@ public:
 
 	void StoreBufferData();
 	void LoadBufferData();
+
+	void CheckOutOfScreen();
 
 protected:
 

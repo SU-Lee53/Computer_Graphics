@@ -74,7 +74,7 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 	{
 		if (objectCount >= MAX_SIZE)
 			break;
-		Objects* o = new Objects(OBJ_POINT, pos);
+		Objects* o = new Objects(OBJ_POINT, pos, 0);
 		list[objectCount] = o;
 		objectCount++;
 		break;
@@ -83,7 +83,7 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 	{
 		if (objectCount >= MAX_SIZE)
 			break;
-		Objects* o = new Objects(OBJ_LINE, pos);
+		Objects* o = new Objects(OBJ_LINE, pos, 0);
 		list[objectCount] = o;
 		objectCount++;
 		break;
@@ -92,7 +92,7 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 	{
 		if (objectCount >= MAX_SIZE)
 			break;
-		Objects* o = new Objects(OBJ_TRIANGLE, pos);
+		Objects* o = new Objects(OBJ_TRIANGLE, pos, 0.2);
 		list[objectCount] = o;
 		objectCount++;
 		break;
@@ -101,7 +101,7 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 	{
 		if (objectCount >= MAX_SIZE)
 			break;
-		Objects* o = new Objects(OBJ_RECTANGLE, pos);
+		Objects* o = new Objects(OBJ_RECTANGLE, pos, 0.1);
 		list[objectCount] = o;
 		objectCount++;
 		break;

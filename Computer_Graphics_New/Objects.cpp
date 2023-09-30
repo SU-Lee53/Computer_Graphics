@@ -2,16 +2,16 @@
 #include "Objects.h"
 
 
-Objects::Objects(OBJ_SHAPE shape, Coord pos) : shape(shape)
+Objects::Objects(OBJ_SHAPE shape, Coord pos, float size) : shape(shape)
 {
-	CreateObject(this->shape, pos);
+	CreateObject(this->shape, pos, size);
 }
 
 Objects::~Objects()
 {
 }
 
-void Objects::CreateObject(OBJ_SHAPE shape, Coord pos)
+void Objects::CreateObject(OBJ_SHAPE shape, Coord pos, float size)
 {
 	// 정점 데이터를 쉐입에 따라서 다르게 넣는다.
 	switch (shape)
@@ -44,9 +44,9 @@ void Objects::CreateObject(OBJ_SHAPE shape, Coord pos)
 	case OBJ_TRIANGLE:
 	{
 		GLfloat vertex[] = {
-			pos.x, pos.y + 0.2, 0.0f,
-			pos.x - 0.1, pos.y - 0.1, 0.0f,
-			pos.x + 0.1, pos.y - 0.1, 0.0f
+			pos.x, pos.y + (size * 2), 0.0f,
+			pos.x - size, pos.y - size, 0.0f,
+			pos.x + size, pos.y - size, 0.0f
 		};
 		GLfloat color[] = {
 			1.0f, 0.0f, 0.0f,
@@ -83,6 +83,86 @@ void Objects::CreateObject(OBJ_SHAPE shape, Coord pos)
 		break;
 	}
 
+	}
+
+	StoreBufferData();
+}
+
+void Objects::SetRGB(RGB rgb)
+{
+	int vertexCount;
+	switch (shape)
+	{
+	case OBJ_POINT:
+		vertexCount = 3;
+		break;
+	case OBJ_LINE:
+		vertexCount = 6;
+		break;
+	case OBJ_TRIANGLE:
+		vertexCount = 9;
+		break;
+	case OBJ_RECTANGLE:
+		vertexCount = 12;
+		break;
+	}
+
+	for (int i = 0; i < vertexCount; i++)
+	{
+		if (i % 3 == 0)
+			colorBuf[i] = rgb.Red;
+		else if (i % 3 == 1)
+			colorBuf[i] = rgb.Green;
+		else if (i % 3 == 2)
+			colorBuf[i] = rgb.Blue;
+	}
+
+
+}
+
+void Objects::SetVertexPos(Coord pos, float size)
+{
+	switch (shape)
+	{
+	case OBJ_POINT:
+	{
+		float vertex[] = { pos.x, pos.y, 0.0f };
+		vertexBuf = vertex;
+		break;
+	}
+
+	case OBJ_LINE:
+	{
+		float vertex[] = {
+			pos.x, pos.y, 0.0f,
+			pos.x + size, pos.y + size, 0.0f
+		};
+		vertexBuf = vertex;
+		break;
+	}
+
+	case OBJ_TRIANGLE:
+	{
+		float vertex[] = {
+			pos.x, pos.y + (size * 2), 0.0f,
+			pos.x - size, pos.y - size, 0.0f,
+			pos.x + size, pos.y - size, 0.0f
+		};
+		vertexBuf = vertex;
+		break;
+	}
+
+	case OBJ_RECTANGLE:
+	{
+		float vertex[] = {
+			pos.x - size, pos.y + size, 0.0f,
+			pos.x + size, pos.y + size, 0.0f,
+			pos.x - size, pos.y - size, 0.0f,
+			pos.x + size, pos.y - size, 0.0f
+		};
+		vertexBuf = vertex;
+		break;
+	}
 	}
 
 	StoreBufferData();
@@ -309,4 +389,20 @@ void Objects::LoadBufferData()
 			elementBuf[i] = elementStore[i];
 		}
 	}
+}
+
+void Objects::CheckOutOfScreen()
+{
+	if (shape != OBJ_TRIANGLE)
+		return;
+
+	int index;
+	for (index = 0; index < 9; index++)
+	{
+		if (vertexBuf[index] >= 1.0f || vertexBuf[index] <= 1.0f)
+			break;
+	}
+
+	
+
 }
