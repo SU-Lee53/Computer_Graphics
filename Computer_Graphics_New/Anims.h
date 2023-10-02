@@ -23,14 +23,17 @@ enum ANIM_DIR
 class Anims
 {
 public:
+	// 실습 9번용 생성자
 	Anims(Objects* obj);
+	// 실습 10번용 생성자
+	Anims(Coord pos);
 	~Anims();
 
+	// 실습 9번 애니매이션
 	void Bounce();
 	void Zigzag();
 	void RSpiral();
 	void CSpiral();
-
 
 	void SetBounce();
 	void SetZigZag();
@@ -38,6 +41,15 @@ public:
 	void SetCSpiral();
 	void ChangeRSprialDirection();
 	
+	// 실습 10번 스파이럴 애니매이션
+	void SymSpiral();
+	void InitSpiral();
+	void SetSpiral();
+	unsigned int GetSpiralVAO() { return vao; }
+	int GetSpiralVertexCount() { return bufIndex / 3; }
+	float GetSpiralRadian() { return radian; }
+	bool GetSpiralEndFlag() { return isEnd; }
+	bool GetSpiralDirection() { return spiralDirection; }
 
 private:
 	Objects* obj;
@@ -62,5 +74,21 @@ private:
 	float beforeX;
 	float beforeY;
 	float vertexOrigin[9];
+
+	// 10번 스파이럴 전용
+	
+	unsigned int vao;
+	unsigned int vbo[2];
+	float* colorBuf;
+	float* spiralBuf;
+	float vBuf[2000];
+	float cBuf[2000];
+	int bufIndex;
+	Coord pos;
+	Coord newPos;
+	bool SpiralSwitch = true;
+	bool isEnd;
+	bool spiralDirection;
+	
 };
 

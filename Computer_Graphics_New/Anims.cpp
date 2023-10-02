@@ -1,11 +1,18 @@
 #include "pch.h"
 #include "Anims.h"
+#include <cmath>
 
 Anims::Anims(Objects* obj) : obj(obj)
 {
 	SetBounce();
 	SetZigZag();
 	SetRSpiral();
+}
+
+Anims::Anims(Coord _pos)
+{
+	this->pos = _pos;
+	SetSpiral();
 }
 
 Anims::~Anims()
@@ -264,7 +271,7 @@ void Anims::CSpiral()
 }
 
 
-//////////////// 이하 애니메이션 셋업 함수 ////////////////
+//////////////// 이하 애니메이션 셋업, 유틸 함수 ////////////////
 
 void Anims::SetBounce()
 {
@@ -327,3 +334,180 @@ void Anims::ChangeRSprialDirection()
 		break;
 	}
 }
+
+void Anims::SymSpiral()
+{
+	if (isEnd == true)
+		return;
+
+	if(spiralDirection == true) {
+		if (SpiralSwitch == true) {
+			if (radian < 5.5 * L_pi)
+			{
+				spiralBuf[bufIndex] = pos.x + radius * cos(radian) - beforeX;
+				spiralBuf[bufIndex + 1] = pos.y + radius * sin(radian) - beforeY;
+				spiralBuf[bufIndex + 2] = 0.0f;
+
+				colorBuf[bufIndex] = 1.0f;
+				colorBuf[bufIndex + 1] = 1.0f;
+				colorBuf[bufIndex + 2] = 1.0f;
+
+				beforeX = radius * cos(radian);
+				beforeY = radius * sin(radian);
+
+				radius += 0.015;
+				radian += 0.07;
+			}
+			else
+			{
+				spiralBuf[bufIndex] = pos.x + radius * cos(radian) - beforeX;
+				spiralBuf[bufIndex + 1] = pos.y + radius * sin(radian) - beforeY;
+				spiralBuf[bufIndex + 2] = 0.0f;
+
+				colorBuf[bufIndex] = 1.0f;
+				colorBuf[bufIndex + 1] = 1.0f;
+				colorBuf[bufIndex + 2] = 1.0f;
+
+				SpiralSwitch = false;
+				float temp = (spiralBuf[bufIndex] - spiralBuf[0]);
+
+				newPos.x = spiralBuf[bufIndex] + temp;
+				newPos.y = pos.y;
+
+				beforeX = radius * cos(radian) + temp;
+				beforeY = radius * sin(radian);
+
+			}
+		}
+		else
+		{
+			if (radian > 0.0f)
+			{
+				spiralBuf[bufIndex] = newPos.x + radius * cos(radian) - beforeX;
+				spiralBuf[bufIndex + 1] = newPos.y + radius * sin(radian) - beforeY;
+				spiralBuf[bufIndex + 2] = 0.0f;
+
+				colorBuf[bufIndex] = 1.0f;
+				colorBuf[bufIndex + 1] = 1.0f;
+				colorBuf[bufIndex + 2] = 1.0f;
+
+				beforeX = radius * cos(radian);
+				beforeY = radius * sin(radian);
+
+				radius -= 0.015;
+				radian -= 0.07;
+			}
+			else
+			{
+				isEnd = true;
+			}
+		}
+	}
+	else
+	{
+		if (SpiralSwitch == true) {
+			if (radian > -4.52 * L_pi)
+			{
+				spiralBuf[bufIndex] = pos.x + radius * cos(radian) - beforeX;
+				spiralBuf[bufIndex + 1] = pos.y + radius * sin(radian) - beforeY;
+				spiralBuf[bufIndex + 2] = 0.0f;
+
+				colorBuf[bufIndex] = 1.0f;
+				colorBuf[bufIndex + 1] = 1.0f;
+				colorBuf[bufIndex + 2] = 1.0f;
+
+				beforeX = radius * cos(radian);
+				beforeY = radius * sin(radian);
+
+				radius -= 0.015;
+				radian -= 0.07;
+			}
+			else
+			{
+				spiralBuf[bufIndex] = pos.x + radius * cos(radian) - beforeX;
+				spiralBuf[bufIndex + 1] = pos.y + radius * sin(radian) - beforeY;
+				spiralBuf[bufIndex + 2] = 0.0f;
+
+				colorBuf[bufIndex] = 1.0f;
+				colorBuf[bufIndex + 1] = 1.0f;
+				colorBuf[bufIndex + 2] = 1.0f;
+
+				SpiralSwitch = false;
+				float temp = (spiralBuf[bufIndex] - spiralBuf[0]);
+
+				newPos.x = spiralBuf[bufIndex] + temp;
+				newPos.y = pos.y;
+
+				beforeX = radius * cos(radian) + temp;
+				beforeY = radius * sin(radian);
+
+			}
+		}
+		else
+		{
+			if (radian < 0.0f)
+			{
+				spiralBuf[bufIndex] = newPos.x + radius * cos(radian) - beforeX;
+				spiralBuf[bufIndex + 1] = newPos.y + radius * sin(radian) - beforeY;
+				spiralBuf[bufIndex + 2] = 0.0f;
+
+				colorBuf[bufIndex] = 1.0f;
+				colorBuf[bufIndex + 1] = 1.0f;
+				colorBuf[bufIndex + 2] = 1.0f;
+
+				beforeX = radius * cos(radian);
+				beforeY = radius * sin(radian);
+
+				radius += 0.015;
+				radian += 0.07;
+			}
+			else
+			{
+				isEnd = true;
+			}
+		}
+	}
+
+	bufIndex += 3;
+
+	InitSpiral();
+}
+
+void Anims::InitSpiral()
+{
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+	glGenBuffers(2, vbo);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+	glBufferData(GL_ARRAY_BUFFER, bufIndex * sizeof(float), spiralBuf, GL_DYNAMIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+	glEnableVertexAttribArray(0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+	glBufferData(GL_ARRAY_BUFFER, bufIndex  * sizeof(float), colorBuf, GL_DYNAMIC_DRAW);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+	glEnableVertexAttribArray(1);
+
+}
+
+void Anims::SetSpiral()
+{
+	
+	radian = 0;
+	radius = 0;
+	beforeX = 0;
+	beforeY = 0;
+	bufIndex = 0;
+
+	spiralBuf = vBuf;
+	colorBuf = cBuf;
+	isEnd = false;
+
+	if (rand() % 2 == 0)
+		spiralDirection = true;
+	else
+		spiralDirection = false;
+}
+
+
