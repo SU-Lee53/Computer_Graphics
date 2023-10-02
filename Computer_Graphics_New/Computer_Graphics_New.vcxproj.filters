@@ -71,6 +71,12 @@
     <ClCompile Include="10.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="11.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Anims11.cpp">
+      <Filter>소스 파일\Anims</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -93,6 +99,9 @@
     </ClInclude>
     <ClInclude Include="Objects.h">
       <Filter>소스 파일\GLSL_Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Anims11.h">
+      <Filter>소스 파일\Anims</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -131,6 +131,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="10.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="11.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="6.cpp">
@@ -148,6 +151,7 @@
     <ClCompile Include="Anims.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Anims11.cpp" />
     <ClCompile Include="Objects.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Shaders.cpp" />
@@ -163,6 +167,7 @@
     <ClInclude Include="Anims.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Anims11.h" />
     <ClInclude Include="Objects.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Shaders.h" />
