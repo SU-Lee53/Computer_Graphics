@@ -251,6 +251,18 @@ void Anims::RSpiral()
 
 }
 
+void Anims::CSpiral()
+{
+	obj->ModifyVertex(radius * cos(radian) - beforeX, radius * sin(radian) - beforeY);
+
+	beforeX = radius * cos(radian);
+	beforeY = radius * sin(radian);
+
+	radius += 0.003;
+	radian += 0.1;
+
+}
+
 
 //////////////// 이하 애니메이션 셋업 함수 ////////////////
 
@@ -284,6 +296,14 @@ void Anims::SetRSpiral()
 	RSP_dir = static_cast<Dir>(temp);
 	switchCount = 1;
 	moveCount = 0;
+}
+
+void Anims::SetCSpiral()
+{
+	radian = 0;
+	radius = 0;
+	beforeX = 0;
+	beforeY = 0;
 }
 
 void Anims::ChangeRSprialDirection()

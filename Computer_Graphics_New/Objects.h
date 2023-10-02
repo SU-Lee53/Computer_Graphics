@@ -17,6 +17,7 @@ public:
 	void CreateObject(OBJ_SHAPE shape, Coord pos, float size);
 	void SetRGB(RGB rgb);
 	void SetVertexPos(Coord pos, float size);
+	void ModifyVertex(float dx, float dy);
 	void MoveObject(Dir d, float distance);
 	void RenderObject();
 	void InitBuffer();

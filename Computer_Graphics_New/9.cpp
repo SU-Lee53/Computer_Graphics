@@ -145,6 +145,25 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 			anim3 = false;
 		}
 		break;
+
+	case '4':
+		if (anim4 == false)
+		{
+			anim1 = false;
+			anim2 = false;
+			anim3 = false;
+			anim4 = true;
+
+			for (int i = 0; i < objCount; i++)
+			{
+				list[i].anim->SetCSpiral();
+			}
+		}
+		else
+		{
+			anim4 = false;
+		}
+		break;
 	}
 }
 
@@ -163,6 +182,10 @@ void Animation(int value)
 		else if (anim3 == true)
 		{
 			list[i].anim->RSpiral();
+		}
+		else if (anim4 == true)
+		{
+			list[i].anim->CSpiral();
 		}
 	}
 

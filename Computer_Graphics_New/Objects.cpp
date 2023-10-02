@@ -168,6 +168,45 @@ void Objects::SetVertexPos(Coord pos, float size)
 	StoreBufferData();
 }
 
+void Objects::ModifyVertex(float dx, float dy)
+{
+	int vertexCount;
+	switch (shape)
+	{
+	case OBJ_POINT:
+		vertexCount = 3;
+		break;
+	case OBJ_LINE:
+		vertexCount = 6;
+		break;
+	case OBJ_TRIANGLE:
+		vertexCount = 9;
+		break;
+	case OBJ_RECTANGLE:
+		vertexCount = 12;
+		break;
+	}
+
+	for (int i = 0; i < vertexCount; i++)
+	{
+		// xÁÂÇ¥ -> 0, 3, 6
+		if (i % 3 == 0)
+		{
+			vertexBuf[i] += dx;
+		}
+		// yÁÂÇ¥ -> 1, 4, 7
+		else if (i % 3 == 1)
+		{
+			vertexBuf[i] += dy;
+		}
+		// zÁÂÇ¥ -> 2, 5, 8 : ÇöÀç ¾È¾²¹Ç·Î ½ºÅµ
+		else if (i % 3 == 2)
+		{
+			continue;
+		}
+	}
+}
+
 void Objects::MoveObject(Dir d, float distance)
 {
 	int vertexCount;
