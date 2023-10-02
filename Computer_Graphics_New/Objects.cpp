@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "Objects.h"
+#include <cmath>
 
-
-Objects::Objects(OBJ_SHAPE shape, Coord pos, float size) : shape(shape)
+Objects::Objects(OBJ_SHAPE shape, Coord pos, float size) : shape(shape), size(size)
 {
 	CreateObject(this->shape, pos, size);
 }
@@ -423,16 +423,16 @@ Dir Objects::CheckOutOfScreen()
 		}
 		else if (i % 3 == 0)
 		{
-			if (vertexBuf[i] >= 1.0f)
+			if (vertexBuf[i] > 1.0f)
 				return RIGHT;
-			else if (vertexBuf[i] <= -1.0f)
+			else if (vertexBuf[i] < -1.0f)
 				return LEFT;
 		}
 		else if (i % 3 == 1)
 		{
-			if (vertexBuf[i] >= 1.0f)
+			if (vertexBuf[i] > 1.0f)
 				return	UP;
-			else if (vertexBuf[i] <= -1.0f)
+			else if (vertexBuf[i] < -1.0f)
 				return DOWN;
 		}
 	}
@@ -440,4 +440,171 @@ Dir Objects::CheckOutOfScreen()
 	return NONE;
 	
 
+}
+
+Coord Objects::GetOutOfScreenVertex()
+{
+	if (CheckOutOfScreen() == NONE)
+		return{ -1.0f, -1.0f };
+
+	int count;
+	switch (shape)
+	{
+	case OBJ_POINT:
+		count = 3;
+		break;
+
+	case OBJ_LINE:
+		count = 6;
+		break;
+
+	case OBJ_TRIANGLE:
+		count = 9;
+		break;
+
+	case OBJ_RECTANGLE:
+		count = 12;
+		break;
+	}
+
+	int index;
+	for (index = 0; index < count; index++)
+	{
+		// ÇÊ¿ä¾ø´Â zÁÂÇ¥´Â ½ºÅµ
+		if (vertexBuf[index] <= -1.0 || vertexBuf[index] >= 1.0)
+			break;
+	}
+
+	Coord pos;
+	if (index % 3 == 0)
+	{
+		pos = { vertexBuf[index], vertexBuf[index + 1] };
+	}
+	else if (index % 3 == 1)
+	{
+		pos = { vertexBuf[index - 1], vertexBuf[index] };
+	}
+
+	return pos;
+}
+
+bool Objects::ChangeTriangleDirection(Dir dir)
+{
+	if (dir == NONE)
+		return false;
+
+	Coord standard = GetOutOfScreenVertex();
+	Coord pos1, pos2, pos3;
+
+	switch (dir)
+	{
+	case UP:
+	{
+		if (standard.x + size >= 1.0f)
+		{
+			pos1 = { 1.0f, 1.0f };
+			pos2 = { 1.0f - (size * 2), 1.0f };
+			pos3 = { 1.0f - (size), 1.0f - sqrt(static_cast<float>(pow(size, 2)) * 2) - (size * 2) };
+		}
+		else if (standard.x - size <= -1.0f)
+		{
+			pos1 = { -1.0f, 1.0f };
+			pos2 = { -1.0f + (size * 2), 1.0f };
+			pos3 = { -1.0f + (size), 1.0f - sqrt(static_cast<float>(pow(size, 2)) * 2) - (size * 2) };
+		}
+		else
+		{
+			pos1 = { standard.x - size, 1.0f };
+			pos2 = { standard.x + size, 1.0f };
+			pos3 = { standard.x, 1.0f - sqrt(static_cast<float>(pow(size, 2)) * 2) - (size * 2) };
+		}
+		
+		break;
+	}
+
+	case DOWN:
+	{
+		if (standard.x + size >= 1.0f)
+		{
+			pos1 = { 1.0f, -1.0f };
+			pos2 = { 1.0f - (size * 2), -1.0f };
+			pos3 = { 1.0f - (size), -1.0f + sqrt(static_cast<float>(pow(size, 2)) * 2) + (size * 2) };
+		}
+		else if (standard.x - size <= -1.0f)
+		{
+			pos1 = { -1.0f, -1.0f };
+			pos2 = { -1.0f + (size * 2), -1.0f };
+			pos3 = { -1.0f + (size), -1.0f + sqrt(static_cast<float>(pow(size, 2)) * 2) + (size * 2) };
+		}
+		else
+		{
+			pos1 = { standard.x - size, -1.0f };
+			pos2 = { standard.x + size, -1.0f };
+			pos3 = { standard.x, -1.0f + sqrt(static_cast<float>(pow(size, 2)) * 2) + (size * 2) };
+		}
+
+		break;
+	}
+
+	case RIGHT:
+	{
+		if (standard.y + size >= 1.0f)
+		{
+			pos1 = { 1.0f, 1.0f };
+			pos2 = { 1.0f, 1.0f - (size * 2) };
+			pos3 = { 1.0f - sqrt(static_cast<float>(pow(size, 2)) * 2) - (size * 2), 1.0f - (size) };
+		}
+		else if (standard.y - size <= -1.0f)
+		{
+			pos1 = { 1.0f, -1.0f };
+			pos2 = { 1.0f, -1.0f + (size * 2) };
+			pos3 = { 1.0f - sqrt(static_cast<float>(pow(size, 2)) * 2) - (size * 2), -1.0f - (size) };
+		}
+		else
+		{
+			pos1 = { 1.0f, standard.y + size };
+			pos2 = { 1.0f, standard.y - size };
+			pos3 = { 1.0f - sqrt(static_cast<float>(pow(size, 2)) * 2) - (size * 2), standard.y };
+		}
+
+		break;
+	}
+
+	case LEFT:
+	{
+		if (standard.y + size >= 1.0f)
+		{
+			pos1 = { -1.0f, 1.0f };
+			pos2 = { -1.0f, 1.0f - (size * 2) };
+			pos3 = { -1.0f + sqrt(static_cast<float>(pow(size, 2)) * 2) + (size * 2), 1.0f - (size) };
+		}
+		else if (standard.y - size <= -1.0f)
+		{
+			pos1 = { -1.0f, -1.0f };
+			pos2 = { -1.0f, -1.0f + (size * 2) };
+			pos3 = { -1.0f + sqrt(static_cast<float>(pow(size, 2)) * 2) + (size * 2), -1.0f + (size) };
+		}
+		else
+		{
+			pos1 = { -1.0f, standard.y + size };
+			pos2 = { -1.0f, standard.y - size };
+			pos3 = { -1.0f + sqrt(static_cast<float>(pow(size, 2)) * 2) + (size * 2), standard.y };
+		}
+
+		break;
+	}
+
+	}
+	
+	vertexBuf[0] = pos1.x;
+	vertexBuf[1] = pos1.y;
+
+	vertexBuf[3] = pos2.x;
+	vertexBuf[4] = pos2.y;
+
+	vertexBuf[6] = pos3.x;
+	vertexBuf[7] = pos3.y;
+	
+
+	return true;
 }

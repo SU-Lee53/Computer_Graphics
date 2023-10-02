@@ -28,6 +28,8 @@ public:
 	void LoadBufferData();
 
 	Dir CheckOutOfScreen();
+	Coord GetOutOfScreenVertex();
+	bool ChangeTriangleDirection(Dir dir);
 
 protected:
 
@@ -44,5 +46,7 @@ protected:
 	GLuint vao;
 	GLuint vbo[2];
 	GLuint ebo;
+
+	float size;
 };
 
