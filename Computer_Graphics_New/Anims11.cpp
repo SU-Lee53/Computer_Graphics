@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Anims11.h"
 
-Anims11::Anims11(Coord pos, float _size, TF_TYPE _type) : center(pos), size(_size), type(_type)
+Anims11::Anims11(Coord pos, float _size, TF_TYPE _type, float _speed) : center(pos), size(_size), type(_type), speed(_speed)
 {
 	vertexBuf = vertex;
 	colorBuf = color;
@@ -63,7 +63,7 @@ void Anims11::Line2Tri()
 	if (isEnd == true)
 		return;
 
-	vertex[4] += 0.008f;
+	vertex[4] += speed * 2;
 	if (vertex[4] >= center.y + size)
 		isEnd = true;
 
@@ -76,9 +76,9 @@ void Anims11::Tri2Rect()
 	if (isEnd == true)
 		return;
 
-	vertex[0] -= 0.006f;
-	vertex[3] += 0.006f;
-	if (vertex[0] <= center.x - (size * 1.5))
+	vertex[0] -= speed;
+	vertex[3] += speed;
+	if (vertex[0] <= center.x - (size))
 		isEnd = true;
 
 	InitBuffer();
@@ -89,16 +89,13 @@ void Anims11::Rect2Pent()
 	if (isEnd == true)
 		return;
 
-	vertex[1] += 0.005f;
+	vertex[1] += speed * 1.8f;
 
-	vertex[3] -= 0.001f;
-	vertex[6] += 0.001f;
-
-	vertex[4] -= 0.001f;
-	vertex[7] -= 0.001f;
+	vertex[3] -= speed * 1.5f;
+	vertex[4] -= speed / 1.5f;
 	
-	vertex[9] += 0.001f;
-	vertex[12] -= 0.001f;
+	vertex[6] += speed * 1.5f;
+	vertex[7] -= speed / 1.5f;
 
 
 	if (vertex[1] >= center.y + (size * 1.8))
@@ -109,19 +106,22 @@ void Anims11::Rect2Pent()
 
 void Anims11::Pent2Point()
 {
-	vertex[1] -= 0.004;
+	if (isEnd == true)
+		return;
 
-	vertex[3] += 0.003f;
-	vertex[4] -= 0.002f;
+	vertex[1] -= speed * 1.8f;
 
-	vertex[6] -= 0.003f;
-	vertex[7] -= 0.002f;
+	vertex[3] += speed * 1.5f;
+	vertex[4] -= speed / 1.5f;
 
-	vertex[9] += 0.002f;
-	vertex[10] += 0.0015f;
+	vertex[6] -= speed * 1.5f;
+	vertex[7] -= speed / 1.5f;
 
-	vertex[12] -= 0.002f;
-	vertex[13] += 0.0015f;
+	vertex[9] += speed;
+	vertex[10] += speed;
+
+	vertex[12] -= speed;
+	vertex[13] += speed;
 
 	if (vertex[6] - vertex[3] <= 0.01f)
 		isEnd = true;
@@ -175,12 +175,12 @@ void Anims11::SetTri2Rect()
 	vertex[5] = 0.0f;
 
 	// 좌하단
-	vertex[6] = center.x - (size * 1.5);
+	vertex[6] = center.x - (size);
 	vertex[7] = center.y - size;
 	vertex[8] = 0.0f;
 
 	// 우하단
-	vertex[9] = center.x + (size * 1.5);
+	vertex[9] = center.x + (size);
 	vertex[10] = center.y - size;
 	vertex[11] = 0.0f;
 
@@ -212,22 +212,22 @@ void Anims11::SetRect2Pent()
 	vertex[2] = 0.0f;
 
 	// 좌상단
-	vertex[3] = center.x - (size * 1.5);
+	vertex[3] = center.x - size;
 	vertex[4] = center.y + size;
 	vertex[5] = 0.0f;
 
 	// 우상단
-	vertex[6] = center.x + (size * 1.5);
+	vertex[6] = center.x + size;
 	vertex[7] = center.y + size;
 	vertex[8] = 0.0f;
 
 	// 좌하단
-	vertex[9] = center.x - (size * 1.5);
+	vertex[9] = center.x - size;
 	vertex[10] = center.y - size;
 	vertex[11] = 0.0f;
 
 	// 우하단
-	vertex[12] = center.x + (size * 1.5);
+	vertex[12] = center.x + size;
 	vertex[13] = center.y - size;
 	vertex[14] = 0.0f;
 

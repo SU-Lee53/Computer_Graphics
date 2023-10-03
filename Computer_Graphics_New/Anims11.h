@@ -5,13 +5,14 @@ enum TF_TYPE
 	L2T = 0,
 	T2R,
 	R2P,
-	P2P
+	P2P,
+	ALL
 };
 
 class Anims11
 {
 public:
-	Anims11(Coord pos, float Size, TF_TYPE type);
+	Anims11(Coord pos, float Size, TF_TYPE type, float _speed);
 	void PlayAnim();
 	void SetAnim();
 
@@ -47,6 +48,7 @@ private:
 	Coord center;
 	float size;
 	TF_TYPE type;
+	float speed;
 
 	bool isEnd = false;
 };
