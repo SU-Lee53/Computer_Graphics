@@ -268,6 +268,49 @@ void Anims::CSpiral()
 	radius += 0.003;
 	radian += 0.1;
 
+	Dir isOut = obj->CheckOutOfScreen();
+	switch (isOut)
+	{
+	case UP:
+	{
+		obj->ChangeTriangleDirection(UP);
+		ChangeRSprialDirection();
+		moveCount = 0;
+		switchCount++;
+		break;
+	}
+
+	case DOWN:
+	{
+		obj->ChangeTriangleDirection(DOWN);
+		ChangeRSprialDirection();
+		moveCount = 0;
+		switchCount++;
+		break;
+	}
+
+	case RIGHT:
+	{
+		obj->ChangeTriangleDirection(RIGHT);
+		ChangeRSprialDirection();
+		moveCount = 0;
+		switchCount++;
+		break;
+	}
+
+	case LEFT:
+	{
+		obj->ChangeTriangleDirection(LEFT);
+		ChangeRSprialDirection();
+		moveCount = 0;
+		switchCount++;
+		break;
+	}
+
+	case NONE:
+		break;
+	}
+
 }
 
 

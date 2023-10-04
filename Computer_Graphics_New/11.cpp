@@ -182,7 +182,6 @@ GLvoid Animation(int value)
 			glutTimerFunc(17, Animation, 0);
 		else
 		{
-			cout << "end" << endl;
 			return;
 		}
 	}

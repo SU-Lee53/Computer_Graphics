@@ -139,6 +139,11 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 		RenderFill = false;
 		glutPostRedisplay();
 		break;
+
+	case 'r':
+		SetScreen();
+		glutPostRedisplay();
+		break;
 	}
 
 

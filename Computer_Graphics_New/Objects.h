@@ -6,7 +6,8 @@ enum OBJ_SHAPE
 	OBJ_POINT = 0,
 	OBJ_LINE,
 	OBJ_TRIANGLE,
-	OBJ_RECTANGLE
+	OBJ_RECTANGLE,
+	OBJ_PENTAGON
 };
 
 class Objects
@@ -39,9 +40,9 @@ protected:
 	unsigned int* elementBuf;
 
 	// 버퍼를 여기다 옮겨담아서 저장하고 필요할때 꺼내씀
-	float vertexStore[12];
-	float colorStore[12];
-	unsigned int elementStore[6];
+	float vertexStore[15];
+	float colorStore[15];
+	unsigned int elementStore[9];
 
 	OBJ_SHAPE shape;
 	GLuint vao;

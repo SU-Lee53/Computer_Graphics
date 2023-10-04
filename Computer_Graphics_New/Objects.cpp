@@ -18,15 +18,15 @@ void Objects::CreateObject(OBJ_SHAPE shape, Coord pos, float size)
 	{
 	case OBJ_POINT:
 	{
-		float vertex[] = {pos.x, pos.y, 0.0};
+		float vertex[] = { pos.x, pos.y, 0.0 };
 		GLfloat color[] = { 0.0f, 0.0f, 1.0f };
 		vertexBuf = vertex;
 		colorBuf = color;
 		break;
 	}
+
 	case OBJ_LINE:
 	{
-		srand(time(0));
 		float randf1 = 1 - static_cast<float>(rand()) / (RAND_MAX / 2);
 		float randf2 = 1 - static_cast<float>(rand()) / (RAND_MAX / 2);
 		GLfloat vertex[] = {
@@ -41,6 +41,7 @@ void Objects::CreateObject(OBJ_SHAPE shape, Coord pos, float size)
 		colorBuf = color;
 		break;
 	}
+
 	case OBJ_TRIANGLE:
 	{
 		GLfloat vertex[] = {
@@ -57,6 +58,7 @@ void Objects::CreateObject(OBJ_SHAPE shape, Coord pos, float size)
 		colorBuf = color;
 		break;
 	}
+
 	case OBJ_RECTANGLE:
 	{
 		float vertex[] = {
@@ -76,6 +78,33 @@ void Objects::CreateObject(OBJ_SHAPE shape, Coord pos, float size)
 			0, 2, 1,
 			1, 2, 3
 
+		};
+		vertexBuf = vertex;
+		colorBuf = color;
+		elementBuf = index;
+		break;
+	}
+
+	case OBJ_PENTAGON:
+	{
+		float vertex[] = {
+			pos.x,					pos.y + (size * 1.8f),	0.0f,
+			pos.x - (size * 1.5f),	pos.y + (size / 1.5f),	0.0f,
+			pos.x + (size * 1.5f),	pos.y + (size / 1.5f),	0.0f,
+			pos.x - size,			pos.y - size,			0.0f,
+			pos.x + size,			pos.y - size,			0.0f
+		};
+		float color[] = {
+			0.0f, 1.0f, 1.0f,
+			0.0f, 1.0f, 1.0f,
+			0.0f, 1.0f, 1.0f,
+			0.0f, 1.0f, 1.0f,
+			0.0f, 1.0f, 1.0f
+		};
+		unsigned int index[] = {
+			0, 1, 2,
+			1, 3, 2,
+			2, 3, 4
 		};
 		vertexBuf = vertex;
 		colorBuf = color;
@@ -262,6 +291,8 @@ void Objects::MoveObject(Dir d, float distance)
 
 void Objects::RenderObject()
 {
+	InitBuffer();
+
 	glBindVertexArray(vao);
 	switch (shape)
 	{
@@ -281,6 +312,10 @@ void Objects::RenderObject()
 
 	case OBJ_RECTANGLE:
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		break;
+
+	case OBJ_PENTAGON:
+		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
 		break;
 	}
 
@@ -353,6 +388,22 @@ void Objects::InitBuffer()
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 		glEnableVertexAttribArray(1);
 	}
+	case OBJ_PENTAGON:
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+		glBufferData(GL_ARRAY_BUFFER, 15 * sizeof(GLfloat), vertexBuf, GL_DYNAMIC_DRAW);
+
+		glGenBuffers(1, &ebo);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 9 * sizeof(GLuint), elementBuf, GL_DYNAMIC_DRAW);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+		glEnableVertexAttribArray(0);
+
+		glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+		glBufferData(GL_ARRAY_BUFFER, 15 * sizeof(GLfloat), colorBuf, GL_DYNAMIC_DRAW);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+		glEnableVertexAttribArray(1);
+	}
 	}
 }
 
@@ -376,6 +427,9 @@ void Objects::StoreBufferData()
 	case OBJ_RECTANGLE:
 		count = 12;
 		break;
+
+	case OBJ_PENTAGON:
+		count = 15;
 	}
 
 	for (int i = 0; i < count; i++)
@@ -394,7 +448,15 @@ void Objects::StoreBufferData()
 
 		elementBuf = elementStore;
 	}
+	else if (shape == OBJ_PENTAGON)
+	{
+		for (int i = 0; i < 9; i++)
+			elementStore[i] = elementBuf[i];
 
+		elementBuf = elementStore;
+	}
+
+	
 }
 
 void Objects::LoadBufferData()

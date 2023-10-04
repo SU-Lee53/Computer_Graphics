@@ -32,3 +32,12 @@ char* filetobuf(const char* file)
 
 	return buf;
 }
+
+Coord GetRandomCoord()
+{
+	Coord pos;
+	pos.x = static_cast<float>(rand()) / RAND_MAX;
+	pos.y = static_cast<float>(rand()) / RAND_MAX;
+
+	return pos;
+}

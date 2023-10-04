@@ -77,6 +77,9 @@
     <ClCompile Include="Anims11.cpp">
       <Filter>소스 파일\Anims</Filter>
     </ClCompile>
+    <ClCompile Include="12.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -106,12 +109,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="vertex.glsl">
-      <Filter>소스 파일\GLSL</Filter>
-    </None>
-    <None Include="vertex7.glsl">
-      <Filter>소스 파일\GLSL</Filter>
-    </None>
-    <None Include="fragment7.glsl">
       <Filter>소스 파일\GLSL</Filter>
     </None>
     <None Include="fragment.glsl">
