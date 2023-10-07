@@ -260,7 +260,7 @@ void Anims::RSpiral()
 
 void Anims::CSpiral()
 {
-	obj->ModifyVertex(radius * cos(radian) - beforeX, radius * sin(radian) - beforeY);
+	obj->MoveVertex(radius * cos(radian) - beforeX, radius * sin(radian) - beforeY);
 
 	beforeX = radius * cos(radian);
 	beforeY = radius * sin(radian);

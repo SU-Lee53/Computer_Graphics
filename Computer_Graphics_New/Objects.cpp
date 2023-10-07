@@ -5,6 +5,7 @@
 Objects::Objects(OBJ_SHAPE shape, Coord pos, float size) : shape(shape), size(size)
 {
 	CreateObject(this->shape, pos, size);
+	MakeHitbox();
 }
 
 Objects::~Objects()
@@ -115,6 +116,8 @@ void Objects::CreateObject(OBJ_SHAPE shape, Coord pos, float size)
 	}
 
 	StoreBufferData();
+	MakeHitbox();
+
 }
 
 void Objects::SetRGB(RGB rgb)
@@ -195,26 +198,13 @@ void Objects::SetVertexPos(Coord pos, float size)
 	}
 
 	StoreBufferData();
+	MakeHitbox();
+
 }
 
-void Objects::ModifyVertex(float dx, float dy)
+void Objects::MoveVertex(float dx, float dy)
 {
-	int vertexCount;
-	switch (shape)
-	{
-	case OBJ_POINT:
-		vertexCount = 3;
-		break;
-	case OBJ_LINE:
-		vertexCount = 6;
-		break;
-	case OBJ_TRIANGLE:
-		vertexCount = 9;
-		break;
-	case OBJ_RECTANGLE:
-		vertexCount = 12;
-		break;
-	}
+	int vertexCount = GetVertexCount();
 
 	for (int i = 0; i < vertexCount; i++)
 	{
@@ -234,26 +224,15 @@ void Objects::ModifyVertex(float dx, float dy)
 			continue;
 		}
 	}
+
+	MakeHitbox();
+
 }
 
 void Objects::MoveObject(Dir d, float distance)
 {
-	int vertexCount;
-	switch (shape)
-	{
-	case OBJ_POINT:
-		vertexCount = 3;
-		break;
-	case OBJ_LINE:
-		vertexCount = 6;
-		break;
-	case OBJ_TRIANGLE:
-		vertexCount = 9;
-		break;
-	case OBJ_RECTANGLE:
-		vertexCount = 12;
-		break;
-	}
+	int vertexCount = GetVertexCount();
+
 
 	switch (d)
 	{
@@ -286,6 +265,8 @@ void Objects::MoveObject(Dir d, float distance)
 		break;
 
 	}
+
+	MakeHitbox();
 
 }
 
@@ -323,10 +304,13 @@ void Objects::RenderObject()
 
 void Objects::InitBuffer()
 {
-	
-	glGenVertexArrays(1, &vao);
+	if(!vao)
+	{
+		glGenVertexArrays(1, &vao);
+		glGenBuffers(2, vbo);
+	}
+
 	glBindVertexArray(vao);
-	glGenBuffers(2, vbo);
 
 	// 정점 데이터를 쉐입에 따라서 다르게 넣는다.
 	switch (shape)
@@ -407,30 +391,65 @@ void Objects::InitBuffer()
 	}
 }
 
-void Objects::StoreBufferData()
+void Objects::MakeHitbox()
 {
-	int count = 0;
+	int vertexCount = GetVertexCount();
+
 	switch (shape)
 	{
 	case OBJ_POINT:
-		count = 3;
+	{
+		hBox.p1 = { vertexBuf[0] - 0.02f, vertexBuf[1] + 0.02f };
+		hBox.p4 = { vertexBuf[0] + 0.02f, vertexBuf[1] - 0.02f };
+
+		hBox.p2 = { hBox.p4.x, hBox.p1.y };
+		hBox.p3 = { hBox.p1.x, hBox.p4.y };
+
 		break;
+	}
 
 	case OBJ_LINE:
-		count = 6;
-		break;
-
 	case OBJ_TRIANGLE:
-		count = 9;
-		break;
-
 	case OBJ_RECTANGLE:
-		count = 12;
-		break;
-
 	case OBJ_PENTAGON:
-		count = 15;
+	{
+		Coord min = { 1.0f, 1.0f };
+		Coord max = { -1.0f, -1.0f };
+
+		for (int i = 0; i < vertexCount; i++)
+		{
+			if (i % 3 == 0)
+			{
+				if (vertexBuf[i] > max.x)
+					max.x = vertexBuf[i];
+				if (vertexBuf[i] < min.x)
+					min.x = vertexBuf[i];
+			}
+			if (i % 3 == 1)
+			{
+				if (vertexBuf[i] > max.y)
+					max.y = vertexBuf[i];
+				if (vertexBuf[i] < min.y)
+					min.y = vertexBuf[i];
+			}
+			if (i % 3 == 2)
+				continue;
+		}
+
+		hBox.p1 = { min.x, max.y };
+		hBox.p2 = { max.x, max.y };
+		hBox.p3 = { min.x, min.y };
+		hBox.p4 = { max.x, min.y };
+
+		break;
 	}
+	}
+
+}
+
+void Objects::StoreBufferData()
+{
+	int count = GetVertexCount();
 
 	for (int i = 0; i < count; i++)
 	{
@@ -461,25 +480,7 @@ void Objects::StoreBufferData()
 
 void Objects::LoadBufferData()
 {
-	int count = 0;
-	switch (shape)
-	{
-	case OBJ_POINT:
-		count = 3;
-		break;
-
-	case OBJ_LINE:
-		count = 6;
-		break;
-
-	case OBJ_TRIANGLE:
-		count = 9;
-		break;
-
-	case OBJ_RECTANGLE:
-		count = 12;
-		break;
-	}
+	int count = GetVertexCount();
 
 	for (int i = 0; i < count; i++)
 	{
@@ -494,25 +495,7 @@ void Objects::LoadBufferData()
 
 Dir Objects::CheckOutOfScreen()
 {
-	int count;
-	switch (shape)
-	{
-	case OBJ_POINT:
-		count = 3;
-		break;
-
-	case OBJ_LINE:
-		count = 6;
-		break;
-
-	case OBJ_TRIANGLE:
-		count = 9;
-		break;
-
-	case OBJ_RECTANGLE:
-		count = 12;
-		break;
-	}
+	int count = GetVertexCount();
 
 
 	for (int i = 0; i < count; i++)
@@ -706,6 +689,65 @@ bool Objects::ChangeTriangleDirection(Dir dir)
 	vertexBuf[6] = pos3.x;
 	vertexBuf[7] = pos3.y;
 	
+	MakeHitbox();
 
 	return true;
+}
+
+bool Objects::CheckClicked(Coord pos)
+{
+
+	if ((pos.x >= hBox.p1.x && pos.x <= hBox.p4.x) && (pos.y <= hBox.p1.y && pos.y >= hBox.p4.y))
+		return true;
+	else
+		return false;
+
+}
+
+bool Objects::GetCollision(Objects* obj)
+{
+	HITBOX h1 = GetHitbox();
+	HITBOX h2 = obj->GetHitbox();
+
+	if ((h1.p1.x >= h2.p1.x && h1.p1.x <= h2.p2.x && h1.p1.y <= h2.p1.y && h1.p1.y >= h2.p4.y)
+		|| (h1.p2.x >= h2.p1.x && h1.p2.x <= h2.p2.x && h1.p2.y <= h2.p1.y && h1.p2.y >= h2.p4.y)
+		|| (h1.p3.x >= h2.p1.x && h1.p3.x <= h2.p2.x && h1.p3.y <= h2.p1.y && h1.p3.y >= h2.p4.y)
+		|| (h1.p4.x >= h2.p1.x && h1.p4.x <= h2.p2.x && h1.p4.y <= h2.p1.y && h1.p4.y >= h2.p4.y))
+	{
+		return true;
+	}
+	else
+		return false;
+
+
+}
+
+int Objects::GetVertexCount()
+{
+	int count = 0;
+
+	switch (shape)
+	{
+	case OBJ_POINT:
+		count = 3;
+		break;
+
+	case OBJ_LINE:
+		count = 6;
+		break;
+
+	case OBJ_TRIANGLE:
+		count = 9;
+		break;
+
+	case OBJ_RECTANGLE:
+		count = 12;
+		break;
+
+	case OBJ_PENTAGON:
+		count = 15;
+		break;
+	}
+
+	return count;
 }
