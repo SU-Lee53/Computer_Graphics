@@ -31,12 +31,10 @@ public:
 	void RenderObject();
 	void InitBuffer();
 	void MakeHitbox();
+	void StoreBufferData();
 
 	GLuint GetVAO() { return vao; }
 	OBJ_SHAPE GetShape() { return shape; }
-
-	void StoreBufferData();
-	void LoadBufferData();
 
 	Dir CheckOutOfScreen();
 	Coord GetOutOfScreenVertex();

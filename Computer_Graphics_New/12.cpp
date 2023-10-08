@@ -123,6 +123,7 @@ GLvoid Motion(int x, int y)
 
 		if (selected->GetCollision(list[i]))
 		{
+			// 여기서 합쳐서 새로운 도형 만들면 됨ㅇㅇ
 			cout << "Collition!!!: " << i << endl;
 			isCollision = true;
 			break;

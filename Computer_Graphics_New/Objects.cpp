@@ -478,21 +478,6 @@ void Objects::StoreBufferData()
 	
 }
 
-void Objects::LoadBufferData()
-{
-	int count = GetVertexCount();
-
-	for (int i = 0; i < count; i++)
-	{
-		vertexBuf[i] = vertexStore[i];
-		colorBuf[i] = colorStore[i];
-		if (shape == OBJ_RECTANGLE)
-		{
-			elementBuf[i] = elementStore[i];
-		}
-	}
-}
-
 Dir Objects::CheckOutOfScreen()
 {
 	int count = GetVertexCount();
@@ -709,15 +694,11 @@ bool Objects::GetCollision(Objects* obj)
 	HITBOX h1 = GetHitbox();
 	HITBOX h2 = obj->GetHitbox();
 
-	if ((h1.p1.x >= h2.p1.x && h1.p1.x <= h2.p2.x && h1.p1.y <= h2.p1.y && h1.p1.y >= h2.p4.y)
-		|| (h1.p2.x >= h2.p1.x && h1.p2.x <= h2.p2.x && h1.p2.y <= h2.p1.y && h1.p2.y >= h2.p4.y)
-		|| (h1.p3.x >= h2.p1.x && h1.p3.x <= h2.p2.x && h1.p3.y <= h2.p1.y && h1.p3.y >= h2.p4.y)
-		|| (h1.p4.x >= h2.p1.x && h1.p4.x <= h2.p2.x && h1.p4.y <= h2.p1.y && h1.p4.y >= h2.p4.y))
-	{
+	if (h1.p2.x > h2.p1.x && h2.p2.x > h1.p1.x && h1.p1.y > h2.p4.y && h2.p1.y > h1.p4.y)
 		return true;
-	}
 	else
 		return false;
+
 
 
 }
