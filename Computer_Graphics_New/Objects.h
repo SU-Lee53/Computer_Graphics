@@ -48,6 +48,10 @@ public:
 	float GetVertex(int index) { return vertexStore[index]; }
 
 	HITBOX GetHitbox() { return hBox; }
+
+	void SetValid(bool flag) { isValid = flag; }
+	bool GetValid() { return isValid; }
+
 protected:
 
 	GLfloat* vertexBuf;
@@ -67,5 +71,7 @@ protected:
 	float size;
 
 	HITBOX hBox;
+
+	bool isValid;
 };
 

@@ -53,7 +53,7 @@ void Anims::Bounce()
 		else if (bounceDir == NE)
 			bounceDir = SE;
 
-		obj->ChangeTriangleDirection(UP);
+		// obj->ChangeTriangleDirection(UP);
 		break;
 	}
 
@@ -64,7 +64,7 @@ void Anims::Bounce()
 		else if (bounceDir == SE)
 			bounceDir = NE;
 
-		obj->ChangeTriangleDirection(DOWN);
+		// obj->ChangeTriangleDirection(DOWN);
 		break;
 	}
 
@@ -75,7 +75,7 @@ void Anims::Bounce()
 		if (bounceDir == SE)
 			bounceDir = SW;
 
-		obj->ChangeTriangleDirection(RIGHT);
+		// obj->ChangeTriangleDirection(RIGHT);
 		break;
 	}
 
@@ -86,7 +86,7 @@ void Anims::Bounce()
 		if (bounceDir == SW)
 			bounceDir = SE;
 
-		obj->ChangeTriangleDirection(LEFT);
+		// obj->ChangeTriangleDirection(LEFT);
 		break;
 	}
 

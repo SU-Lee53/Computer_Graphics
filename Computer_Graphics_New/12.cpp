@@ -6,14 +6,23 @@ GLvoid Reshape(int w, int h);
 GLvoid Mouse(int button, int state, int x, int y);
 GLvoid Keyboard(unsigned char key, int x, int y);
 GLvoid Motion(int x, int y);
+GLvoid Animation(int value);
 void SetScreen();
 
 GLuint shaderID;
 Shaders* shader = new Shaders();
 
+struct ANIM
+{
+	Objects* obj;
+	Anims* anim;
+};
+
 vector<Objects*> list;
+vector<ANIM> animList;
 int objCount = 0;
 Objects* selected;
+int sIdx;
 Coord beforePos = { 0, 0 };
 
 int main(int argc, char** argv)
@@ -21,7 +30,7 @@ int main(int argc, char** argv)
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(100, 100);
-	glutInitWindowSize(800, 800);
+	glutInitWindowSize(1920, 1080);
 	glutCreateWindow("실습12");
 
 	glewExperimental = GL_TRUE;
@@ -40,19 +49,48 @@ int main(int argc, char** argv)
 	glutReshapeFunc(Reshape);
 	glutMouseFunc(Mouse);
 	glutMotionFunc(Motion);
+	glutTimerFunc(0, Animation, 1);
 	glutMainLoop();
+}
+
+Coord GetRandomPos()
+{
+	float x = (static_cast<float>(rand()) / (RAND_MAX / 2)) - 1;
+	float y = (static_cast<float>(rand()) / (RAND_MAX / 2)) - 1;
+
+	return { x, y };
 }
 
 void SetScreen()
 {
 	srand(time(0));
-	list.push_back(new Objects(OBJ_POINT, { -0.5f, 0.5f }, 1));
-	list.push_back(new Objects(OBJ_LINE, { 0.5f, 0.5f }, 0.2));
-	list.push_back(new Objects(OBJ_TRIANGLE, { -0.5f, -0.5f }, 0.2));
-	list.push_back(new Objects(OBJ_RECTANGLE, { 0.5f, -0.5f }, 0.2));
-	list.push_back(new Objects(OBJ_PENTAGON, { 0.0f, 0.0f }, 0.2));
-	objCount = 5;
+
+	for (int i = 0; i < 3; i++)
+	{
+		list.push_back(new Objects(OBJ_POINT, GetRandomPos(), 1));
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		list.push_back(new Objects(OBJ_LINE, GetRandomPos(), 0.5));
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		list.push_back(new Objects(OBJ_TRIANGLE, GetRandomPos(), 0.08));
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		list.push_back(new Objects(OBJ_RECTANGLE, GetRandomPos(), 0.08));
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		list.push_back(new Objects(OBJ_PENTAGON, GetRandomPos(), 0.08));
+	}
 	
+	for (int i = 0; i < list.size(); i++)
+	{
+		RGB rgb = { static_cast<float>(rand()) / RAND_MAX, static_cast<float>(rand()) / RAND_MAX , static_cast<float>(rand()) / RAND_MAX };
+		list[i]->SetRGB(rgb);
+	}
 }
 
 GLvoid drawScene()
@@ -64,7 +102,13 @@ GLvoid drawScene()
 
 	for (int i = 0; i < list.size(); i++)
 	{
-		list[i]->RenderObject();
+		if(list[i]->GetValid() == true)
+			list[i]->RenderObject();
+	}
+
+	for (int i = 0; i < animList.size(); i++)
+	{
+		animList[i].obj->RenderObject();
 	}
 
 	glutSwapBuffers();
@@ -83,9 +127,13 @@ GLvoid Mouse(int button, int state, int x, int y)
 	{
 		for (int i = 0; i < list.size(); i++)
 		{
+			if (list[i]->GetValid() == false)
+				continue;
+
 			if (list[i]->CheckClicked(pos) == true)
 			{
 				selected = list[i];
+				sIdx = i;
 				cout << i << " selected" << endl;
 				break;
 			}
@@ -115,29 +163,96 @@ GLvoid Motion(int x, int y)
 	selected->MoveVertex(dx, dy);
 	cout << "Moved: " << dx << ", " << dy << endl;
 
-	bool isCollision = false;
 	for (int i = 0; i < list.size(); i++)
 	{
-		if (list[i] == selected)
+		if (list[i] == selected || list[i]->GetValid() == false)
 			continue;
 
 		if (selected->GetCollision(list[i]))
 		{
-			// 여기서 합쳐서 새로운 도형 만들면 됨ㅇㅇ
-			cout << "Collition!!!: " << i << endl;
-			isCollision = true;
+			int v1 = selected->GetVertexCount() / 3;
+			int v2 = list[i]->GetVertexCount() / 3;
+
+			int finalV = v1 + v2;
+
+			if (finalV >= 6)
+			{
+				finalV = 1;
+			}
+
+			ANIM a;
+			switch (finalV)
+			{
+			case 1:
+			{
+				a.obj = new Objects(OBJ_POINT, pos, 1);
+				RGB rgb = { static_cast<float>(rand()) / RAND_MAX, static_cast<float>(rand()) / RAND_MAX , static_cast<float>(rand()) / RAND_MAX };
+				a.obj->SetRGB(rgb);
+				a.anim = new Anims(a.obj);
+				break;
+			}
+			case 2:
+			{
+				a.obj = new Objects(OBJ_LINE, pos, 0.5);
+				RGB rgb = { static_cast<float>(rand()) / RAND_MAX, static_cast<float>(rand()) / RAND_MAX , static_cast<float>(rand()) / RAND_MAX };
+				a.obj->SetRGB(rgb);
+				a.anim = new Anims(a.obj);
+				break;
+			}
+			case 3:
+			{
+				a.obj = new Objects(OBJ_TRIANGLE, pos, 0.08);
+				RGB rgb = { static_cast<float>(rand()) / RAND_MAX, static_cast<float>(rand()) / RAND_MAX , static_cast<float>(rand()) / RAND_MAX };
+				a.obj->SetRGB(rgb);
+				a.anim = new Anims(a.obj);
+				break;
+			}
+			case 4:
+			{
+				a.obj = new Objects(OBJ_RECTANGLE, pos, 0.08);
+				RGB rgb = { static_cast<float>(rand()) / RAND_MAX, static_cast<float>(rand()) / RAND_MAX , static_cast<float>(rand()) / RAND_MAX };
+				a.obj->SetRGB(rgb);
+				a.anim = new Anims(a.obj);
+				break;
+			}
+			case 5:
+			{
+				a.obj = new Objects(OBJ_PENTAGON, pos, 0.08);
+				RGB rgb = { static_cast<float>(rand()) / RAND_MAX, static_cast<float>(rand()) / RAND_MAX , static_cast<float>(rand()) / RAND_MAX };
+				a.obj->SetRGB(rgb);
+				a.anim = new Anims(a.obj);
+				break;
+			}
+
+			}
+
+			selected->SetValid(false);
+			list[i]->SetValid(false);
+
+			animList.push_back(a);
+
+			selected = nullptr;
+			cout << "unselected" << endl;
 			break;
 		}
 		
 	}
 
-	if (isCollision == false)
+	glutPostRedisplay();
+
+	beforePos = pos;
+
+}
+
+GLvoid Animation(int value)
+{
+	for (int i = 0; i < animList.size(); i++)
 	{
-		cout << "No Collition" << endl;
+		animList.at(i).anim->Bounce();
 	}
 
 	glutPostRedisplay();
 
-	beforePos = pos;
+	glutTimerFunc(17, Animation, 0);
 
 }

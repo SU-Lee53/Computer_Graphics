@@ -2,7 +2,7 @@
 #include "Objects.h"
 #include <cmath>
 
-Objects::Objects(OBJ_SHAPE shape, Coord pos, float size) : shape(shape), size(size)
+Objects::Objects(OBJ_SHAPE shape, Coord pos, float size) : shape(shape), size(size), isValid(true)
 {
 	CreateObject(this->shape, pos, size);
 	MakeHitbox();
@@ -32,7 +32,7 @@ void Objects::CreateObject(OBJ_SHAPE shape, Coord pos, float size)
 		float randf2 = 1 - static_cast<float>(rand()) / (RAND_MAX / 2);
 		GLfloat vertex[] = {
 			pos.x, pos.y, 0.0,
-			pos.x + randf1, pos.y + randf2, 0.0
+			pos.x + (randf1 * size), pos.y + (randf2 * size), 0.0
 		};
 		GLfloat color[] = {
 			0.0f, 1.0f, 0.0f,
@@ -63,10 +63,10 @@ void Objects::CreateObject(OBJ_SHAPE shape, Coord pos, float size)
 	case OBJ_RECTANGLE:
 	{
 		float vertex[] = {
-			pos.x - 0.2, pos.y + 0.2, 0.0f,
-			pos.x + 0.2, pos.y + 0.2, 0.0f,
-			pos.x - 0.2, pos.y - 0.2, 0.0f,
-			pos.x + 0.2, pos.y - 0.2, 0.0f
+			pos.x - size, pos.y + size, 0.0f,
+			pos.x + size, pos.y + size, 0.0f,
+			pos.x - size, pos.y - size, 0.0f,
+			pos.x + size, pos.y - size, 0.0f
 		};
 		float color[] =
 		{
@@ -122,22 +122,7 @@ void Objects::CreateObject(OBJ_SHAPE shape, Coord pos, float size)
 
 void Objects::SetRGB(RGB rgb)
 {
-	int vertexCount;
-	switch (shape)
-	{
-	case OBJ_POINT:
-		vertexCount = 3;
-		break;
-	case OBJ_LINE:
-		vertexCount = 6;
-		break;
-	case OBJ_TRIANGLE:
-		vertexCount = 9;
-		break;
-	case OBJ_RECTANGLE:
-		vertexCount = 12;
-		break;
-	}
+	int vertexCount = GetVertexCount();
 
 	for (int i = 0; i < vertexCount; i++)
 	{
@@ -148,7 +133,6 @@ void Objects::SetRGB(RGB rgb)
 		else if (i % 3 == 2)
 			colorBuf[i] = rgb.Blue;
 	}
-
 
 }
 
@@ -699,8 +683,6 @@ bool Objects::GetCollision(Objects* obj)
 	else
 		return false;
 
-
-
 }
 
 int Objects::GetVertexCount()
@@ -732,3 +714,4 @@ int Objects::GetVertexCount()
 
 	return count;
 }
+
