@@ -5,7 +5,6 @@
 Objects::Objects(OBJ_SHAPE shape, Coord pos, float size) : shape(shape), size(size), isValid(true)
 {
 	CreateObject(this->shape, pos, size);
-	MakeHitbox();
 }
 
 Objects::~Objects()
@@ -113,6 +112,41 @@ void Objects::CreateObject(OBJ_SHAPE shape, Coord pos, float size)
 		break;
 	}
 
+	case OBJ_RECT13:
+	{
+		float vertex[] = {
+			pos.x - size, pos.y + size, 0.0f,
+			pos.x + size, pos.y + size, 0.0f,
+			pos.x - size, pos.y - size, 0.0f,
+			pos.x + size, pos.y - size, 0.0f
+		};
+
+		// 실습 자료처럼 꼭짓점마다 색이 다르게
+		RGB rgb1 = { static_cast<float>(rand()) / RAND_MAX, static_cast<float>(rand()) / RAND_MAX , static_cast<float>(rand()) / RAND_MAX };
+		RGB rgb2 = { static_cast<float>(rand()) / RAND_MAX, static_cast<float>(rand()) / RAND_MAX , static_cast<float>(rand()) / RAND_MAX };
+		RGB rgb3 = { static_cast<float>(rand()) / RAND_MAX, static_cast<float>(rand()) / RAND_MAX , static_cast<float>(rand()) / RAND_MAX };
+		RGB rgb4 = { static_cast<float>(rand()) / RAND_MAX, static_cast<float>(rand()) / RAND_MAX , static_cast<float>(rand()) / RAND_MAX };
+
+		float color[] =
+		{
+			rgb1.Red, rgb1.Green, rgb1.Blue,
+			rgb2.Red, rgb2.Green, rgb2.Blue,
+			rgb3.Red, rgb3.Green, rgb3.Blue,
+			rgb4.Red, rgb4.Green, rgb4.Blue
+		};
+
+		// 선으로 렌더링하기 위해 8개의 EBO 원소 생성
+		unsigned int index[] = {
+			0, 1,
+			0, 2,
+			3, 1,
+			3, 2
+		};
+		vertexBuf = vertex;
+		colorBuf = color;
+		elementBuf = index;
+		break;
+	}
 	}
 
 	StoreBufferData();
@@ -282,6 +316,10 @@ void Objects::RenderObject()
 	case OBJ_PENTAGON:
 		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
 		break;
+		
+	case OBJ_RECT13:
+		glDrawElements(GL_LINES, 8, GL_UNSIGNED_INT, 0);
+		break;
 	}
 
 }
@@ -372,6 +410,22 @@ void Objects::InitBuffer()
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 		glEnableVertexAttribArray(1);
 	}
+	case OBJ_RECT13:
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+		glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(GLfloat), vertexBuf, GL_DYNAMIC_DRAW);
+
+		glGenBuffers(1, &ebo);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 8 * sizeof(GLuint), elementBuf, GL_DYNAMIC_DRAW);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+		glEnableVertexAttribArray(0);
+
+		glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+		glBufferData(GL_ARRAY_BUFFER, 12 * sizeof(GLfloat), colorBuf, GL_DYNAMIC_DRAW);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+		glEnableVertexAttribArray(1);
+	}
 	}
 }
 
@@ -396,6 +450,7 @@ void Objects::MakeHitbox()
 	case OBJ_TRIANGLE:
 	case OBJ_RECTANGLE:
 	case OBJ_PENTAGON:
+	case OBJ_RECT13:
 	{
 		Coord min = { 1.0f, 1.0f };
 		Coord max = { -1.0f, -1.0f };
@@ -458,7 +513,13 @@ void Objects::StoreBufferData()
 
 		elementBuf = elementStore;
 	}
+	else if (shape == OBJ_RECT13)
+	{
+		for (int i = 0; i < 8; i++)
+			elementStore[i] = elementBuf[i];
 
+		elementBuf = elementStore;
+	}
 	
 }
 
@@ -704,6 +765,7 @@ int Objects::GetVertexCount()
 		break;
 
 	case OBJ_RECTANGLE:
+	case OBJ_RECT13:
 		count = 12;
 		break;
 
@@ -713,5 +775,66 @@ int Objects::GetVertexCount()
 	}
 
 	return count;
+}
+
+void Objects::ModifySpecificVertex(int vIdx, float dx, float dy)
+{
+	Coord pos = GetSpecificVertex(vIdx);
+
+	pos.x += dx;
+	pos.y += dy;
+
+	int idx = vIdx * 3;
+	vertexBuf[idx] = pos.x;
+	vertexBuf[idx + 1] = pos.y;
+
+	MakeHitbox();
+}
+
+Coord Objects::GetSpecificVertex(int vIdx)
+{
+	int idx = vIdx * 3;
+	Coord pos = { vertexBuf[idx], vertexBuf[idx + 1] };
+
+	return pos;
+}
+
+int Objects::CheckSpecificVertexClicked(Coord pos)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		Coord vPos = GetSpecificVertex(i);
+
+		Coord tPos1 = { vPos.x - 0.05f, vPos.y + 0.05f };
+		Coord tPos2 = { vPos.x + 0.05f, vPos.y - 0.05f };
+
+		if ((pos.x >= tPos1.x && pos.x <= tPos2.x) && (pos.y <= tPos1.y && pos.y >= tPos2.y))
+			return i;
+	}
+
+	return -1;
+}
+
+void Objects::SetAxis(bool Mode)
+{
+	if (shape != OBJ_LINE)
+		return;
+
+	if (Mode == true)
+	{
+		vertexBuf[0] = -1.0f;
+		vertexBuf[1] = 0.0f;
+
+		vertexBuf[3] = 1.0f;
+		vertexBuf[4] = 0.0f;
+	}
+	else
+	{
+		vertexBuf[0] = 0.0f;
+		vertexBuf[1] = 1.0f;
+
+		vertexBuf[3] = 0.0f;
+		vertexBuf[4] = -1.0f;
+	}
 }
 

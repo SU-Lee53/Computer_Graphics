@@ -33,11 +33,11 @@
     <Filter Include="소스 파일\GLSL_Objects\Shapes">
       <UniqueIdentifier>{a33ba779-b415-454f-8570-a2ab68bb084d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\ex_old">
+      <UniqueIdentifier>{e0540e93-e570-48ce-893d-ee10a0cac0c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="6.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일\pch</Filter>
     </ClCompile>
@@ -47,38 +47,44 @@
     <ClCompile Include="Anims.cpp">
       <Filter>소스 파일\Anims</Filter>
     </ClCompile>
-    <ClCompile Include="shader_test.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ShaderTest2.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="7.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Shaders.cpp">
       <Filter>소스 파일\Shaders</Filter>
     </ClCompile>
     <ClCompile Include="Objects.cpp">
       <Filter>소스 파일\GLSL_Objects</Filter>
     </ClCompile>
-    <ClCompile Include="9.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="8.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="10.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="11.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Anims11.cpp">
       <Filter>소스 파일\Anims</Filter>
     </ClCompile>
+    <ClCompile Include="6.cpp">
+      <Filter>소스 파일\ex_old</Filter>
+    </ClCompile>
+    <ClCompile Include="13.cpp">
+      <Filter>소스 파일\ex_old</Filter>
+    </ClCompile>
     <ClCompile Include="12.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\ex_old</Filter>
+    </ClCompile>
+    <ClCompile Include="11.cpp">
+      <Filter>소스 파일\ex_old</Filter>
+    </ClCompile>
+    <ClCompile Include="10.cpp">
+      <Filter>소스 파일\ex_old</Filter>
+    </ClCompile>
+    <ClCompile Include="9.cpp">
+      <Filter>소스 파일\ex_old</Filter>
+    </ClCompile>
+    <ClCompile Include="8.cpp">
+      <Filter>소스 파일\ex_old</Filter>
+    </ClCompile>
+    <ClCompile Include="7.cpp">
+      <Filter>소스 파일\ex_old</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderTest2.cpp">
+      <Filter>소스 파일\ex_old</Filter>
+    </ClCompile>
+    <ClCompile Include="shader_test.cpp">
+      <Filter>소스 파일\ex_old</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

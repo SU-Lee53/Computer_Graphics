@@ -7,7 +7,8 @@ enum OBJ_SHAPE
 	OBJ_LINE,
 	OBJ_TRIANGLE,
 	OBJ_RECTANGLE,
-	OBJ_PENTAGON
+	OBJ_PENTAGON,
+	OBJ_RECT13	// 13번 전용 삼각형이 아닌 선으로 만들어진 사각형
 };
 
 struct HITBOX
@@ -51,6 +52,14 @@ public:
 
 	void SetValid(bool flag) { isValid = flag; }
 	bool GetValid() { return isValid; }
+
+
+	// 실습 13
+	void ModifySpecificVertex(int vNum, float dx, float dy);
+	Coord GetSpecificVertex(int vNum);
+	int CheckSpecificVertexClicked(Coord pos);
+	// x,y축 선 조정, Mode == true -> x축, 아니면 y축
+	void SetAxis(bool Mode);
 
 protected:
 
