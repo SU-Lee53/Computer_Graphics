@@ -11,11 +11,10 @@ public:
 
 	virtual void drawScene() override;
 	virtual void Reshape(int w, int h) override;
-	virtual void Update() override;
 
-	void MouseUpdate();
-	void KeyboardUpdate() {}
-	void MotionUpdate() {}
+	virtual void MouseUpdate() override;
+	virtual void KeyboardUpdate() override {}
+	virtual void MotionUpdate() override {}
 
 private:
 	RGB _Background = { 0.0f, 0.0f, 0.0f };

@@ -15,6 +15,7 @@
 
 #include "__enum.h"
 #include "__struct.h"
+#include "__defines.h"
 #include "Utills.h"
 
 #include "Shaders.h"

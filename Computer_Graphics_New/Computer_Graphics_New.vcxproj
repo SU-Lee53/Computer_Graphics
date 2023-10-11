@@ -189,7 +189,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Core.h" />
-    <ClInclude Include="Defines.h" />
+    <ClInclude Include="__defines.h" />
     <ClInclude Include="Ex14.h" />
     <ClInclude Include="Examples.h" />
     <ClInclude Include="InputManager.h" />

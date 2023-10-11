@@ -38,11 +38,6 @@ void Ex14::Reshape(int w, int h)
 	glViewport(0, 0, w, h);
 }
 
-void Ex14::Update()
-{
-	MouseUpdate();
-}
-
 void Ex14::MouseUpdate()
 {
 	_mouseState = InputManager::GetInstance().DequeueMouseBuf();

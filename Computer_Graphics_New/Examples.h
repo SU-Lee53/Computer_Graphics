@@ -6,6 +6,12 @@ class Examples
 public:
 	virtual ~Examples();
 
+	virtual void Update()
+	{
+		MouseUpdate();
+		MotionUpdate();
+		KeyboardUpdate();
+	}
 
 
 private:
@@ -15,8 +21,12 @@ private:
 	// 실습 객체를 초기화합니다.
 	virtual void InitEx() = 0;
 
+	virtual void MouseUpdate() = 0;
+	virtual void MotionUpdate() = 0;
+	virtual void KeyboardUpdate() = 0;
+
 	// 실습 객체 내부의 요소들을 싹 한번 업데이트 합니다.
-	virtual void Update() = 0;
+	
 
 private:
 	int exNum;

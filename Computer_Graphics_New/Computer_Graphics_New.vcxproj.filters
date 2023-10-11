@@ -169,7 +169,7 @@
     <ClInclude Include="VBO.h">
       <Filter>소스 파일\Vertex_Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Defines.h">
+    <ClInclude Include="__defines.h">
       <Filter>소스 파일\enum, struct, const, defines</Filter>
     </ClInclude>
     <ClInclude Include="Examples.h">
