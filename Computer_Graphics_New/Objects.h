@@ -1,86 +1,46 @@
 #pragma once
-using namespace std;
 
-enum OBJ_SHAPE
+enum OBJ_TYPE_2D
 {
 	OBJ_POINT = 0,
 	OBJ_LINE,
 	OBJ_TRIANGLE,
 	OBJ_RECTANGLE,
 	OBJ_PENTAGON,
-	OBJ_RECT13	// 13번 전용 삼각형이 아닌 선으로 만들어진 사각형
 };
 
-struct HITBOX
+enum OBJ_TYPE_3D
 {
-	Coord p1;
-	Coord p2;
-	Coord p3;
-	Coord p4;
+	OBJ_TETRAHEDRON = 0,
+	OBJ_CUBE,
+	OBJ_CONE
 };
 
 class Objects
 {
 public:
-	Objects(OBJ_SHAPE shape, Coord pos, float size);
+	// 2D전용 생성자
+	Objects(OBJ_TYPE_2D type, Coord pos, float size);
+	Objects(OBJ_TYPE_3D type, Coord pos, float size);
 	~Objects();
-	void CreateObject(OBJ_SHAPE shape, Coord pos, float size);
-	void SetRGB(RGB rgb);
-	void SetVertexPos(Coord pos, float size);
-	void MoveVertex(float dx, float dy);
-	void MoveObject(Dir d, float distance);
-	void RenderObject();
-	void InitBuffer();
-	void MakeHitbox();
-	void StoreBufferData();
 
-	GLuint GetVAO() { return vao; }
-	OBJ_SHAPE GetShape() { return shape; }
+private:
+	void CreateObject2D(OBJ_TYPE_2D type);
+	void CreateObject3D(OBJ_TYPE_3D type) {} ;
 
-	Dir CheckOutOfScreen();
-	Coord GetOutOfScreenVertex();
-	bool ChangeTriangleDirection(Dir dir);
-
-	bool CheckClicked(Coord pos);
-
-	bool GetCollision(Objects* obj);
-	int GetVertexCount();
-
-	float GetVertex(int index) { return vertexStore[index]; }
-
-	HITBOX GetHitbox() { return hBox; }
-
-	void SetValid(bool flag) { isValid = flag; }
-	bool GetValid() { return isValid; }
+public:
+	// 변환 함수
+	void Translate() {};
+	void Rotate() {};
+	void Scale() {};
 
 
-	// 실습 13
-	void ModifySpecificVertex(int vNum, float dx, float dy);
-	Coord GetSpecificVertex(int vNum);
-	int CheckSpecificVertexClicked(Coord pos);
-	// x,y축 선 조정, Mode == true -> x축, 아니면 y축
-	void SetAxis(bool Mode);
+	// 렌더링
+	void Render();
 
-protected:
-
-	GLfloat* vertexBuf;
-	GLfloat* colorBuf;
-	unsigned int* elementBuf;
-
-	// 버퍼를 여기다 옮겨담음
-	float vertexStore[15];
-	float colorStore[15];
-	unsigned int elementStore[9];
-
-	OBJ_SHAPE shape;
-	GLuint vao;
-	GLuint vbo[2];
-	GLuint ebo;
-
-	float size;
-
-	HITBOX hBox;
-
-	bool isValid;
+private:
+	VAO* _vao;
+	Coord _centerPos;
+	float _size;
 };
 

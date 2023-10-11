@@ -4,16 +4,25 @@
 #include <gl/glew.h>
 #include <gl/freeglut.h>
 #include <gl/freeglut_ext.h>
+#include <gl/glm/glm.hpp>
+#include <gl/glm/ext.hpp>
+#include <gl/glm/gtc/matrix_transform.hpp>
+
 
 #include <vector>
 #include <string>
-
+#include <queue>
 
 #include "__enum.h"
 #include "__struct.h"
 #include "Utills.h"
 
 #include "Shaders.h"
+#include "VBO.h"
+#include "VAO.h"
 #include "Objects.h"
-#include "Anims.h"
-#include "Anims11.h"
+
+#include "Core.h"
+#include "InputManager.h"
+
+#include "Examples.h"

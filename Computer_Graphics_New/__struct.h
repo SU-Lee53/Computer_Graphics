@@ -3,12 +3,10 @@
 struct Coord
 {
 
-	GLfloat x;
-	GLfloat y;
+	float x;
+	float y;
 
 };
-
-
 
 struct RGB
 {

@@ -4,10 +4,13 @@ using namespace std;
 
 Shaders::Shaders()
 {
+	makeShaderProgram();
 }
 
 Shaders::~Shaders()
 {
+	glDeleteShader(shaderID);
+	delete this;
 }
 
 void Shaders::makeVertexShaders()
