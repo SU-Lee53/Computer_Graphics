@@ -1,13 +1,13 @@
 #pragma once
 
-struct m_State
+struct MouseState
 {
 	int button;
 	int state;
 	Coord pos;
 };
 
-struct k_State
+struct KeyboardState
 {
 	unsigned char key;
 	Coord pos;
@@ -21,6 +21,7 @@ enum INPUT_TYPE
 };
 
 // InputManager는 실습 객체에 종속되지 않고 싱글톤으로 작동됨
+// 현재 문제점: 싱글톤 객체 내부 정적함수 -> 좋지않다
 class InputManager
 {
 public:
@@ -36,9 +37,9 @@ public:
 	void (*MotionFunc())(int, int) { return MotionInput; }
 	void (*KeyboardFunc())(unsigned char, int, int) { return KeyboardInput; }
 
-	m_State* DequeueMouseBuf();
+	MouseState* DequeueMouseBuf();
 	Coord* DequeueMotionBuf();
-	k_State* DequeueKeyboardBuf();
+	KeyboardState* DequeueKeyboardBuf();
 
 
 private:
@@ -48,16 +49,16 @@ private:
 	static void MotionInput(int x, int y);
 	static void KeyboardInput(unsigned char key, int x, int y);
 
-	queue<m_State*>& GetMouseBuf() { return mouseBuf; }
+	queue<MouseState*>& GetMouseBuf() { return mouseBuf; }
 	queue<Coord*>& GetMotionBuf() { return motionBuf; }
-	queue<k_State*>& GetKeyboardBuf() { return keyboardBuf; }
+	queue<KeyboardState*>& GetKeyboardBuf() { return keyboardBuf; }
 
 private:
 
 	// 입력 버퍼
-	queue<m_State*> mouseBuf;
-	queue<k_State*> keyboardBuf;
+	queue<MouseState*> mouseBuf;
+	queue<KeyboardState*> keyboardBuf;
 	queue<Coord*> motionBuf;
-	int instanceNum;
+
 };
 

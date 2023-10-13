@@ -16,6 +16,20 @@ enum OBJ_TYPE_3D
 	OBJ_CONE
 };
 
+enum QOBJ_TYPE	// Quadric Objects
+{
+	QOBJ_SPHERE = 0,
+	QOBJ_CYLINDER,
+	QOBJ_DISK
+};
+
+enum AXIS
+{
+	X_AXIS = 0,
+	Y_AXIS,
+	Z_AXIS
+};
+
 class Objects
 {
 public:
@@ -26,13 +40,11 @@ public:
 
 private:
 	void CreateObject2D(OBJ_TYPE_2D type);
-	void CreateObject3D(OBJ_TYPE_3D type) {} ;
+	void CreateObject3D(OBJ_TYPE_3D type);
+	void CreateQuadricObject(QOBJ_TYPE type) {}
 
 public:
-	// 변환 함수
-	void Translate() {};
-	void Rotate() {};
-	void Scale() {};
+	// 유틸함수
 
 
 	// 렌더링
@@ -42,5 +54,8 @@ private:
 	VAO* _vao;
 	Coord _centerPos;
 	float _size;
+
+
+	bool indexed = false;
 };
 

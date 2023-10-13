@@ -36,8 +36,41 @@ char* filetobuf(const char* file)
 Coord GetRandomCoord()
 {
 	Coord pos;
-	pos.x = static_cast<float>(rand()) / RAND_MAX;
-	pos.y = static_cast<float>(rand()) / RAND_MAX;
+	pos.x = static_cast<float>(rand()) / (RAND_MAX / 2) - 1.0f;
+	pos.y = static_cast<float>(rand()) / (RAND_MAX / 2) - 1.0f;
 
 	return pos;
+}
+
+RGB GetRandomRGB()
+{
+	RGB rgb;
+	rgb.Red = static_cast<float>(rand()) / RAND_MAX;
+	rgb.Green = static_cast<float>(rand()) / RAND_MAX;
+	rgb.Blue = static_cast<float>(rand()) / RAND_MAX;
+
+	return rgb;
+}
+
+void DrawAxis()
+{
+	glBegin(GL_LINES);
+
+	// x√‡
+	glColor3f(0.0, 0.0, 0.0);
+	glVertex3f(-1.0, 0.0, 0.0);
+	glVertex3f(1.0, 0.0, 0.0);
+
+	// y√‡
+	glColor3f(0.0, 0.0, 0.0);
+	glVertex3f(0.0, -1.0, 0.0);
+	glVertex3f(0.0, 1.0, 0.0);
+
+	// z√‡
+	glColor3f(0.0, 0.0, 0.0);
+	glVertex3f(0.0, 0.0, -1.0);
+	glVertex3f(0.0, 0.0, 1.0);
+	glEnd();
+
+
 }

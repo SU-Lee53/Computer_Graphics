@@ -18,6 +18,7 @@
 #include "__defines.h"
 #include "Utills.h"
 
+
 #include "Shaders.h"
 #include "VBO.h"
 #include "VAO.h"
@@ -25,5 +26,6 @@
 
 #include "Core.h"
 #include "InputManager.h"
+#include "TransformManager.h"
 
 #include "Examples.h"

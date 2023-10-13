@@ -14,16 +14,25 @@ Ex14::~Ex14()
 
 void Ex14::InitEx()
 {
-	
+	tMatrix = tMatrix * TransformManager::GetInstance().GetRotateMatrix(30.0f, X_AXIS);
+	tMatrix = tMatrix * TransformManager::GetInstance().GetRotateMatrix(30.0f, Y_AXIS);
 }
 
 void Ex14::drawScene()
 {
 	glClearColor(_Background.Red, _Background.Green, _Background.Blue, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glUseProgram(Core::GetInstance().GetShaderID());
-	
 	Update();
+
+	unsigned int shaderID = Core::GetInstance().GetShaderID();
+	glUseProgram(shaderID);
+
+	tMatrix = tMatrix * TransformManager::GetInstance().GetRotateMatrix(0.03f, Y_AXIS);
+
+	unsigned int uniformLocation = glGetUniformLocation(shaderID, "transform");
+	glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(tMatrix));
+
+	DrawAxis();
 
 	if (_obj != nullptr)
 	{
@@ -47,7 +56,7 @@ void Ex14::MouseUpdate()
 	else
 	{
 		if(_mouseState->button == GLUT_LEFT_BUTTON && _mouseState->state == GLUT_DOWN())
-		_obj = new Objects(OBJ_TRIANGLE, { _mouseState->pos.x, _mouseState->pos.y }, 0.2);
+		_obj = new Objects(OBJ_TETRAHEDRON, { 0,0 }, 0.2);
 		delete _mouseState;
 	}
 }

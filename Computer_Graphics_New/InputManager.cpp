@@ -3,7 +3,6 @@
 
 InputManager::InputManager()
 {
-	instanceNum = rand();
 }
 
 InputManager::~InputManager()
@@ -14,7 +13,7 @@ void InputManager::MouseInput(int button, int state, int x, int y)
 {
 	Coord pos = { x, y };
 	pos = AdjustMouseCoordinate(pos);
-	m_State* s = new m_State { button, state, pos };
+	MouseState* s = new MouseState { button, state, pos };
 	InputManager::GetInstance().GetMouseBuf().push(s);
 }
 
@@ -29,18 +28,20 @@ void InputManager::KeyboardInput(unsigned char key, int x, int y)
 {
 	Coord pos = { x, y };
 	pos = AdjustMouseCoordinate(pos);
-	k_State s = { key, pos };
+	KeyboardState s = { key, pos };
 	InputManager::GetInstance().GetKeyboardBuf().push(&s);
 }
 
-m_State* InputManager::DequeueMouseBuf()
+MouseState* InputManager::DequeueMouseBuf()
 {
 	if (mouseBuf.empty())
 	{
 		return nullptr;
 	}
-	m_State* temp = mouseBuf.front();
-	m_State* ret = new m_State{temp->button, temp->state, temp->pos };
+	MouseState* temp = mouseBuf.front();
+
+	// 반환을 위해 새로 할당. 실습객체에서 사용후 반드시 delete 할것
+	MouseState* ret = new MouseState{temp->button, temp->state, temp->pos };
 	mouseBuf.pop();
 	return ret;
 }
@@ -52,19 +53,23 @@ Coord* InputManager::DequeueMotionBuf()
 		return nullptr;
 	}
 
-	Coord* s = motionBuf.front();
+	Coord* temp = motionBuf.front();
+
+	// 반환을 위해 새로 할당. 실습객체에서 사용후 반드시 delete 할것
+	Coord* ret = new Coord{ temp->x, temp->y, temp->z };
 	motionBuf.pop();
-	return s;
+	return ret;
 }
 
-k_State* InputManager::DequeueKeyboardBuf()
+KeyboardState* InputManager::DequeueKeyboardBuf()
 {
 	if (keyboardBuf.empty())
 	{
 		return nullptr;
 	}
 
-	k_State* s = keyboardBuf.front();
+	KeyboardState* temp = keyboardBuf.front();
+	KeyboardState* ret = new KeyboardState{ temp->key, temp->pos };
 	keyboardBuf.pop();
-	return s;
+	return ret;
 }

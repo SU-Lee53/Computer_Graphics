@@ -17,8 +17,12 @@ public:
 	virtual void MotionUpdate() override {}
 
 private:
-	RGB _Background = { 0.0f, 0.0f, 0.0f };
+	RGB _Background = { 1.0f, 1.0f, 1.0f };
+	Objects* _axis;
 	Objects* _obj;
-	m_State* _mouseState = nullptr;
+	MouseState* _mouseState = nullptr;
+
+	// 변환행렬은 단위행렬로 초기화
+	glm::mat4 tMatrix = glm::mat4(1.0f);
 };
 

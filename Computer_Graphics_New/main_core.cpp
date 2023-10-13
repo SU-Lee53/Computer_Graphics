@@ -17,7 +17,7 @@ void Reshape(int w, int h)
 
 int main(int argc, char** argv)
 {
-	Core::GetInstance().InitScreen(argc, argv, 100, 100, 800, 600, "14");
+	Core::GetInstance().InitScreen(argc, argv, 100, 100, 800, 800, "14");
 	Core::GetInstance().InitShader();
 
 	Core::GetInstance().BindDrawCallback(drawScene);

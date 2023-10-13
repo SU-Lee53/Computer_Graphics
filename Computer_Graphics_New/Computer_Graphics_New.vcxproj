@@ -177,6 +177,7 @@
     <ClCompile Include="shader_test.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="TransformManager.cpp" />
     <ClCompile Include="Utills.cpp" />
     <ClCompile Include="VAO.cpp" />
     <ClCompile Include="VBO.cpp" />
@@ -189,6 +190,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Core.h" />
+    <ClInclude Include="TransformManager.h" />
     <ClInclude Include="__defines.h" />
     <ClInclude Include="Ex14.h" />
     <ClInclude Include="Examples.h" />
