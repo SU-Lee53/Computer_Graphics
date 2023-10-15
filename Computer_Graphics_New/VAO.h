@@ -18,10 +18,14 @@ public:
 	// VAO_TYPE: NON_INDEXED or INDEXED
 	void InitVAO(VAO_TYPE type);
 
+	void ChangeElementBuffer(unsigned int* element, int eBufSize);
+
 	unsigned int GetVAOHandle() { return h_VAO; }
 	int GetVertexCount() { return _vBufSize; }
 	int GetElementCount() { return _eBufSize; }
-
+	float* GetVertexBuffer() { return _vbo.GetVertexBuf(); }
+	float* GetColorBuffer() { return _vbo.GetColorBuf(); }
+	unsigned int* GetElementBuffer() { return _vbo.GetElementBuf(); }
 
 private:
 

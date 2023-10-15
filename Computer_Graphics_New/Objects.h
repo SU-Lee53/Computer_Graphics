@@ -45,7 +45,7 @@ private:
 
 public:
 	// 유틸함수
-
+	VAO& GetVAO() { return *_vao; }
 
 	// 렌더링
 	void Render();

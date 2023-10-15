@@ -23,6 +23,13 @@ VAO::~VAO()
 	glDeleteVertexArrays(1, &this->h_VAO);
 }
 
+void VAO::ChangeElementBuffer(unsigned int* element, int eBufSize)
+{
+	_vbo.PushToElementBuffer(element, eBufSize);
+	_eBufSize = eBufSize;
+	InitVAO(INDEXED);
+}
+
 void VAO::InitVAO(VAO_TYPE type)	// elementMode가 true면 EBO를 사용하므로 버퍼 3개 생성함
 {
 	bool GenBufs = false;	// vbo를 생성할지 안할지 결정하는 플래그
@@ -60,3 +67,5 @@ void VAO::InitVAO(VAO_TYPE type)	// elementMode가 true면 EBO를 사용하므로 버퍼 3
 	glEnableVertexAttribArray(1);
 
 }
+
+

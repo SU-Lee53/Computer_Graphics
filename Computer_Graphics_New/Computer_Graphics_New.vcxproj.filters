@@ -129,7 +129,7 @@
       <Filter>소스 파일\Objects</Filter>
     </ClCompile>
     <ClCompile Include="TransformManager.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -181,7 +181,9 @@
     <ClInclude Include="Objects.h">
       <Filter>소스 파일\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="TransformManager.h" />
+    <ClInclude Include="TransformManager.h">
+      <Filter>소스 파일\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertex.glsl">

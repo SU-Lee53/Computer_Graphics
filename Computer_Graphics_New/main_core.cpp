@@ -23,6 +23,7 @@ int main(int argc, char** argv)
 	Core::GetInstance().BindDrawCallback(drawScene);
 	Core::GetInstance().BindReshapeCallback(Reshape);
 	Core::GetInstance().UseMouseCallback();
+	Core::GetInstance().UseKeyboardCallback();
 
 	while (true)
 	{
