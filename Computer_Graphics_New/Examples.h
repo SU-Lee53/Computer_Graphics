@@ -6,13 +6,6 @@ class Examples
 public:
 	virtual ~Examples();
 
-	virtual void Update()
-	{
-		MouseUpdate();
-		MotionUpdate();
-		KeyboardUpdate();
-	}
-
 
 protected:
 	virtual void drawScene() = 0;
@@ -24,6 +17,7 @@ protected:
 	virtual void MouseUpdate() = 0;
 	virtual void MotionUpdate() = 0;
 	virtual void KeyboardUpdate() = 0;
+	virtual void SpecialKeyUpdate() = 0;
 
 	// 실습 객체 내부의 요소들을 싹 한번 업데이트 합니다.
 

@@ -162,6 +162,7 @@
     </ClCompile>
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="Ex14.cpp" />
+    <ClCompile Include="Ex15.cpp" />
     <ClCompile Include="Examples.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main_core.cpp" />
@@ -190,6 +191,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Core.h" />
+    <ClInclude Include="Ex15.h" />
     <ClInclude Include="TransformManager.h" />
     <ClInclude Include="__defines.h" />
     <ClInclude Include="Ex14.h" />

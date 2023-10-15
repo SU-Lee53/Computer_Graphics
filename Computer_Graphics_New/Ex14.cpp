@@ -83,7 +83,7 @@ void Ex14::KeyboardUpdate()
 		if (_obj != nullptr)
 			delete _obj;
 
-		_obj = new Objects(OBJ_CUBE, { 0,0 }, 0.3);
+		_obj = new Objects(OBJ_CUBE, { 0,0 }, 0.3f);
 
 		SetRandomFace(CUBE);
 		renderMode = -1;
@@ -96,7 +96,7 @@ void Ex14::KeyboardUpdate()
 		if (_obj != nullptr)
 			delete _obj;
 
-		_obj = new Objects(OBJ_TETRAHEDRON, { 0,0 }, 0.3);
+		_obj = new Objects(OBJ_TETRAHEDRON, { 0,0 }, 0.3f);
 
 		SetRandomFace(TETRAHEDRON);
 		renderMode = -1;
@@ -130,7 +130,7 @@ void Ex14::RenderWorld()
 			if (_obj != nullptr)
 				delete _obj;
 
-			_obj = new Objects(OBJ_CUBE, { 0,0 }, 0.3);
+			_obj = new Objects(OBJ_CUBE, { 0,0 }, 0.3f);
 			unsigned int start = renderMode * 6 - 6;
 			unsigned int elementBuf[6];
 			memcpy(elementBuf, &_obj->GetVAO().GetElementBuffer()[start], sizeof(unsigned int) * 6);
@@ -155,7 +155,7 @@ void Ex14::RenderWorld()
 			else
 				faceNum += 1;
 
-			_obj = new Objects(OBJ_TETRAHEDRON, { 0,0 }, 0.3);
+			_obj = new Objects(OBJ_TETRAHEDRON, { 0,0 }, 0.3f);
 			unsigned int start = faceNum * 3 - 3;
 			unsigned int elementBuf[3];
 			memcpy(elementBuf, &_obj->GetVAO().GetElementBuffer()[start], sizeof(unsigned int) * 3);
@@ -188,7 +188,7 @@ void Ex14::RenderWorld()
 			if (_obj != nullptr)
 				delete _obj;
 
-			_obj = new Objects(OBJ_CUBE, { 0,0 }, 0.3);
+			_obj = new Objects(OBJ_CUBE, { 0,0 }, 0.3f);
 
 			_obj->GetVAO().ChangeElementBuffer(elementBuf1, 6);
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

@@ -13,7 +13,7 @@ enum OBJ_TYPE_3D
 {
 	OBJ_TETRAHEDRON = 0,
 	OBJ_CUBE,
-	OBJ_CONE
+	OBJ_PYRAMID,
 };
 
 enum QOBJ_TYPE	// Quadric Objects

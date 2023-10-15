@@ -69,6 +69,7 @@ void Objects::CreateObject3D(OBJ_TYPE_3D type)
 		break;
 	}
 	case OBJ_CUBE:
+	{
 		float vertex[] = {
 			_centerPos.x - _size, _centerPos.y + _size, _centerPos.z - _size,
 			_centerPos.x + _size, _centerPos.y + _size, _centerPos.z - _size,
@@ -106,6 +107,35 @@ void Objects::CreateObject3D(OBJ_TYPE_3D type)
 		_vao = new VAO(vertex, color, element, 24, 36);
 		indexed = true;
 		break;
+	}
+	case OBJ_PYRAMID:
+	{
+		float vertex[] = {
+			_centerPos.x, _centerPos.y + _size, _centerPos.z,
+			_centerPos.x - _size, _centerPos.y - _size, _centerPos.z - _size,
+			_centerPos.x + _size, _centerPos.y - _size, _centerPos.z - _size,
+			_centerPos.x - _size, _centerPos.y - _size, _centerPos.z + _size,
+			_centerPos.x + _size, _centerPos.y - _size, _centerPos.z + _size
+		};
+		float color[] = {
+			1.0f, 0.0f, 0.0f,
+			0.0f, 1.0f, 0.0f,
+			0.0f, 0.0f, 1.0f,
+			1.0f, 1.0f, 0.0f,
+			0.0f, 1.0f, 1.0f
+		};
+		unsigned int element[] = {
+			0, 2, 1,
+			0, 1, 3,
+			0, 3, 4,
+			0, 4, 2,
+			1, 2, 3,
+			2, 4, 3
+		};
+		_vao = new VAO(vertex, color, element, 15, 18);
+		indexed = true;
+		break;
+	}
 
 	}
 
@@ -113,9 +143,10 @@ void Objects::CreateObject3D(OBJ_TYPE_3D type)
 
 void Objects::Render()
 {
+	if (this == nullptr)
+		return;
+
 	glBindVertexArray(_vao->GetVAOHandle());
-	glEnable(GL_CULL_FACE);
-	glPolygonMode(GL_FRONT, GL_FILL);
 
 	if(!indexed)
 	{

@@ -66,5 +66,10 @@ void Core::UseKeyboardCallback()
 	glutKeyboardFunc(InputManager::GetInstance().KeyboardFunc());
 }
 
+void Core::UseSpecialKeyCallback()
+{
+	glutSpecialFunc(InputManager::GetInstance().SpecialKeyFunc());
+}
+
 
 

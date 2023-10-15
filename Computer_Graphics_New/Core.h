@@ -17,6 +17,8 @@ public:
 	void UseMouseCallback();
 	void UseMotionCallback();
 	void UseKeyboardCallback();
+	void UseSpecialKeyCallback();
+
 
 	int GetShaderID() { return shader->GetShaderID(); }
 
