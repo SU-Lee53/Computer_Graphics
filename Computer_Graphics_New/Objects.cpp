@@ -14,6 +14,7 @@ Objects::Objects(OBJ_TYPE_3D type, Coord pos, float size) : _centerPos(pos), _si
 
 Objects::~Objects()
 {
+	_vao->~VAO();
 }
 
 void Objects::CreateObject2D(OBJ_TYPE_2D type)
