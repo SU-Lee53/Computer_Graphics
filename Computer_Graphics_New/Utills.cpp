@@ -58,18 +58,18 @@ void DrawAxis()
 
 	// xรเ
 	glColor3f(0.0, 0.0, 0.0);
-	glVertex3f(-1.0, 0.0, 0.0);
-	glVertex3f(1.0, 0.0, 0.0);
+	glVertex3f(-30.0, 0.0, 0.0);
+	glVertex3f(30.0, 0.0, 0.0);
 
 	// yรเ
 	glColor3f(0.0, 0.0, 0.0);
-	glVertex3f(0.0, -1.0, 0.0);
-	glVertex3f(0.0, 1.0, 0.0);
+	glVertex3f(0.0, -30.0, 0.0);
+	glVertex3f(0.0, 30.0, 0.0);
 
 	// zรเ
 	glColor3f(0.0, 0.0, 0.0);
-	glVertex3f(0.0, 0.0, -1.0);
-	glVertex3f(0.0, 0.0, 1.0);
+	glVertex3f(0.0, 0.0, -30.0);
+	glVertex3f(0.0, 0.0, 30.0);
 	glEnd();
 
 

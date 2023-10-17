@@ -33,18 +33,6 @@
     <Filter Include="소스 파일\Examples">
       <UniqueIdentifier>{ce00a470-869f-4114-a362-f145b3889090}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\__No_Use_GLSL_Objects">
-      <UniqueIdentifier>{2feaceb3-0a58-4be2-9acb-e0950afb1fb5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\__No_Use_GLSL_Objects\Shapes">
-      <UniqueIdentifier>{a33ba779-b415-454f-8570-a2ab68bb084d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\__No_Use_Anims">
-      <UniqueIdentifier>{8d3e9e51-5e70-4383-ada8-003057c0d5ab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\__Old_Ex">
-      <UniqueIdentifier>{e0540e93-e570-48ce-893d-ee10a0cac0c8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\enum, struct, const, defines">
       <UniqueIdentifier>{2a29d9b7-2026-4fa2-832d-2464e2642e3e}</UniqueIdentifier>
     </Filter>
@@ -53,6 +41,21 @@
     </Filter>
     <Filter Include="소스 파일\Objects">
       <UniqueIdentifier>{8fe09cfe-150e-4daf-b7e4-46822b1e0cea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\__Old">
+      <UniqueIdentifier>{bfcaf75b-98c9-47b4-becf-e0b64562421c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\__Old\__Old_Ex">
+      <UniqueIdentifier>{e0540e93-e570-48ce-893d-ee10a0cac0c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\__Old\__No_Use_GLSL_Objects">
+      <UniqueIdentifier>{2feaceb3-0a58-4be2-9acb-e0950afb1fb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\__Old\__No_Use_GLSL_Objects\Shapes">
+      <UniqueIdentifier>{a33ba779-b415-454f-8570-a2ab68bb084d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\__Old\__No_Use_Anims">
+      <UniqueIdentifier>{8d3e9e51-5e70-4383-ada8-003057c0d5ab}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -63,46 +66,46 @@
       <Filter>소스 파일\Utills</Filter>
     </ClCompile>
     <ClCompile Include="Anims.cpp">
-      <Filter>소스 파일\__No_Use_Anims</Filter>
+      <Filter>소스 파일\__Old\__No_Use_Anims</Filter>
     </ClCompile>
     <ClCompile Include="Shaders.cpp">
       <Filter>소스 파일\Shaders</Filter>
     </ClCompile>
     <ClCompile Include="ObjectsUnused.cpp">
-      <Filter>소스 파일\__No_Use_GLSL_Objects</Filter>
+      <Filter>소스 파일\__Old\__No_Use_GLSL_Objects</Filter>
     </ClCompile>
     <ClCompile Include="Anims11.cpp">
-      <Filter>소스 파일\__No_Use_Anims</Filter>
+      <Filter>소스 파일\__Old\__No_Use_Anims</Filter>
     </ClCompile>
     <ClCompile Include="6.cpp">
-      <Filter>소스 파일\__Old_Ex</Filter>
+      <Filter>소스 파일\__Old\__Old_Ex</Filter>
     </ClCompile>
     <ClCompile Include="13.cpp">
-      <Filter>소스 파일\__Old_Ex</Filter>
+      <Filter>소스 파일\__Old\__Old_Ex</Filter>
     </ClCompile>
     <ClCompile Include="12.cpp">
-      <Filter>소스 파일\__Old_Ex</Filter>
+      <Filter>소스 파일\__Old\__Old_Ex</Filter>
     </ClCompile>
     <ClCompile Include="11.cpp">
-      <Filter>소스 파일\__Old_Ex</Filter>
+      <Filter>소스 파일\__Old\__Old_Ex</Filter>
     </ClCompile>
     <ClCompile Include="10.cpp">
-      <Filter>소스 파일\__Old_Ex</Filter>
+      <Filter>소스 파일\__Old\__Old_Ex</Filter>
     </ClCompile>
     <ClCompile Include="9.cpp">
-      <Filter>소스 파일\__Old_Ex</Filter>
+      <Filter>소스 파일\__Old\__Old_Ex</Filter>
     </ClCompile>
     <ClCompile Include="8.cpp">
-      <Filter>소스 파일\__Old_Ex</Filter>
+      <Filter>소스 파일\__Old\__Old_Ex</Filter>
     </ClCompile>
     <ClCompile Include="7.cpp">
-      <Filter>소스 파일\__Old_Ex</Filter>
+      <Filter>소스 파일\__Old\__Old_Ex</Filter>
     </ClCompile>
     <ClCompile Include="ShaderTest2.cpp">
-      <Filter>소스 파일\__Old_Ex</Filter>
+      <Filter>소스 파일\__Old\__Old_Ex</Filter>
     </ClCompile>
     <ClCompile Include="shader_test.cpp">
-      <Filter>소스 파일\__Old_Ex</Filter>
+      <Filter>소스 파일\__Old\__Old_Ex</Filter>
     </ClCompile>
     <ClCompile Include="Core.cpp">
       <Filter>소스 파일\Core</Filter>
@@ -134,6 +137,9 @@
     <ClCompile Include="Ex15.cpp">
       <Filter>소스 파일\Examples</Filter>
     </ClCompile>
+    <ClCompile Include="Ex16.cpp">
+      <Filter>소스 파일\Examples</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -149,16 +155,16 @@
       <Filter>소스 파일\enum, struct, const, defines</Filter>
     </ClInclude>
     <ClInclude Include="Anims.h">
-      <Filter>소스 파일\__No_Use_Anims</Filter>
+      <Filter>소스 파일\__Old\__No_Use_Anims</Filter>
     </ClInclude>
     <ClInclude Include="Shaders.h">
       <Filter>소스 파일\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="Objects_Unused.h">
-      <Filter>소스 파일\__No_Use_GLSL_Objects</Filter>
+      <Filter>소스 파일\__Old\__No_Use_GLSL_Objects</Filter>
     </ClInclude>
     <ClInclude Include="Anims11.h">
-      <Filter>소스 파일\__No_Use_Anims</Filter>
+      <Filter>소스 파일\__Old\__No_Use_Anims</Filter>
     </ClInclude>
     <ClInclude Include="Core.h">
       <Filter>소스 파일\Core</Filter>
@@ -188,6 +194,9 @@
       <Filter>소스 파일\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Ex15.h">
+      <Filter>소스 파일\Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Ex16.h">
       <Filter>소스 파일\Examples</Filter>
     </ClInclude>
   </ItemGroup>

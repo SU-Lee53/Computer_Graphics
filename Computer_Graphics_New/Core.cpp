@@ -38,8 +38,9 @@ void Core::InitScreen(int argc, char** argv, int position_x, int position_y, int
 
 void Core::InitShader()
 {
-	shader = new Shaders();
+	Core::GetInstance().shader = new Shaders();
 }
+
 
 void Core::BindDrawCallback(void (*funcptr)())
 {

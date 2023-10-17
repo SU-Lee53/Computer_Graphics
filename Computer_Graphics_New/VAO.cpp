@@ -33,6 +33,7 @@ void VAO::ChangeElementBuffer(unsigned int* element, int eBufSize)
 void VAO::InitVAO(VAO_TYPE type)	// elementMode가 true면 EBO를 사용하므로 버퍼 3개 생성함
 {
 	bool GenBufs = false;	// vbo를 생성할지 안할지 결정하는 플래그
+
 	if (!h_VAO)
 	{
 		glGenVertexArrays(1, &h_VAO);

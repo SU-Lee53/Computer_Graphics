@@ -30,6 +30,14 @@ glm::mat4 TransformManager::GetRotateMatrix(float degree, AXIS axis)
 	return rotate;
 }
 
+glm::mat4 TransformManager::GetRotateMatrix(float degree, glm::vec3 axis)
+{
+	glm::mat4 rotate = glm::mat4(1.0f);
+	rotate = glm::rotate(rotate, glm::radians(degree), axis);
+
+	return rotate;
+}
+
 glm::mat4 TransformManager::GetScaleMatrix(glm::vec3 vec)
 {
 	glm::mat4 scale = glm::mat4(1.0f);
@@ -42,6 +50,6 @@ void TransformManager::BindTransformMatrix(glm::mat4* matrix)
 {
 	unsigned int shaderID = Core::GetInstance().GetShaderID();
 	glUseProgram(shaderID);
-	unsigned int uniformLocation = glGetUniformLocation(shaderID, "transform");
+	unsigned int uniformLocation = glGetUniformLocation(shaderID, "model");
 	glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(*matrix));
 }

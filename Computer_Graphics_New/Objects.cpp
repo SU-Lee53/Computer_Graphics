@@ -12,6 +12,11 @@ Objects::Objects(OBJ_TYPE_3D type, Coord pos, float size) : _centerPos(pos), _si
 	CreateObject3D(type);
 }
 
+Objects::Objects(QOBJ_TYPE type, Coord pos, float size) : _qType(type), _centerPos(pos), _size(size)
+{
+	CreateQuadricObject();
+}
+
 Objects::~Objects()
 {
 	_vao->~VAO();
@@ -141,21 +146,52 @@ void Objects::CreateObject3D(OBJ_TYPE_3D type)
 
 }
 
+void Objects::CreateQuadricObject()
+{
+	_qObj = gluNewQuadric();
+	gluQuadricDrawStyle(_qObj, GLU_LINE);
+}
+
 void Objects::Render()
 {
 	if (this == nullptr)
 		return;
 
-	glBindVertexArray(_vao->GetVAOHandle());
-
-	if(!indexed)
+	
+	if(_qType == NONE)
 	{
-		glDrawArrays(GL_TRIANGLES, 0, _vao->GetVertexCount());
+		glBindVertexArray(_vao->GetVAOHandle());
+		if (!indexed)
+		{
+			glDrawArrays(GL_TRIANGLES, 0, _vao->GetVertexCount());
+		}
+		else
+		{
+			glDrawElements(GL_TRIANGLES, _vao->GetElementCount(), GL_UNSIGNED_INT, 0);
+		}
 	}
 	else
 	{
-		glDrawElements(GL_TRIANGLES, _vao->GetElementCount(), GL_UNSIGNED_INT, 0);
+		switch (_qType)
+		{
+		case QOBJ_SPHERE:
+			gluSphere(_qObj, 0.2, 20, 20);
+			break;
+
+		case QOBJ_CYLINDER:
+			gluCylinder(_qObj, 0.2, 0.2, 0.5, 20, 8);
+			break;
+
+		case QOBJ_CONE:
+			gluCylinder(_qObj, 0.2, 0.0, 0.5, 20, 8);
+			break;
+
+		case QOBJ_DISK:
+			gluDisk(_qObj, 0.2, 0.4, 20, 3);
+			break;
+		}
 	}
+
 	glutPostRedisplay();
 }
 

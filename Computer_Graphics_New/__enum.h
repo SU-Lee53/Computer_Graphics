@@ -6,5 +6,4 @@ enum Dir
 	DOWN,
 	LEFT,
 	RIGHT,
-	NONE
 };

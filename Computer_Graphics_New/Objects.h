@@ -20,7 +20,9 @@ enum QOBJ_TYPE	// Quadric Objects
 {
 	QOBJ_SPHERE = 0,
 	QOBJ_CYLINDER,
-	QOBJ_DISK
+	QOBJ_CONE,
+	QOBJ_DISK,
+	NONE
 };
 
 enum AXIS
@@ -35,13 +37,16 @@ class Objects
 public:
 	// 2D전용 생성자
 	Objects(OBJ_TYPE_2D type, Coord pos, float size);
+	// 3D전용 생성자
 	Objects(OBJ_TYPE_3D type, Coord pos, float size);
+	// Quadric Objects 전용 생성자
+	Objects(QOBJ_TYPE type, Coord pos, float size);
 	~Objects();
 
 private:
 	void CreateObject2D(OBJ_TYPE_2D type);
 	void CreateObject3D(OBJ_TYPE_3D type);
-	void CreateQuadricObject(QOBJ_TYPE type) {}
+	void CreateQuadricObject();
 
 public:
 	// 유틸함수
@@ -49,12 +54,13 @@ public:
 
 	// 렌더링
 	void Render();
-
+	
 private:
 	VAO* _vao;
 	Coord _centerPos;
 	float _size;
-
+	QOBJ_TYPE _qType = NONE;
+	GLUquadricObj* _qObj = nullptr;
 
 	bool indexed = false;
 };

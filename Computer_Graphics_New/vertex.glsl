@@ -5,11 +5,12 @@ layout(location = 1) in vec3 in_Color;
 
 out vec3 out_Color;
 
-uniform mat4 transform;
+uniform mat4 model;
+uniform mat4 projection;
 
 void main()
 {
-	gl_Position = transform * vec4(in_Position, 1.0f);
+	gl_Position = projection * model * vec4(in_Position, 1.0f);
 
 	out_Color = in_Color;
 }
