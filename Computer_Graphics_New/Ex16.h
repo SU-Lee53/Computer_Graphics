@@ -24,10 +24,13 @@ public:
 	virtual void KeyboardUpdate() override;
 	virtual void MotionUpdate() override {}
 	virtual void SpecialKeyUpdate() override {}
+
 	void AnimationUpdate();
 	void RenderWorld();
 
-	
+	void ChangeObjects();
+
+
 private:
 	Objects* _obj1;
 	Objects* _obj2;

@@ -19,7 +19,8 @@ Objects::Objects(QOBJ_TYPE type, Coord pos, float size) : _qType(type), _centerP
 
 Objects::~Objects()
 {
-	_vao->~VAO();
+	if (isQuadric() == false)
+		_vao->~VAO();
 }
 
 void Objects::CreateObject2D(OBJ_TYPE_2D type)

@@ -55,6 +55,15 @@ public:
 	// 렌더링
 	void Render();
 	
+	// Quadric Object인지 확인하는 flag 반환
+	bool isQuadric()
+	{
+		if (_qType == NONE)
+			return false;
+		else
+			return true;
+	}
+
 private:
 	VAO* _vao;
 	Coord _centerPos;

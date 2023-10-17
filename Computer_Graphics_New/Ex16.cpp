@@ -12,6 +12,7 @@ Ex16::~Ex16()
 
 void Ex16::InitEx()
 {
+	srand(time(0));
 	_worldMat = TransformManager::GetInstance().GetRotateMatrix(30.0f, X_AXIS)
 		* TransformManager::GetInstance().GetRotateMatrix(30.0f, Y_AXIS);
 
@@ -127,19 +128,96 @@ void Ex16::KeyboardUpdate()
 
 		revolutionDirection = false;
 		break;
-	}
 
+	case 'c':
+		ChangeObjects();
+		break;
+	}
 
 
 	delete kState;
 }
 
+void Ex16::ChangeObjects()
+{
+
+	delete _obj1;
+	delete _obj2;
+
+
+	int obj1 = rand() % 7;
+	int obj2 = rand() % 7;
+
+	switch (obj1)
+	{
+	case 0:
+		_obj1 = new Objects(OBJ_TETRAHEDRON, { 0,0 }, 0.15);
+		break;
+
+	case 1:
+		_obj1 = new Objects(OBJ_CUBE, { 0,0 }, 0.15);
+		break;
+
+	case 2:
+		_obj1 = new Objects(OBJ_PYRAMID, { 0,0 }, 0.15);
+		break;
+
+	case 3:
+		_obj1 = new Objects(QOBJ_SPHERE, { 0,0 }, 0.15);
+		break;
+
+	case 4:
+		_obj1 = new Objects(QOBJ_CYLINDER, { 0,0 }, 0.15);
+		break;
+
+	case 5:
+		_obj1 = new Objects(QOBJ_CONE, { 0,0 }, 0.15);
+		break;
+
+	case 6:
+		_obj1 = new Objects(QOBJ_DISK, { 0,0 }, 0.15);
+		break;
+
+	}
+
+	switch (obj2)
+	{
+	case 0:
+		_obj2 = new Objects(OBJ_TETRAHEDRON, { 0,0 }, 0.15);
+		break;
+
+	case 1:
+		_obj2 = new Objects(OBJ_CUBE, { 0,0 }, 0.15);
+		break;
+
+	case 2:
+		_obj2 = new Objects(OBJ_PYRAMID, { 0,0 }, 0.15);
+		break;
+
+	case 3:
+		_obj2 = new Objects(QOBJ_SPHERE, { 0,0 }, 0.15);
+		break;
+
+	case 4:
+		_obj2 = new Objects(QOBJ_CYLINDER, { 0,0 }, 0.15);
+		break;
+
+	case 5:
+		_obj2 = new Objects(QOBJ_CONE, { 0,0 }, 0.15);
+		break;
+
+	case 6:
+		_obj2 = new Objects(QOBJ_DISK, { 0,0 }, 0.15);
+		break;
+
+	}
+
+}
 
 void Ex16::AnimationUpdate()
 {
 	glm::mat4 rotation = glm::mat4(1.0f);
 	
-
 	if (rotateSwitch == true)
 	{
 		if (rotateAxis == X_AXIS)
@@ -182,32 +260,25 @@ void Ex16::AnimationUpdate()
 	
 	}
 
-	glm::mat4 revolution1 = glm::mat4(1.0f);
-	glm::mat4 revolution2 = glm::mat4(1.0f);
-	glm::vec3 axis = TransformManager::GetInstance().GetRotateMatrix(30.0f, Y_AXIS) * glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
+	glm::mat4 revolution = glm::mat4(1.0f);
 
 	if (revolutionSwitch)
 	{
 		if (revolutionDirection)
 		{
-			revolution1 = TransformManager::GetInstance().GetRotateMatrix(0.5f, Y_AXIS);
+			revolution = TransformManager::GetInstance().GetRotateMatrix(0.5f, Y_AXIS);
 			_objPos1 = TransformManager::GetInstance().GetRotateMatrix(0.5f, Y_AXIS) * glm::vec4(_objPos1, 1.0f);
 			_objPos2 = TransformManager::GetInstance().GetRotateMatrix(0.5f, Y_AXIS) * glm::vec4(_objPos2, 1.0f);
 		}
 		else
 		{
-			revolution1 = TransformManager::GetInstance().GetRotateMatrix(-0.5f, Y_AXIS);
+			revolution = TransformManager::GetInstance().GetRotateMatrix(-0.5f, Y_AXIS);
 			_objPos1 = glm::vec3(radius * glm::cos(glm::radians(-0.5f)), 0.0, radius * glm::sin(glm::radians(-0.05f)));
 			_objPos2 = glm::vec3(radius * glm::cos(glm::radians(-0.5f)), 0.0, radius * glm::sin(glm::radians(-0.05f)));
 		}
-		
-		glm::mat4 Tm1 = TransformManager::GetInstance().GetTranslateMatrix(_objPos1);
-		glm::mat4 Tm2 = TransformManager::GetInstance().GetTranslateMatrix(_objPos2);
 
-		_objMat1 = revolution1 * _objMat1;
-		_objMat2 = revolution1 * _objMat2;
-
-		
+		_objMat1 = revolution * _objMat1;
+		_objMat2 = revolution * _objMat2;
 
 	}
 
@@ -215,6 +286,7 @@ void Ex16::AnimationUpdate()
 
 
 	/*
+	
 	이동행렬로 공전 -> 자전과 함께 돌지 못함
 	if (revolutionSwitch)
 	{
@@ -285,4 +357,6 @@ void Ex16::RenderWorld()
 	}
 
 }
+
+
 
