@@ -18,8 +18,7 @@ void Ex16::InitEx()
 
 	_objMat1 = TransformManager::GetInstance().GetTranslateMatrix({ 0.0f, 0.f, 0.5f });
 	_objMat2 = TransformManager::GetInstance().GetTranslateMatrix({ 0.0f, 0.0f, -0.5f });
-	_objPos1 = _objPos1 * glm::vec3(0.0f, 0.0f, 0.5f);
-	_objPos2 = _objPos2 * glm::vec3(0.0f, 0.0f, -0.5f);
+
 
 	projection = glm::perspective(45.0f, 1.0f, 0.1f, 100.0f);
 	projection = glm::translate(projection, glm::vec3(0.0, 0.0, -2.0));
@@ -109,7 +108,7 @@ void Ex16::KeyboardUpdate()
 
 	case '3':
 		rotateMode = BOTH;
-
+		break;
 
 	case 'r':
 		if (!revolutionSwitch)
@@ -131,6 +130,10 @@ void Ex16::KeyboardUpdate()
 
 	case 'c':
 		ChangeObjects();
+		break;
+
+	case 's':
+		Reset();
 		break;
 	}
 
@@ -214,6 +217,20 @@ void Ex16::ChangeObjects()
 
 }
 
+void Ex16::Reset()
+{
+	_objMat1 = TransformManager::GetInstance().GetTranslateMatrix({ 0.0f, 0.f, 0.5f });
+	_objMat2 = TransformManager::GetInstance().GetTranslateMatrix({ 0.0f, 0.0f, -0.5f });
+
+	delete _obj1;
+	delete _obj2;
+
+
+	_obj1 = new Objects(OBJ_CUBE, { 0.0f, 0.0f , 0.0f }, 0.15);
+	_obj2 = new Objects(QOBJ_SPHERE, { 0.0f, 0.0f, 0.0f }, 0.3);
+
+}
+
 void Ex16::AnimationUpdate()
 {
 	glm::mat4 rotation = glm::mat4(1.0f);
@@ -267,14 +284,10 @@ void Ex16::AnimationUpdate()
 		if (revolutionDirection)
 		{
 			revolution = TransformManager::GetInstance().GetRotateMatrix(0.5f, Y_AXIS);
-			_objPos1 = TransformManager::GetInstance().GetRotateMatrix(0.5f, Y_AXIS) * glm::vec4(_objPos1, 1.0f);
-			_objPos2 = TransformManager::GetInstance().GetRotateMatrix(0.5f, Y_AXIS) * glm::vec4(_objPos2, 1.0f);
 		}
 		else
 		{
 			revolution = TransformManager::GetInstance().GetRotateMatrix(-0.5f, Y_AXIS);
-			_objPos1 = glm::vec3(radius * glm::cos(glm::radians(-0.5f)), 0.0, radius * glm::sin(glm::radians(-0.05f)));
-			_objPos2 = glm::vec3(radius * glm::cos(glm::radians(-0.5f)), 0.0, radius * glm::sin(glm::radians(-0.05f)));
 		}
 
 		_objMat1 = revolution * _objMat1;

@@ -27,6 +27,9 @@ void Objects::CreateObject2D(OBJ_TYPE_2D type)
 {
 	switch (type)
 	{
+	case OBJ_LINE:
+
+
 	case OBJ_TRIANGLE:
 	{
 		float vertex[] = {

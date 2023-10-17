@@ -29,7 +29,7 @@ public:
 	void RenderWorld();
 
 	void ChangeObjects();
-
+	void Reset();
 
 private:
 	Objects* _obj1;
@@ -38,9 +38,6 @@ private:
 	glm::mat4 _worldMat = glm::mat4(1.0f);
 	glm::mat4 _objMat1 = glm::mat4(1.0f);
 	glm::mat4 _objMat2 = glm::mat4(1.0f);
-
-	glm::vec3 _objPos1= glm::vec3(1.0f);
-	glm::vec3 _objPos2 = glm::vec3(1.0f);
 
 	glm::mat4 projection = glm::mat4(1.0f);
 
@@ -64,10 +61,10 @@ private:
 
 
 
-	// 공전각
+	// 공전각 -> 이동행렬 버전에서 사용하였으나 폐기
 	// float revolutionDegree1 = 90.0f;
 	// float revolutionDegree2 = 270.0f;
-	float radius = 0.5f;
+	// float radius = 0.5f;
 
 };
 

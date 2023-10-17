@@ -140,6 +140,9 @@
     <ClCompile Include="Ex16.cpp">
       <Filter>소스 파일\Examples</Filter>
     </ClCompile>
+    <ClCompile Include="Ex17.cpp">
+      <Filter>소스 파일\Examples</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -197,6 +200,9 @@
       <Filter>소스 파일\Examples</Filter>
     </ClInclude>
     <ClInclude Include="Ex16.h">
+      <Filter>소스 파일\Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Ex17.h">
       <Filter>소스 파일\Examples</Filter>
     </ClInclude>
   </ItemGroup>
