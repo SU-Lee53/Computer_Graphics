@@ -51,3 +51,5 @@ Computer_Graphics_New/x64/Debug/Anims.obj
 *.tlog
 *.log
 *.pdb
+*.aps
+*.rc
