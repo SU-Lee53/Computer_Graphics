@@ -13,7 +13,7 @@ public:
 	// 정점 버퍼 함수
 
 	int GetShaderID() { return shaderID; }
-	
+
 private:
 	void makeVertexShaders();
 	void makeFragmentShaders();

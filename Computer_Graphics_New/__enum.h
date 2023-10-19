@@ -1,6 +1,6 @@
 #pragma once
 
-enum Dir
+enum DIR
 {
 	UP = 0,
 	DOWN,

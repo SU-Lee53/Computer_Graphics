@@ -22,6 +22,7 @@ public:
 	virtual void MouseUpdate() override;
 	virtual void KeyboardUpdate() override;
 	virtual void MotionUpdate() override {}
+	virtual void SpecialKeyUpdate() override {}
 
 	void RenderWorld();
 	void SetRandomFace(RenderMode2 mode);
@@ -40,6 +41,7 @@ private:
 
 	// 변환행렬은 단위행렬로 초기화
 	glm::mat4 tMatrix = glm::mat4(1.0f);
+	glm::mat4 _projection = glm::mat4(1.0f);
 
 	// 선택한 면만 그릴때 사용한 인덱스 버퍼
 	unsigned int elementBuf1[6];

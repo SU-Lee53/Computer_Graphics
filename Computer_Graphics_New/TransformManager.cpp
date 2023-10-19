@@ -46,10 +46,10 @@ glm::mat4 TransformManager::GetScaleMatrix(glm::vec3 vec)
 	return scale;
 }
 
-void TransformManager::BindTransformMatrix(glm::mat4* matrix)
+void TransformManager::BindTransformMatrix(glm::mat4 matrix)
 {
 	unsigned int shaderID = Core::GetInstance().GetShaderID();
 	glUseProgram(shaderID);
 	unsigned int uniformLocation = glGetUniformLocation(shaderID, "model");
-	glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(*matrix));
+	glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(matrix));
 }

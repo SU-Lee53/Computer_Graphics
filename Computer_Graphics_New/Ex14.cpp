@@ -16,6 +16,9 @@ void Ex14::InitEx()
 {
 	tMatrix = tMatrix * TransformManager::GetInstance().GetRotateMatrix(20.0f, X_AXIS);
 	tMatrix = tMatrix * TransformManager::GetInstance().GetRotateMatrix(20.0f, Y_AXIS);
+
+	_projection = glm::perspective(45.0f, 1.0f, 0.1f, 100.0f);
+	_projection = glm::translate(_projection, glm::vec3(0.0, 0.0, -2.0));
 }
 
 void Ex14::drawScene()
@@ -24,6 +27,9 @@ void Ex14::drawScene()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	MouseUpdate();
 	KeyboardUpdate();
+
+	unsigned int projectionLocation = glGetUniformLocation(Core::GetInstance().GetShaderID(), "projection");
+	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &_projection[0][0]);
 
 	TransformManager::GetInstance().BindTransformMatrix(&tMatrix);
 
@@ -117,6 +123,7 @@ void Ex14::KeyboardUpdate()
 
 void Ex14::RenderWorld()
 {
+
 	if(modeSwitch){
 		switch (renderMode)
 		{

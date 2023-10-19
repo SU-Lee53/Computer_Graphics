@@ -18,9 +18,6 @@
     <Filter Include="소스 파일\Shaders">
       <UniqueIdentifier>{f4fd67de-7751-4d64-8fbf-086ec1003f5f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\GLSL">
-      <UniqueIdentifier>{a6b3f779-c34f-46b6-9e3f-3a58ad27e83f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Core">
       <UniqueIdentifier>{b9949c5b-10af-42f8-a364-3ae00992336d}</UniqueIdentifier>
     </Filter>
@@ -56,6 +53,15 @@
     </Filter>
     <Filter Include="소스 파일\__Old\__No_Use_Anims">
       <UniqueIdentifier>{8d3e9e51-5e70-4383-ada8-003057c0d5ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Shaders\GLSL">
+      <UniqueIdentifier>{a6b3f779-c34f-46b6-9e3f-3a58ad27e83f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Camera">
+      <UniqueIdentifier>{2be84619-dea5-4a2a-ae03-f08323d88deb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Projection">
+      <UniqueIdentifier>{80a1b8e2-1798-4347-b77e-2bfb12001cb2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +149,15 @@
     <ClCompile Include="Ex17.cpp">
       <Filter>소스 파일\Examples</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>소스 파일\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Ex18.cpp">
+      <Filter>소스 파일\Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Projection.cpp">
+      <Filter>소스 파일\Projection</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -205,13 +220,28 @@
     <ClInclude Include="Ex17.h">
       <Filter>소스 파일\Examples</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>소스 파일\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Ex18.h">
+      <Filter>소스 파일\Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Projection.h">
+      <Filter>소스 파일\Projection</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertex.glsl">
-      <Filter>소스 파일\GLSL</Filter>
+      <Filter>소스 파일\Shaders\GLSL</Filter>
     </None>
     <None Include="fragment.glsl">
-      <Filter>소스 파일\GLSL</Filter>
+      <Filter>소스 파일\Shaders\GLSL</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Computer_Graphics_New.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

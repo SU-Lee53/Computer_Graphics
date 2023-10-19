@@ -1,6 +1,9 @@
 #pragma once
 #include "pch.h"
 
+// 이동 후에도 현위치에서 이동이 되어야함 -0.3 감점
+
+
 enum ANIMTYPE
 {
 	ANIM_SPIRAL = 0,
@@ -39,6 +42,8 @@ public:
 	void MakeSpiral2D();
 
 	void Reset();
+	void SetOrigin();
+
 
 private:
 	Objects* _obj1;
@@ -47,7 +52,8 @@ private:
 	glm::mat4 _worldMat = glm::mat4(1.0f);
 	glm::mat4 _objMat1 = glm::mat4(1.0f);
 	glm::mat4 _objMat2 = glm::mat4(1.0f);
-	glm::mat4 _projection = glm::mat4(1.0f);
+	Camera* _camera;
+	Projection* _projection;
 
 	VAO* _spiralVAO;
 	float _spiralVBuf[256];
@@ -58,6 +64,9 @@ private:
 	int _spiralMoveIdx2 = 0;
 
 	ANIMTYPE _animType = ANIM_NONE;
+
+	glm::vec3 _originPos1;
+	glm::vec3 _originPos2;
 
 	glm::vec3 _objPos1 = glm::vec3(0.0f, 0.0f, 0.8f);
 	glm::vec3 _objPos2 = glm::vec3(0.0f, 0.0f, -0.8f);

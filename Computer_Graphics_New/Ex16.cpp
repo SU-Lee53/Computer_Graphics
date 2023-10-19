@@ -241,22 +241,22 @@ void Ex16::AnimationUpdate()
 		{
 			if (rotateDirection == true)
 			{
-				rotation = rotation * TransformManager::GetInstance().GetRotateMatrix(0.5f, X_AXIS);
+				rotation = rotation * TransformManager::GetInstance().GetRotateMatrix(0.2f, X_AXIS);
 			}
 			else
 			{
-				rotation = rotation * TransformManager::GetInstance().GetRotateMatrix(-0.5f, X_AXIS);
+				rotation = rotation * TransformManager::GetInstance().GetRotateMatrix(-0.2f, X_AXIS);
 			}
 		}
 		else if (rotateAxis == Y_AXIS)
 		{
 			if (rotateDirection == true)
 			{
-				rotation = rotation * TransformManager::GetInstance().GetRotateMatrix(0.5f, Y_AXIS);
+				rotation = rotation * TransformManager::GetInstance().GetRotateMatrix(0.2f, Y_AXIS);
 			}
 			else
 			{
-				rotation = rotation * TransformManager::GetInstance().GetRotateMatrix(-0.5f, Y_AXIS);
+				rotation = rotation * TransformManager::GetInstance().GetRotateMatrix(-0.2f, Y_AXIS);
 			}
 		}
 		switch (rotateMode)
@@ -283,11 +283,11 @@ void Ex16::AnimationUpdate()
 	{
 		if (revolutionDirection)
 		{
-			revolution = TransformManager::GetInstance().GetRotateMatrix(0.5f, Y_AXIS);
+			revolution = TransformManager::GetInstance().GetRotateMatrix(0.2f, Y_AXIS);
 		}
 		else
 		{
-			revolution = TransformManager::GetInstance().GetRotateMatrix(-0.5f, Y_AXIS);
+			revolution = TransformManager::GetInstance().GetRotateMatrix(-0.2f, Y_AXIS);
 		}
 
 		_objMat1 = revolution * _objMat1;

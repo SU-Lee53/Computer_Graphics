@@ -160,11 +160,19 @@
     <ClCompile Include="Anims11.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Core.cpp" />
-    <ClCompile Include="Ex14.cpp" />
-    <ClCompile Include="Ex15.cpp" />
-    <ClCompile Include="Ex16.cpp" />
+    <ClCompile Include="Ex14.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Ex15.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Ex16.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Ex17.cpp" />
+    <ClCompile Include="Ex18.cpp" />
     <ClCompile Include="Examples.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main_core.cpp" />
@@ -173,6 +181,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Projection.cpp" />
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="ShaderTest2.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -192,13 +201,23 @@
     <ClInclude Include="Anims11.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Core.h" />
-    <ClInclude Include="Ex15.h" />
-    <ClInclude Include="Ex16.h" />
+    <ClInclude Include="Ex15.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Ex16.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Ex17.h" />
+    <ClInclude Include="Ex18.h" />
+    <ClInclude Include="Projection.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="TransformManager.h" />
     <ClInclude Include="__defines.h" />
-    <ClInclude Include="Ex14.h" />
+    <ClInclude Include="Ex14.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Examples.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Objects.h" />
@@ -216,6 +235,9 @@
   <ItemGroup>
     <None Include="fragment.glsl" />
     <None Include="vertex.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Computer_Graphics_New.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

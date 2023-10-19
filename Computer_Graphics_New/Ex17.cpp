@@ -20,8 +20,8 @@ void Ex17::InitEx()
 	_objMat1 = GET_SINGLE(TransformManager).GetTranslateMatrix({ 0.0f, 0.f, 0.8f });
 	_objMat2 = GET_SINGLE(TransformManager).GetTranslateMatrix({ 0.0f, 0.0f, -0.8f });
 
-	_projection = glm::perspective(45.0f, 1.0f, 0.1f, 100.0f);
-	_projection = glm::translate(_projection, glm::vec3(0.0, 0.0, -2.0));
+	_camera = new Camera(glm::vec3(0, 0, 2), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	_projection = new Projection(45.0f, 1.0f, 0.1f, 50.0f, -2.0f);
 
 	cout << "신축, 이동 조작키" << endl;
 	cout << "* : 원점 확대" << endl;
@@ -61,13 +61,13 @@ void Ex17::drawScene()
 {
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	unsigned int projectionLocation = glGetUniformLocation(Core::GetInstance().GetShaderID(), "projection");
-	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &_projection[0][0]);
+	_camera->Bind();
+	_projection->Bind();
 
 	KeyboardUpdate();
 	AnimPlayer();
 
-	GET_SINGLE(TransformManager).BindTransformMatrix(&_worldMat);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat);
 	DrawAxis();
 
 	RenderWorld();
@@ -243,6 +243,8 @@ void Ex17::KeyboardUpdate()
 
 void Ex17::AnimPlayer()
 {
+	SetOrigin();
+
 	switch (_animType)
 	{
 	case ANIM_SPIRAL:
@@ -308,8 +310,8 @@ void Ex17::GotoCenterAnim()
 
 	if(_CenterSwitch == false)
 	{
-		_objPos1[2] -= 0.01f;
-		_objPos2[2] += 0.01f;
+		_objPos1[2] -= 0.001f;
+		_objPos2[2] += 0.001f;
 		if (_objPos1[2] <= 0.0f)
 		{
 			_CenterSwitch = true;
@@ -317,8 +319,8 @@ void Ex17::GotoCenterAnim()
 	}
 	else
 	{
-		_objPos1[2] += 0.01f;
-		_objPos2[2] -= 0.01f;
+		_objPos1[2] += 0.001f;
+		_objPos2[2] -= 0.001f;
 		if (_objPos1[2] >= 0.8f)
 		{
 			_CenterSwitch = false;
@@ -336,8 +338,8 @@ void Ex17::GotoCenterAnim()
 
 void Ex17::CrossAnim()
 {
-	_objPos1[2] -= 0.01f;
-	_objPos2[2] += 0.01f;
+	_objPos1[2] -= 0.001f;
+	_objPos2[2] += 0.001f;
 
 	_objMat1 = GET_SINGLE(TransformManager).GetTranslateMatrix(_objPos1);
 	_objMat2 = GET_SINGLE(TransformManager).GetTranslateMatrix(_objPos2);
@@ -347,33 +349,25 @@ void Ex17::CrossAnim()
 		_objPos1[2] = 0.8f;
 		_objPos2[2] = -0.8f;
 		_animType = ANIM_NONE;
-
-		if (positionSwitched)
-			positionSwitched = false;
-		else
-			positionSwitched = true;
 	}
 
 }
 
 void Ex17::RotateAnim()
 {
-	glm::mat4 rotateMatrix = GET_SINGLE(TransformManager).GetRotateMatrix(0.5f, Y_AXIS);
+	glm::mat4 rotateMatrix = GET_SINGLE(TransformManager).GetRotateMatrix(0.2f, Y_AXIS);
 
-	_rotateDegree += 0.5f;
+	_rotateDegree += 0.2f;
 
 	_objMat1 = rotateMatrix * _objMat1;
 	_objMat2 = rotateMatrix * _objMat2;
 
 	if (_rotateDegree >= 180.0f)
 	{
+		_objPos1[2] = 0.8f;
+		_objPos2[2] = -0.8f;
 		_rotateDegree = 0.0f;
 		_animType = ANIM_NONE;
-
-		if (positionSwitched)
-			positionSwitched = false;
-		else
-			positionSwitched = true;
 	}
 
 }
@@ -382,8 +376,8 @@ void Ex17::UpDownAnim()
 {
 	if(UpDownSwitch == false)
 	{
-		_objPos1 += glm::vec3(0.0f, 0.01f, -0.01f);
-		_objPos2 += glm::vec3(0.0f, -0.01f, 0.01f);
+		_objPos1 += glm::vec3(0.0f, 0.001f, -0.001f);
+		_objPos2 += glm::vec3(0.0f, -0.001f, 0.001f);
 		if (_objPos1[2] <= 0.0)
 		{
 			UpDownSwitch = true;
@@ -391,8 +385,8 @@ void Ex17::UpDownAnim()
 	}
 	else
 	{
-		_objPos1 += glm::vec3(0.0f, -0.01f, -0.01f);
-		_objPos2 += glm::vec3(0.0f, 0.01f, 0.01f);
+		_objPos1 += glm::vec3(0.0f, -0.001f, -0.001f);
+		_objPos2 += glm::vec3(0.0f, 0.001f, 0.001f);
 	}
 
 	_objMat1 = GET_SINGLE(TransformManager).GetTranslateMatrix(_objPos1);
@@ -404,11 +398,6 @@ void Ex17::UpDownAnim()
 		_objPos1[2] = 0.8f;
 		_objPos2[2] = -0.8f;
 		_animType = ANIM_NONE;
-
-		if(positionSwitched)
-			positionSwitched = false;
-		else
-			positionSwitched = true;
 	}
 
 }
@@ -432,20 +421,20 @@ void Ex17::RenderWorld()
 
 	if (_obj1 != nullptr)
 	{
-		GET_SINGLE(TransformManager).BindTransformMatrix(&objMatUse1);
+		GET_SINGLE(TransformManager).BindTransformMatrix(objMatUse1);
 		_obj1->Render();
 	}
 
 	if (_obj2 != nullptr)
 	{
-		GET_SINGLE(TransformManager).BindTransformMatrix(&objMatUse2);
+		GET_SINGLE(TransformManager).BindTransformMatrix(objMatUse2);
 		_obj2->Render();
 	}
 
 	
 	if (_animType == ANIM_SPIRAL)
 	{
-		GET_SINGLE(TransformManager).BindTransformMatrix(&_worldMat);
+		GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat);
 		glBindVertexArray(_spiralVAO->GetVAOHandle());
 		glLineWidth(1.0);
 		for (int i = 0; i < (256 / 3) - 1; i++)
@@ -487,11 +476,19 @@ void Ex17::Reset()
 	_obj1 = new Objects(OBJ_CUBE, { 0.0f, 0.0f , 0.0f }, 0.15);
 	_obj2 = new Objects(QOBJ_SPHERE, { 0.0f, 0.0f, 0.0f }, 0.3);
 
-	_objPos1 = glm::vec3(0.0f, 0.0f, 0.8f);
-	_objPos2 = glm::vec3(0.0f, 0.0f, -0.8f);
+	_objPos1 = _originPos1;
+	_objPos2 = _originPos2;
 
 	_rotateDegree = 0.0f;
 
 	UpDownSwitch = false;
 	_CenterSwitch = false;
+}
+
+void Ex17::SetOrigin()
+{
+	_originPos1 = _objPos1;
+	_originPos2 = _objPos2;
+	
+
 }

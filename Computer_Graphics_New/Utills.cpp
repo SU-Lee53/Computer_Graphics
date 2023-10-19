@@ -73,4 +73,11 @@ void DrawAxis()
 	glEnd();
 
 
+
+}
+
+void SetBackground(RGB rgb)
+{
+	glClearColor(rgb.Red, rgb.Green, rgb.Blue, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }

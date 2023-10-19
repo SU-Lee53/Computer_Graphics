@@ -25,7 +25,7 @@ private:
 	Objects* _obj;
 	glm::mat4 unit = glm::mat4(1.0f);
 	glm::mat4 tMatrix = glm::mat4(1.0f);
-
+	glm::mat4 _projection = glm::mat4(1.0f);
 	/*
 	
 	키보드 명령

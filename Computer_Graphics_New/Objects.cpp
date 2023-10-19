@@ -55,19 +55,22 @@ void Objects::CreateObject3D(OBJ_TYPE_3D type)
 	{
 	case OBJ_TETRAHEDRON:
 	{
-		float vertex[] = {		// 사면체의 정점: 4*3 = 12, 위에 꼭짓점 하나 찍고 zx평면에 삼각형 하나 그려서 정점 이어주면 됨
+		float vertex[] = 
+		{		// 사면체의 정점: 4*3 = 12, 위에 꼭짓점 하나 찍고 zx평면에 삼각형 하나 그려서 정점 이어주면 됨
 			_centerPos.x, _centerPos.y + (_size * sqrt(2)), _centerPos.z,	// 위쪽 꼭짓점
 			_centerPos.x, _centerPos.y - _size, _centerPos.z - (_size * sqrt(2)),
 			_centerPos.x + _size, _centerPos.y - _size, _centerPos.z + _size,
 			_centerPos.x - _size, _centerPos.y - _size, _centerPos.z + _size,
 		};
-		float color[] = {
+		float color[] = 
+		{
 		1.0f, 0.0f, 0.0f,
 		0.0f, 1.0f, 0.0f,
 		0.0f, 0.0f, 1.0f,
 		0.0f, 0.0f, 0.0f
 		};
-		unsigned int element[] = {
+		unsigned int element[] = 
+		{
 			0, 2, 1,
 			0, 3, 2,
 			0, 1, 3,
@@ -79,7 +82,8 @@ void Objects::CreateObject3D(OBJ_TYPE_3D type)
 	}
 	case OBJ_CUBE:
 	{
-		float vertex[] = {
+		float vertex[] = 
+		{
 			_centerPos.x - _size, _centerPos.y + _size, _centerPos.z - _size,
 			_centerPos.x + _size, _centerPos.y + _size, _centerPos.z - _size,
 			_centerPos.x - _size, _centerPos.y + _size, _centerPos.z + _size,
@@ -89,7 +93,8 @@ void Objects::CreateObject3D(OBJ_TYPE_3D type)
 			_centerPos.x - _size, _centerPos.y - _size, _centerPos.z + _size,
 			_centerPos.x + _size, _centerPos.y - _size, _centerPos.z + _size
 		};
-		float color[] = {
+		float color[] = 
+		{
 			1.0f, 0.0f, 0.0f,
 			0.0f, 1.0f, 0.0f,
 			0.0f, 0.0f, 1.0f,
@@ -99,7 +104,8 @@ void Objects::CreateObject3D(OBJ_TYPE_3D type)
 			0.0f, 0.0f, 0.0f,
 			1.0f, 1.0f, 1.0f
 		};
-		unsigned int element[] = {
+		unsigned int element[] = 
+		{
 			0, 2, 1,	// 면 1
 			1, 2, 3,
 			0, 4, 2,	// 면 2
@@ -117,23 +123,27 @@ void Objects::CreateObject3D(OBJ_TYPE_3D type)
 		indexed = true;
 		break;
 	}
+
 	case OBJ_PYRAMID:
 	{
-		float vertex[] = {
+		float vertex[] = 
+		{
 			_centerPos.x, _centerPos.y + _size, _centerPos.z,
 			_centerPos.x - _size, _centerPos.y - _size, _centerPos.z - _size,
 			_centerPos.x + _size, _centerPos.y - _size, _centerPos.z - _size,
 			_centerPos.x - _size, _centerPos.y - _size, _centerPos.z + _size,
 			_centerPos.x + _size, _centerPos.y - _size, _centerPos.z + _size
 		};
-		float color[] = {
+		float color[] = 
+		{
 			1.0f, 0.0f, 0.0f,
 			0.0f, 1.0f, 0.0f,
 			0.0f, 0.0f, 1.0f,
 			1.0f, 1.0f, 0.0f,
 			0.0f, 1.0f, 1.0f
 		};
-		unsigned int element[] = {
+		unsigned int element[] = 
+		{
 			0, 2, 1,
 			0, 1, 3,
 			0, 3, 4,
@@ -145,6 +155,52 @@ void Objects::CreateObject3D(OBJ_TYPE_3D type)
 		indexed = true;
 		break;
 	}
+
+	case OBJ_PLANE_RECT:	// 기본적으로 zx평면위에 만듬
+	{
+		float vertex[] =
+		{
+			_centerPos.x - _size, _centerPos.y, _centerPos.z - _size,
+			_centerPos.x + _size, _centerPos.y, _centerPos.z - _size,
+			_centerPos.x - _size, _centerPos.y, _centerPos.z + _size,
+			_centerPos.x + _size, _centerPos.y, _centerPos.z + _size
+		};
+		float color[] =
+		{
+			1.0f, 0.0f, 0.0f,
+			0.0f, 1.0f, 0.0f,
+			0.0f, 0.0f, 1.0f,
+			1.0f, 1.0f, 0.0f,
+		};
+		unsigned int element[] =
+		{
+			0, 2, 1,
+			1, 2, 3
+		};
+		_vao = new VAO(vertex, color, element, 12, 6);
+		indexed = true;
+		break;
+	}
+
+	case OBJ_PLANE_TRIANGLE:	// 기본적으로 zx평면위에 만듬
+	{
+		float vertex[] = // 한 변의 길이가 2 * _size인 정삼각형
+		{
+			_centerPos.x, _centerPos.y, _centerPos.z - _size,	// 상단
+			_centerPos.x - _size, _centerPos.y, _centerPos.z + _size,	// 좌하단
+			_centerPos.x + _size, _centerPos.y, _centerPos.z + _size	// 우하단
+		};
+		float color[] =
+		{
+			1.0f, 0.0f, 0.0f,
+			0.0f, 1.0f, 0.0f,
+			0.0f, 0.0f, 1.0f,
+		};
+		_vao = new VAO(vertex, color, 9);
+		indexed = false;
+		break;
+	}
+
 
 	}
 

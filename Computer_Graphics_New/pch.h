@@ -23,6 +23,8 @@
 #include "VBO.h"
 #include "VAO.h"
 #include "Objects.h"
+#include "Camera.h"
+#include "Projection.h"
 
 #include "Core.h"
 #include "InputManager.h"

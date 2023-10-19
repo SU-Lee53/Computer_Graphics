@@ -15,6 +15,9 @@ void Ex15::InitEx()
 	tMatrix = tMatrix * TransformManager::GetInstance().GetRotateMatrix(30.0f, X_AXIS) 
 			* TransformManager::GetInstance().GetRotateMatrix(30.0f, Y_AXIS);
 
+	_projection = glm::perspective(45.0f, 1.0f, 0.1f, 100.0f);
+	_projection = glm::translate(_projection, glm::vec3(0.0, 0.0, -2.0));
+
 	Reset();
 }
 
@@ -25,6 +28,8 @@ void Ex15::drawScene()
 	MouseUpdate();
 	KeyboardUpdate();
 	SpecialKeyUpdate();
+	unsigned int projectionLocation = glGetUniformLocation(Core::GetInstance().GetShaderID(), "projection");
+	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &_projection[0][0]);
 
 	TransformManager::GetInstance().BindTransformMatrix(&tMatrix);
 	DrawAxis();

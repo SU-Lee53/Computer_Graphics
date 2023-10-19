@@ -19,7 +19,7 @@ public:
 
 	glm::mat4 GetScaleMatrix(glm::vec3 scale);
 
-	void BindTransformMatrix(glm::mat4* matrix);
+	void BindTransformMatrix(glm::mat4 matrix);
 
 private:
 	TransformManager();
