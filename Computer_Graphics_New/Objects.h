@@ -41,6 +41,8 @@ public:
 	Objects(OBJ_TYPE_2D type, Coord pos, float size);
 	// 3D전용 생성자
 	Objects(OBJ_TYPE_3D type, Coord pos, float size);
+	// 3D NON-INDEXED 생성자, INDEXED로도 생성 가능하므로 가능하면 이걸 사용
+	Objects(OBJ_TYPE_3D type, Coord pos, float size, VAO_TYPE indexType);
 	// Quadric Objects 전용 생성자
 	Objects(QOBJ_TYPE type, Coord pos, float size);
 	~Objects();
@@ -48,6 +50,7 @@ public:
 private:
 	void CreateObject2D(OBJ_TYPE_2D type);
 	void CreateObject3D(OBJ_TYPE_3D type);
+	void CreateNonIndexedObject3D(OBJ_TYPE_3D type);
 	void CreateQuadricObject();
 
 public:
@@ -73,6 +76,7 @@ private:
 	QOBJ_TYPE _qType = NONE;
 	GLUquadricObj* _qObj = nullptr;
 
-	bool indexed = false;
+	VAO_TYPE _indexType = NON_INDEXED;
+
 };
 

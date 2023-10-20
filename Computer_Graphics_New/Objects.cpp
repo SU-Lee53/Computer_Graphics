@@ -12,6 +12,14 @@ Objects::Objects(OBJ_TYPE_3D type, Coord pos, float size) : _centerPos(pos), _si
 	CreateObject3D(type);
 }
 
+Objects::Objects(OBJ_TYPE_3D type, Coord pos, float size, VAO_TYPE indexType) : _centerPos(pos), _size(size), _indexType(indexType)
+{
+	if(_indexType == NON_INDEXED)
+		CreateNonIndexedObject3D(type);
+	else
+		CreateObject3D(type);
+}
+
 Objects::Objects(QOBJ_TYPE type, Coord pos, float size) : _qType(type), _centerPos(pos), _size(size)
 {
 	CreateQuadricObject();
@@ -43,7 +51,7 @@ void Objects::CreateObject2D(OBJ_TYPE_2D type)
 			1.0f, 0.0f, 0.0f,
 		};
 		_vao = new VAO(vertex, color, 9);
-		indexed = false;
+		_indexType = INDEXED;
 	}
 		break;
 	}
@@ -77,7 +85,7 @@ void Objects::CreateObject3D(OBJ_TYPE_3D type)
 			1, 2, 3
 		};
 		_vao = new VAO(vertex, color, element, 12, 12);
-		indexed = true;
+		_indexType = INDEXED;
 		break;
 	}
 	case OBJ_CUBE:
@@ -120,7 +128,7 @@ void Objects::CreateObject3D(OBJ_TYPE_3D type)
 			6, 5, 7
 		};
 		_vao = new VAO(vertex, color, element, 24, 36);
-		indexed = true;
+		_indexType = INDEXED;
 		break;
 	}
 
@@ -152,7 +160,7 @@ void Objects::CreateObject3D(OBJ_TYPE_3D type)
 			2, 4, 3
 		};
 		_vao = new VAO(vertex, color, element, 15, 18);
-		indexed = true;
+		_indexType = INDEXED;
 		break;
 	}
 
@@ -178,7 +186,7 @@ void Objects::CreateObject3D(OBJ_TYPE_3D type)
 			1, 2, 3
 		};
 		_vao = new VAO(vertex, color, element, 12, 6);
-		indexed = true;
+		_indexType = INDEXED;
 		break;
 	}
 
@@ -197,13 +205,143 @@ void Objects::CreateObject3D(OBJ_TYPE_3D type)
 			0.0f, 0.0f, 1.0f,
 		};
 		_vao = new VAO(vertex, color, 9);
-		indexed = false;
+		_indexType = NON_INDEXED;
 		break;
 	}
 
 
 	}
 
+}
+
+void Objects::CreateNonIndexedObject3D(OBJ_TYPE_3D type)
+{
+	switch (type)
+	{
+	case OBJ_CUBE:
+	{
+		float vertex[] =
+		{
+			// _centerPos.x - _size, _centerPos.y + _size, _centerPos.z - _size,	0
+			// _centerPos.x + _size, _centerPos.y + _size, _centerPos.z - _size,	1
+			// _centerPos.x - _size, _centerPos.y + _size, _centerPos.z + _size,	2
+			// _centerPos.x + _size, _centerPos.y + _size, _centerPos.z + _size,	3
+			// _centerPos.x - _size, _centerPos.y - _size, _centerPos.z - _size,	4
+			// _centerPos.x + _size, _centerPos.y - _size, _centerPos.z - _size,	5
+			// _centerPos.x - _size, _centerPos.y - _size, _centerPos.z + _size,	6
+			// _centerPos.x + _size, _centerPos.y - _size, _centerPos.z + _size		7
+
+			_centerPos.x - _size, _centerPos.y + _size, _centerPos.z - _size,	// À­¸é		0, 2, 1 / 1, 2, 3 
+			_centerPos.x - _size, _centerPos.y + _size, _centerPos.z + _size,
+			_centerPos.x + _size, _centerPos.y + _size, _centerPos.z - _size,
+			_centerPos.x + _size, _centerPos.y + _size, _centerPos.z - _size,
+			_centerPos.x - _size, _centerPos.y + _size, _centerPos.z + _size,
+			_centerPos.x + _size, _centerPos.y + _size, _centerPos.z + _size,
+
+			_centerPos.x - _size, _centerPos.y + _size, _centerPos.z - _size,	// ¿ÞÂÊ¸é	0, 4, 2 / 2, 4, 6
+			_centerPos.x - _size, _centerPos.y - _size, _centerPos.z - _size,	
+			_centerPos.x - _size, _centerPos.y + _size, _centerPos.z + _size,
+			_centerPos.x - _size, _centerPos.y + _size, _centerPos.z + _size,
+			_centerPos.x - _size, _centerPos.y - _size, _centerPos.z - _size,
+			_centerPos.x - _size, _centerPos.y - _size, _centerPos.z + _size,
+
+			_centerPos.x - _size, _centerPos.y + _size, _centerPos.z + _size,	// ¾Õ¸é		2, 6, 3 / 3, 6, 7
+			_centerPos.x - _size, _centerPos.y - _size, _centerPos.z + _size,
+			_centerPos.x + _size, _centerPos.y + _size, _centerPos.z + _size,
+			_centerPos.x + _size, _centerPos.y + _size, _centerPos.z + _size,
+			_centerPos.x - _size, _centerPos.y - _size, _centerPos.z + _size,
+			_centerPos.x + _size, _centerPos.y - _size, _centerPos.z + _size,
+
+			_centerPos.x + _size, _centerPos.y + _size, _centerPos.z - _size,	// ¿À¸¥ÂÊ¸é	1, 3, 5 / 5, 3, 7
+			_centerPos.x + _size, _centerPos.y + _size, _centerPos.z + _size,
+			_centerPos.x + _size, _centerPos.y - _size, _centerPos.z - _size,
+			_centerPos.x + _size, _centerPos.y - _size, _centerPos.z - _size,
+			_centerPos.x + _size, _centerPos.y + _size, _centerPos.z + _size,
+			_centerPos.x + _size, _centerPos.y - _size, _centerPos.z + _size,
+
+			_centerPos.x - _size, _centerPos.y + _size, _centerPos.z - _size,	// µÞ¸é		0, 1, 4 / 1, 5, 4
+			_centerPos.x + _size, _centerPos.y + _size, _centerPos.z - _size,
+			_centerPos.x - _size, _centerPos.y - _size, _centerPos.z - _size,
+			_centerPos.x + _size, _centerPos.y + _size, _centerPos.z - _size,
+			_centerPos.x + _size, _centerPos.y - _size, _centerPos.z - _size,
+			_centerPos.x - _size, _centerPos.y - _size, _centerPos.z - _size,
+
+			_centerPos.x - _size, _centerPos.y - _size, _centerPos.z - _size,	// ¾Æ·§¸é	4, 5, 6	/ 5, 7, 6
+			_centerPos.x + _size, _centerPos.y - _size, _centerPos.z - _size,
+			_centerPos.x - _size, _centerPos.y - _size, _centerPos.z + _size,
+			_centerPos.x + _size, _centerPos.y - _size, _centerPos.z - _size,
+			_centerPos.x + _size, _centerPos.y - _size, _centerPos.z + _size,
+			_centerPos.x - _size, _centerPos.y - _size, _centerPos.z + _size
+		};
+
+		glm::vec3 c0 = glm::vec3 (1.0f, 0.0f, 0.0f);
+		glm::vec3 c1 = glm::vec3 (0.0f, 1.0f, 0.0f);
+		glm::vec3 c2 = glm::vec3 (0.0f, 0.0f, 1.0f);
+		glm::vec3 c3 = glm::vec3 (1.0f, 1.0f, 0.0f);
+
+		glm::vec3 c4 = glm::vec3 (0.0f, 1.0f, 1.0f);
+		glm::vec3 c5 = glm::vec3 (1.0f, 0.0f, 1.0f);
+		glm::vec3 c6 = glm::vec3 (0.0f, 0.0f, 0.0f);
+		glm::vec3 c7 = glm::vec3 (1.0f, 1.0f, 1.0f);
+
+		float color[] =
+		{
+			// 1.0f, 0.0f, 0.0f,	0
+			// 0.0f, 1.0f, 0.0f,	1
+			// 0.0f, 0.0f, 1.0f,	2
+			// 1.0f, 1.0f, 0.0f,	3
+
+			// 0.0f, 1.0f, 1.0f,	4
+			// 1.0f, 0.0f, 1.0f,	5
+			// 0.0f, 0.0f, 0.0f,	6
+			// 1.0f, 1.0f, 1.0f		7
+
+			c0[0], c0[1], c0[2],	// À­¸é		0, 2, 1 / 1, 2, 3 
+			c2[0], c2[1], c2[2],
+			c1[0], c1[1], c1[2],
+			c1[0], c1[1], c1[2],
+			c2[0], c2[1], c2[2],
+			c3[0], c3[1], c3[2],
+
+			c0[0], c0[1], c0[2],	// ¿ÞÂÊ¸é	0, 4, 2 / 2, 4, 6
+			c4[0], c4[1], c4[2],
+			c2[0], c2[1], c2[2],
+			c2[0], c2[1], c2[2],
+			c4[0], c4[1], c4[2],
+			c6[0], c6[1], c6[2],
+			
+			c2[0], c2[1], c2[2],	// ¾Õ¸é		2, 6, 3 / 3, 6, 7
+			c6[0], c6[1], c6[2],
+			c3[0], c3[1], c3[2],
+			c3[0], c3[1], c3[2],
+			c6[0], c6[1], c6[2],
+			c7[0], c7[1], c7[2],
+
+			c1[0], c1[1], c1[2],	// ¿À¸¥ÂÊ¸é	1, 3, 5 / 5, 3, 7
+			c3[0], c3[1], c3[2],
+			c5[0], c5[1], c5[2],
+			c5[0], c5[1], c5[2],
+			c3[0], c3[1], c3[2],
+			c7[0], c7[1], c7[2],
+			
+			c0[0], c0[1], c0[2],	// µÞ¸é		0, 1, 4 / 1, 5, 4
+			c1[0], c1[1], c1[2],
+			c4[0], c4[1], c4[2],
+			c1[0], c1[1], c1[2],
+			c5[0], c5[1], c5[2],
+			c4[0], c4[1], c4[2],
+
+			c4[0], c4[1], c4[2],	// ¾Æ·§¸é	4, 5, 6	/ 5, 7, 6
+			c5[0], c5[1], c5[2],
+			c6[0], c6[1], c6[2],
+			c5[0], c5[1], c5[2],
+			c7[0], c7[1], c7[2],
+			c6[0], c6[1], c6[2],
+		};
+		_vao = new VAO(vertex, color, 108);
+		_indexType = NON_INDEXED;
+	}
+	}
 }
 
 void Objects::CreateQuadricObject()
@@ -221,7 +359,7 @@ void Objects::Render()
 	if(_qType == NONE)
 	{
 		glBindVertexArray(_vao->GetVAOHandle());
-		if (!indexed)
+		if (_indexType == NON_INDEXED)
 		{
 			glDrawArrays(GL_TRIANGLES, 0, _vao->GetVertexCount());
 		}

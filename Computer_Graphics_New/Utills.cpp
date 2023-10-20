@@ -57,19 +57,19 @@ void DrawAxis()
 	glBegin(GL_LINES);
 
 	// x√‡
-	glColor3f(0.0, 0.0, 0.0);
-	glVertex3f(-30.0, 0.0, 0.0);
-	glVertex3f(30.0, 0.0, 0.0);
-
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glVertex3f(-1.0, 0.0, 0.0);
+	glVertex3f(1.0, 0.0, 0.0);
+	
 	// y√‡
-	glColor3f(0.0, 0.0, 0.0);
-	glVertex3f(0.0, -30.0, 0.0);
-	glVertex3f(0.0, 30.0, 0.0);
+	glColor3f(0.0f, 1.0f, 0.0f);
+	glVertex3f(0.0, -1.0, 0.0);
+	glVertex3f(0.0, 1.0, 0.0);
 
 	// z√‡
-	glColor3f(0.0, 0.0, 0.0);
-	glVertex3f(0.0, 0.0, -30.0);
-	glVertex3f(0.0, 0.0, 30.0);
+	glColor3f(0.0f, 0.0f, 1.0f);
+	glVertex3f(0.0, 0.0, -1.0);
+	glVertex3f(0.0, 0.0, 1.0);
 	glEnd();
 
 
@@ -79,5 +79,5 @@ void DrawAxis()
 void SetBackground(RGB rgb)
 {
 	glClearColor(rgb.Red, rgb.Green, rgb.Blue, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT);
 }

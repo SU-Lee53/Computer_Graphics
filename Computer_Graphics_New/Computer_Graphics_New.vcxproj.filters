@@ -239,9 +239,4 @@
       <Filter>소스 파일\Shaders\GLSL</Filter>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Computer_Graphics_New.rc">
-      <Filter>리소스 파일</Filter>
-    </ResourceCompile>
-  </ItemGroup>
 </Project>

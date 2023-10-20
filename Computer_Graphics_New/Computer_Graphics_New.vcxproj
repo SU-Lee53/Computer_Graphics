@@ -236,9 +236,6 @@
     <None Include="fragment.glsl" />
     <None Include="vertex.glsl" />
   </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Computer_Graphics_New.rc" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

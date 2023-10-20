@@ -34,6 +34,5 @@ private:
 	int _vBufSize;	// == cBufSize
 	int _eBufSize;
 
-
 };
 
