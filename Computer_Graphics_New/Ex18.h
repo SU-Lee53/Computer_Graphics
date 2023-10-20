@@ -41,8 +41,8 @@ private:
 	bool _sideOpen = false;
 	bool _backOpen = false;
 
-
-
+	glm::mat4 _yrotateMat = glm::mat4(1.0);
+	float _yRotateDegree = 0.0f;
 	float _topRotateDegree = 0.0f;
 	float _frontOpenDegree = 0.0f;
 	float _sideSlideDistance = 0.0f;

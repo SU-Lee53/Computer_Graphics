@@ -34,7 +34,7 @@ void Ex18::drawScene()
 	// 월드 좌표, 카메라, 투영 바인드
 	_camera->Bind();
 	_projection->Bind();
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat);
 
 	// 화면 리셋
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -133,6 +133,11 @@ void Ex18::AnimUpdate()
 		glDisable(GL_DEPTH_TEST);
 	}
 
+	if (_yRotate)
+	{
+		_yrotateMat = GET_SINGLE(TransformManager).GetRotateMatrix(_yRotateDegree, Y_AXIS);
+		_yRotateDegree += 0.05;
+	}
 
 	if (_TopRotate)
 	{
@@ -187,14 +192,18 @@ void Ex18::AnimUpdate()
 		if (_backScaleSize >= 0.0f)
 		{
 			_backScaleSize -= 0.001;
-			_cubeMat[4] = GET_SINGLE(TransformManager).GetScaleMatrix(glm::vec3(_backScaleSize, _backScaleSize, _backScaleSize));
+			_cubeMat[4] = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(0.f, 0.f, -0.5f)) *
+				GET_SINGLE(TransformManager).GetScaleMatrix(glm::vec3(_backScaleSize, _backScaleSize, _backScaleSize))
+					* GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(0.f, 0.f, 0.5f));
 		}
 	}
 	else
 	{
 		if (_backScaleSize <= 1.0f)
 		{
-			_cubeMat[4] = GET_SINGLE(TransformManager).GetScaleMatrix(glm::vec3(_backScaleSize, _backScaleSize, _backScaleSize));
+			_cubeMat[4] = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(0.f, 0.f, -0.5f)) *
+				GET_SINGLE(TransformManager).GetScaleMatrix(glm::vec3(_backScaleSize, _backScaleSize, _backScaleSize))
+				* GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(0.f, 0.f, 0.5f));
 			_backScaleSize += 0.001;
 		}
 	}
@@ -221,32 +230,32 @@ void Ex18::RenderCube()
 
 	// 0. 윗면
 	start = 0;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _cubeMat[0]);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[0]);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
 	// 1. 왼쪽면
 	start += 6;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _cubeMat[1]);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[1]);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
 	// 2. 앞면
 	start += 6;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _cubeMat[2]);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[2]);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
 	// 3. 오른쪽면
 	start += 6;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _cubeMat[3]);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[3]);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
 	// 4. 뒷면
 	start += 6;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _cubeMat[4]);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[4]);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
 	// 5. 바닥면
 	start += 6;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _cubeMat[5]);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[5]);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
 
