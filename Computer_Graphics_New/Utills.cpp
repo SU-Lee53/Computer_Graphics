@@ -52,24 +52,24 @@ RGB GetRandomRGB()
 	return rgb;
 }
 
-void DrawAxis()
+void DrawAxis(float length)
 {
 	glBegin(GL_LINES);
 
 	// xรเ
 	glColor3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(-1.0, 0.0, 0.0);
-	glVertex3f(1.0, 0.0, 0.0);
+	glVertex3f(-length, 0.0, 0.0);
+	glVertex3f(length, 0.0, 0.0);
 	
 	// yรเ
 	glColor3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(0.0, -1.0, 0.0);
-	glVertex3f(0.0, 1.0, 0.0);
+	glVertex3f(0.0, -length, 0.0);
+	glVertex3f(0.0, length, 0.0);
 
 	// zรเ
 	glColor3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(0.0, 0.0, -1.0);
-	glVertex3f(0.0, 0.0, 1.0);
+	glVertex3f(0.0, 0.0, -length);
+	glVertex3f(0.0, 0.0, length);
 	glEnd();
 
 

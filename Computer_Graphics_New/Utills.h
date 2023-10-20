@@ -9,6 +9,6 @@ Coord GetRandomCoord();
 
 RGB GetRandomRGB();
 
-void DrawAxis();
+void DrawAxis(float length);
 
 void SetBackground(RGB rgb);

@@ -39,7 +39,7 @@ class Objects
 public:
 	// 2D전용 생성자
 	Objects(OBJ_TYPE_2D type, Coord pos, float size);
-	// 3D전용 생성자
+	// 3D전용 생성자, 되도록 아래 생성자를 사용, 이전 실습과 호환성 문제로 레거시로 남겨둠
 	Objects(OBJ_TYPE_3D type, Coord pos, float size);
 	// 3D NON-INDEXED 생성자, INDEXED로도 생성 가능하므로 가능하면 이걸 사용
 	Objects(OBJ_TYPE_3D type, Coord pos, float size, VAO_TYPE indexType);

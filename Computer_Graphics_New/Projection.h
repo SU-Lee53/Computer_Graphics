@@ -6,8 +6,8 @@ public:
 	Projection(float fovy, float aspect, float Near, float Far, float move);
 	Projection(float left, float right, float bottom, float top, float Near, float Far);
 	~Projection();
-	void SetPerspectiveProjection();
-	void SetOrthoProjection();
+	void SetPerspectiveProjection(float fovy, float aspect, float Near, float Far, float move);
+	void SetOrthoProjection(float left, float right, float bottom, float top, float Near, float Far);
 
 	void Bind();
 

@@ -68,7 +68,7 @@ void Ex17::drawScene()
 	AnimPlayer();
 
 	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat);
-	DrawAxis();
+	DrawAxis(1.0f);
 
 	RenderWorld();
 

@@ -340,6 +340,84 @@ void Objects::CreateNonIndexedObject3D(OBJ_TYPE_3D type)
 		};
 		_vao = new VAO(vertex, color, 108);
 		_indexType = NON_INDEXED;
+		break;
+	}
+
+	case OBJ_PYRAMID:
+	{
+		float vertex[]
+		{
+			// ¿ÞÂÊ¸é	4, 0, 2
+			_centerPos.x, _centerPos.y + (sqrt(3) * _size) / 2, _centerPos.z,					// 4
+			_centerPos.x - _size, _centerPos.y - (sqrt(3) * _size) / 2, _centerPos.z - _size,	// 0
+			_centerPos.x - _size, _centerPos.y - (sqrt(3) * _size) / 2, _centerPos.z + _size,	// 2
+
+			// ¾Õ¸é		4, 2, 3
+			_centerPos.x, _centerPos.y + (sqrt(3) * _size) / 2, _centerPos.z,					// 4
+			_centerPos.x - _size, _centerPos.y - (sqrt(3) * _size) / 2, _centerPos.z + _size,	// 2
+			_centerPos.x + _size, _centerPos.y - (sqrt(3) * _size) / 2, _centerPos.z + _size,	// 3
+
+			// ¿À¸¥ÂÊ¸é	4, 3, 1
+			_centerPos.x, _centerPos.y + (sqrt(3) * _size) / 2, _centerPos.z,					// 4
+			_centerPos.x + _size, _centerPos.y - (sqrt(3) * _size) / 2, _centerPos.z + _size,	// 3
+			_centerPos.x + _size, _centerPos.y - (sqrt(3) * _size) / 2, _centerPos.z - _size,	// 1
+
+			// µÞ¸é		4, 1, 0	
+			_centerPos.x, _centerPos.y + (sqrt(3) * _size) / 2, _centerPos.z,					// 4
+			_centerPos.x + _size, _centerPos.y - (sqrt(3) * _size) / 2, _centerPos.z - _size,	// 1
+			_centerPos.x - _size, _centerPos.y - (sqrt(3) * _size) / 2, _centerPos.z - _size,	// 0
+
+			// ¾Æ·§¸é	0, 1, 2 / 1, 3, 2
+			_centerPos.x - _size, _centerPos.y - (sqrt(3) * _size) / 2, _centerPos.z - _size,	// 0
+			_centerPos.x + _size, _centerPos.y - (sqrt(3) * _size) / 2, _centerPos.z - _size,	// 1
+			_centerPos.x - _size, _centerPos.y - (sqrt(3) * _size) / 2, _centerPos.z + _size,	// 2
+
+			_centerPos.x + _size, _centerPos.y - (sqrt(3) * _size) / 2, _centerPos.z - _size,	// 1
+			_centerPos.x + _size, _centerPos.y - (sqrt(3) * _size) / 2, _centerPos.z + _size,	// 3
+			_centerPos.x - _size, _centerPos.y - (sqrt(3) * _size) / 2, _centerPos.z + _size	// 2
+
+		};
+
+		glm::vec3 c0 = glm::vec3(1.0f, 0.0f, 0.0f);
+		glm::vec3 c1 = glm::vec3(0.0f, 1.0f, 0.0f);
+		glm::vec3 c2 = glm::vec3(0.0f, 0.0f, 1.0f);
+		glm::vec3 c3 = glm::vec3(1.0f, 1.0f, 0.0f);
+		glm::vec3 c4 = glm::vec3(0.0f, 1.0f, 1.0f);
+
+		float color[]
+		{
+			// ¿ÞÂÊ¸é	4, 0, 2
+			c4[0], c4[1], c4[2],	// 4
+			c0[0], c0[1], c0[2],	// 0
+			c2[0], c2[1], c2[2],	// 2
+
+			// ¾Õ¸é		4, 2, 3
+			c4[0], c4[1], c4[2],	// 4
+			c2[0], c2[1], c2[2],	// 2
+			c3[0], c3[1], c3[2],	// 3
+
+			// ¿À¸¥ÂÊ¸é	4, 3, 1
+			c4[0], c4[1], c4[2],	// 4
+			c3[0], c3[1], c3[2],	// 3
+			c1[0], c1[1], c1[2],	// 1
+
+			// µÞ¸é		4, 1, 0	
+			c4[0], c4[1], c4[2],	// 4
+			c1[0], c1[1], c1[2],	// 1
+			c0[0], c0[1], c0[2],	// 0
+
+			// ¾Æ·§¸é	0, 1, 2 / 1, 3, 2
+			c0[0], c0[1], c0[2],	// 0
+			c1[0], c1[1], c1[2],	// 1
+			c2[0], c2[1], c2[2],	// 2
+
+			c1[0], c1[1], c1[2],	// 1
+			c3[0], c3[1], c3[2],	// 3
+			c2[0], c2[1], c2[2],	// 2
+		};
+		_vao = new VAO(vertex, color, 54);
+		_indexType = NON_INDEXED;
+		break;
 	}
 	}
 }
