@@ -268,7 +268,7 @@ void Ex19::RenderOrbit()
 	glBindVertexArray(_bigOrbit->GetVAOHandle());
 	int bufSize = _bigOrbit->GetVertexCount();
 
-	float color[] = { 1.0f, 0.0f, 0.0f };
+	float color[] = { 0.0f, 0.0f, 0.0f };
 	glUniform3f(uniformLoc, color[0], color[1], color[2]);
 
 	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yAnimMat * _zAnimMat * _orbit1, shaderID);
@@ -314,18 +314,23 @@ void Ex19::RenderOrbit()
 
 void Ex19::RenderPlanet()
 {
+	glUseProgram(GET_SINGLE(Core).GetuShaderID());
+	unsigned int uniformLoc = glGetUniformLocation(GET_SINGLE(Core).GetuShaderID(), "uniformColor");
+
+	float color[] = { 0.0f, 0.0f, 1.0f };
+	glUniform3f(uniformLoc, color[0], color[1], color[2]);
+
 	glm::mat4 currMat = _worldMat * _yAnimMat * _ancestorMat * yRot1;
 	GET_SINGLE(TransformManager).BindTransformMatrix(currMat, shaderID);
 	_planet->Render();
 	
-	glUseProgram(GET_SINGLE(Core).GetuShaderID());
-	unsigned int uniformLoc = glGetUniformLocation(GET_SINGLE(Core).GetuShaderID(), "uniformColor");
-
-	float color[] = { 1.0f, 0.0f, 0.0f };
+	
+	// 부모;
+	color[0] = 0.0f;
+	color[1] = 1.0f;
+	color[2] = 0.0f;
 	glUniform3f(uniformLoc, color[0], color[1], color[2]);
 
-
-	// 부모;
 	currMat = _worldMat * _yAnimMat * _zAnimMat * (_orbit1 * yRot2) * (_parentMat1 * yRot1) * _scaleMat1;
 	GET_SINGLE(TransformManager).BindTransformMatrix(currMat, shaderID);
 	_planet->Render();
@@ -338,7 +343,13 @@ void Ex19::RenderPlanet()
 	GET_SINGLE(TransformManager).BindTransformMatrix(currMat, shaderID);
 	_planet->Render();
 	
+	
 	// 자식
+	color[0] = 1.0f;
+	color[1] = 0.0f;
+	color[2] = 0.0f;
+	glUniform3f(uniformLoc, color[0], color[1], color[2]);
+
 	currMat = _worldMat * _yAnimMat * _zAnimMat * (_orbit1 * yRot2) * _parentMat1 * (yRot3) * (_lastMat1 * yRot1) * _scaleMat2;
 	GET_SINGLE(TransformManager).BindTransformMatrix(currMat, shaderID);
 	_planet->Render();

@@ -11,7 +11,8 @@ Shaders::Shaders()
 Shaders::~Shaders()
 {
 	glDeleteShader(shaderID);
-	delete this;
+	glDeleteShader(uShaderID);
+	
 }
 
 void Shaders::makeVertexShaders()
@@ -59,13 +60,14 @@ void Shaders::makeFragmentShaders()
 	}
 }
 
-void Shaders::makeUniformVertexShader()
+void Shaders::makeUniformFragmentShader()
 {
-	GLchar* vertexSource;
+	GLchar* fragmentSource;
 
-	vertexSource = filetobuf("uniformVertex.glsl");
-	uniformShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(uniformShader, 1, &vertexSource, NULL);
+	// 프래그먼트 셰이더 읽어 저장하고 컴파일하기
+	fragmentSource = filetobuf("uniformFragment.glsl");
+	uniformShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(uniformShader, 1, &fragmentSource, NULL);
 	glCompileShader(uniformShader);
 
 	GLint result;
@@ -74,7 +76,7 @@ void Shaders::makeUniformVertexShader()
 	if (!result)
 	{
 		glGetShaderInfoLog(uniformShader, 512, NULL, errorLog);
-		cerr << "ERROR: Failed to compile vertex shader\n" << errorLog << endl;
+		cerr << "ERROR: Failed to complie fragment shader\n" << errorLog << endl;
 		return;
 	}
 }
@@ -112,17 +114,17 @@ GLuint Shaders::makeShaderProgram1()
 GLuint Shaders::makeShaderProgram2()
 {
 	makeVertexShaders();
-	makeUniformVertexShader();
+	makeUniformFragmentShader();
 
 	uShaderID = glCreateProgram();
 
+	glAttachShader(uShaderID, vertexShader);
 	glAttachShader(uShaderID, uniformShader);
-	glAttachShader(uShaderID, fragmentShader);
 
 	glLinkProgram(uShaderID);
 
+	glDeleteShader(vertexShader);
 	glDeleteShader(uniformShader);
-	glDeleteShader(fragmentShader);
 
 	GLint result;
 	GLchar errorLog[512];
@@ -135,5 +137,6 @@ GLuint Shaders::makeShaderProgram2()
 	}
 
 	return uShaderID;
+
 }
 

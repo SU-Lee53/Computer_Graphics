@@ -31,8 +31,8 @@ void Ex18::InitEx()
 
 void Ex18::drawScene()
 {
-	shaderID = GET_SINGLE(Core).GetuShaderID();
-	glUseProgram(Core::GetInstance().GetuShaderID());
+	shaderID = GET_SINGLE(Core).GetShaderID();
+	glUseProgram(Core::GetInstance().GetShaderID());
 	// 월드 좌표, 카메라, 투영 바인드
 	_camera->Bind(shaderID);
 	if (_perspective)
@@ -458,14 +458,15 @@ void Ex18::Render()
 		_pyramid = new Objects(OBJ_PYRAMID, { 0,0,0 }, _objSize, NON_INDEXED);
 	}
 
-
+	shaderID = GET_SINGLE(Core).GetShaderID();
+	glUseProgram(shaderID);
 
 	if (objType == true)
 		RenderCube();
 	else
 		RenderPyramid();
 
-
+	glUseProgram(0);
 }
 
 void Ex18::RenderCube()

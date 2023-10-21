@@ -244,7 +244,7 @@
     <None Include="fragment.glsl">
       <Filter>소스 파일\Shaders\GLSL</Filter>
     </None>
-    <None Include="uniformVertex.glsl">
+    <None Include="uniformFragment.glsl">
       <Filter>소스 파일\Shaders\GLSL</Filter>
     </None>
   </ItemGroup>

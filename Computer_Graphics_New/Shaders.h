@@ -19,7 +19,7 @@ public:
 private:
 	void makeVertexShaders();
 	void makeFragmentShaders();
-	void makeUniformVertexShader();
+	void makeUniformFragmentShader();
 
 private:
 	GLuint shaderID;
