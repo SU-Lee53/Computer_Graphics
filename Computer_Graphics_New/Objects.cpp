@@ -26,6 +26,19 @@ Objects::Objects(QOBJ_TYPE type, Coord pos, float size, GLenum drawType, RGB rgb
 	CreateQuadricObject(drawType);
 }
 
+Objects::Objects(float left, float top, float right, float bottom, float floorHeight, float height)
+{
+	Coord center;
+	center.x = (right - left) / 2;
+	center.y = (top - bottom) / 2;
+	center.z = (height - floorHeight) / 2;
+
+	_centerPos = center;
+
+	CreateCubeUsingParams(left, top, right, bottom, floorHeight, height);
+
+}
+
 Objects::~Objects()
 {
 	if (isQuadric() == false)
@@ -427,6 +440,52 @@ void Objects::CreateQuadricObject(GLenum drawType)
 {
 	_qObj = gluNewQuadric();
 	gluQuadricDrawStyle(_qObj, drawType);
+}
+
+void Objects::CreateCubeUsingParams(float left, float top, float right, float bottom, float floorHeight, float ceilingHeight)
+{
+	float vertex[] =
+	{
+		left, ceilingHeight, top,
+		right, ceilingHeight, top,
+		left, ceilingHeight, bottom,
+		right, ceilingHeight, bottom,
+
+		left, floorHeight, top,
+		right, floorHeight, top,
+		left, floorHeight, bottom,
+		right, floorHeight, bottom
+
+	};
+	float color[] =
+	{
+		1.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 1.0f,
+		1.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 1.0f,
+		1.0f, 0.0f, 1.0f,
+		0.0f, 0.0f, 0.0f,
+		1.0f, 1.0f, 1.0f
+	};
+	unsigned int element[] =
+	{
+		0, 2, 1,	// 면 1
+		1, 2, 3,
+		0, 4, 2,	// 면 2
+		2, 4, 6,
+		2, 6, 3,	// 면 3
+		3, 6, 7,
+		1, 3, 5,	// 면 4
+		3, 7, 5,
+		0, 1, 4,	// 면 5
+		1, 5, 4,
+		6, 4, 5,	// 면 6
+		6, 5, 7
+	};
+	_vao = new VAO(vertex, color, element, 24, 36);
+	_indexType = INDEXED;
+
 }
 
 void Objects::SetQuadricDrawType(GLenum drawType)

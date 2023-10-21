@@ -45,6 +45,12 @@ public:
 	Objects(OBJ_TYPE_3D type, Coord pos, float size, VAO_TYPE indexType);
 	// Quadric Objects 전용 생성자
 	Objects(QOBJ_TYPE type, Coord pos, float size, GLenum drawType, RGB rgb);
+
+	// 육면체 CUBE 전용 생성자 -> 육면만 생성가능
+	// 바닥면의 좌상단, 우하단, 높이를 받아서 생성
+	// 3D MAX의 그리기 방식과 유사, 크레인을 만들때 더 쉽게 만들려고 임시로 만든 생성자
+	Objects(float left, float top, float right, float bottom,float floorHeight, float ceilingHeight);
+	
 	~Objects();
 
 private:
@@ -52,6 +58,8 @@ private:
 	void CreateObject3D(OBJ_TYPE_3D type);
 	void CreateNonIndexedObject3D(OBJ_TYPE_3D type);
 	void CreateQuadricObject(GLenum drawType);
+
+	void CreateCubeUsingParams(float left, float top, float right, float bottom, float floorHeight, float height);
 
 public:
 	// 유틸함수
@@ -73,9 +81,9 @@ public:
 	}
 
 private:
-	VAO* _vao;
-	Coord _centerPos;
-	float _size;
+	VAO* _vao = nullptr;
+	Coord _centerPos = { 0,0 };
+	float _size = 0.0f;
 
 	// Quadric Object를 위한 변수
 	QOBJ_TYPE _qType = NONE;
