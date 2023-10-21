@@ -24,20 +24,20 @@ void Anims::Bounce()
 	switch (bounceDir)
 	{
 	case NW:
-		obj->MoveObject(UP, 0.01f);
-		obj->MoveObject(LEFT, 0.01f);
+		obj->MoveObject(DIR_UP, 0.01f);
+		obj->MoveObject(DIR_LEFT, 0.01f);
 		break;
 	case NE:
-		obj->MoveObject(UP, 0.01f);
-		obj->MoveObject(RIGHT, 0.01f);
+		obj->MoveObject(DIR_UP, 0.01f);
+		obj->MoveObject(DIR_RIGHT, 0.01f);
 		break;
 	case SE:
-		obj->MoveObject(DOWN, 0.01f);
-		obj->MoveObject(RIGHT, 0.01f);
+		obj->MoveObject(DIR_DOWN, 0.01f);
+		obj->MoveObject(DIR_RIGHT, 0.01f);
 		break;
 	case SW:
-		obj->MoveObject(DOWN, 0.01f);
-		obj->MoveObject(LEFT, 0.01f);
+		obj->MoveObject(DIR_DOWN, 0.01f);
+		obj->MoveObject(DIR_LEFT, 0.01f);
 		break;
 
 	}
@@ -46,7 +46,7 @@ void Anims::Bounce()
 
 	switch (isOut)
 	{
-	case UP:
+	case DIR_UP:
 	{
 		if (bounceDir == NW)
 			bounceDir = SW;
@@ -57,7 +57,7 @@ void Anims::Bounce()
 		break;
 	}
 
-	case DOWN:
+	case DIR_DOWN:
 	{
 		if (bounceDir == SW)
 			bounceDir = NW;
@@ -68,7 +68,7 @@ void Anims::Bounce()
 		break;
 	}
 
-	case RIGHT:
+	case DIR_RIGHT:
 	{
 		if (bounceDir == NE)
 			bounceDir = NW;
@@ -79,7 +79,7 @@ void Anims::Bounce()
 		break;
 	}
 
-	case LEFT:
+	case DIR_LEFT:
 	{
 		if (bounceDir == NW)
 			bounceDir = NE;
@@ -103,22 +103,22 @@ void Anims::Zigzag()
 	{
 		ZigZagGoDown = false;
 		downCount = 0;
-		if (ZigZagDir == LEFT)
-			ZigZagDir = RIGHT;
+		if (ZigZagDir == DIR_LEFT)
+			ZigZagDir = DIR_RIGHT;
 		else
-			ZigZagDir = LEFT;
+			ZigZagDir = DIR_LEFT;
 	}
 
 	if (ZigZagGoDown == false)
 	{
 		switch (ZigZagDir)
 		{
-		case LEFT:
-			obj->MoveObject(LEFT, 0.02f);
+		case DIR_LEFT:
+			obj->MoveObject(DIR_LEFT, 0.02f);
 			break;
 
-		case RIGHT:
-			obj->MoveObject(RIGHT, 0.02f);
+		case DIR_RIGHT:
+			obj->MoveObject(DIR_RIGHT, 0.02f);
 			break;
 		}
 	}
@@ -126,12 +126,12 @@ void Anims::Zigzag()
 	{
 		switch (ZigZagDir2)
 		{
-		case UP:
-			obj->MoveObject(UP, 0.02f);
+		case DIR_UP:
+			obj->MoveObject(DIR_UP, 0.02f);
 			break;
 
-		case DOWN:
-			obj->MoveObject(DOWN, 0.02f);
+		case DIR_DOWN:
+			obj->MoveObject(DIR_DOWN, 0.02f);
 			break;
 		}
 
@@ -144,12 +144,12 @@ void Anims::Zigzag()
 
 	switch (outDir)
 	{
-	case LEFT:
-		isSwitched = obj->ChangeTriangleDirection(LEFT);
+	case DIR_LEFT:
+		isSwitched = obj->ChangeTriangleDirection(DIR_LEFT);
 		break;
 
-	case RIGHT:
-		isSwitched = obj->ChangeTriangleDirection(RIGHT);
+	case DIR_RIGHT:
+		isSwitched = obj->ChangeTriangleDirection(DIR_RIGHT);
 	}
 
 	if (isSwitched == true)
@@ -158,25 +158,25 @@ void Anims::Zigzag()
 		downCount = 0;
 	}
 	
-	if (outDir == UP)
+	if (outDir == DIR_UP)
 	{
-		obj->ChangeTriangleDirection(UP);
-		ZigZagDir2 = DOWN;
+		obj->ChangeTriangleDirection(DIR_UP);
+		ZigZagDir2 = DIR_DOWN;
 		ZigZagGoDown = false;
-		if (ZigZagDir == LEFT)
-			ZigZagDir = RIGHT;
+		if (ZigZagDir == DIR_LEFT)
+			ZigZagDir = DIR_RIGHT;
 		else
-			ZigZagDir = LEFT;
+			ZigZagDir = DIR_LEFT;
 	}
-	else if(outDir == DOWN)
+	else if(outDir == DIR_DOWN)
 	{
-		obj->ChangeTriangleDirection(DOWN);
-		ZigZagDir2 = UP;
+		obj->ChangeTriangleDirection(DIR_DOWN);
+		ZigZagDir2 = DIR_UP;
 		ZigZagGoDown = false;
-		if (ZigZagDir == LEFT)
-			ZigZagDir = RIGHT;
+		if (ZigZagDir == DIR_LEFT)
+			ZigZagDir = DIR_RIGHT;
 		else
-			ZigZagDir = LEFT;
+			ZigZagDir = DIR_LEFT;
 	}
 
 }
@@ -193,20 +193,20 @@ void Anims::RSpiral()
 
 	switch (RSP_dir)
 	{
-	case UP:
-		obj->MoveObject(UP, 0.02f);
+	case DIR_UP:
+		obj->MoveObject(DIR_UP, 0.02f);
 		break;
 
-	case DOWN:
-		obj->MoveObject(DOWN, 0.02f);
+	case DIR_DOWN:
+		obj->MoveObject(DIR_DOWN, 0.02f);
 		break;
 
-	case LEFT:
-		obj->MoveObject(LEFT, 0.02f);
+	case DIR_LEFT:
+		obj->MoveObject(DIR_LEFT, 0.02f);
 		break;
 
-	case RIGHT:
-		obj->MoveObject(RIGHT, 0.02f);
+	case DIR_RIGHT:
+		obj->MoveObject(DIR_RIGHT, 0.02f);
 		break;
 	}
 	moveCount++;
@@ -215,36 +215,36 @@ void Anims::RSpiral()
 	Dir isOut = obj->CheckOutOfScreen();
 	switch (isOut)
 	{
-	case UP:
+	case DIR_UP:
 	{
-		obj->ChangeTriangleDirection(UP);
+		obj->ChangeTriangleDirection(DIR_UP);
 		ChangeRSprialDirection();
 		moveCount = 0;
 		switchCount++;
 		break;
 	}
 
-	case DOWN:
+	case DIR_DOWN:
 	{
-		obj->ChangeTriangleDirection(DOWN);
+		obj->ChangeTriangleDirection(DIR_DOWN);
 		ChangeRSprialDirection();
 		moveCount = 0;
 		switchCount++;
 		break;
 	}
 
-	case RIGHT:
+	case DIR_RIGHT:
 	{
-		obj->ChangeTriangleDirection(RIGHT);
+		obj->ChangeTriangleDirection(DIR_RIGHT);
 		ChangeRSprialDirection();
 		moveCount = 0;
 		switchCount++;
 		break;
 	}
 
-	case LEFT:
+	case DIR_LEFT:
 	{
-		obj->ChangeTriangleDirection(LEFT);
+		obj->ChangeTriangleDirection(DIR_LEFT);
 		ChangeRSprialDirection();
 		moveCount = 0;
 		switchCount++;
@@ -271,36 +271,36 @@ void Anims::CSpiral()
 	Dir isOut = obj->CheckOutOfScreen();
 	switch (isOut)
 	{
-	case UP:
+	case DIR_UP:
 	{
-		obj->ChangeTriangleDirection(UP);
+		obj->ChangeTriangleDirection(DIR_UP);
 		ChangeRSprialDirection();
 		moveCount = 0;
 		switchCount++;
 		break;
 	}
 
-	case DOWN:
+	case DIR_DOWN:
 	{
-		obj->ChangeTriangleDirection(DOWN);
+		obj->ChangeTriangleDirection(DIR_DOWN);
 		ChangeRSprialDirection();
 		moveCount = 0;
 		switchCount++;
 		break;
 	}
 
-	case RIGHT:
+	case DIR_RIGHT:
 	{
-		obj->ChangeTriangleDirection(RIGHT);
+		obj->ChangeTriangleDirection(DIR_RIGHT);
 		ChangeRSprialDirection();
 		moveCount = 0;
 		switchCount++;
 		break;
 	}
 
-	case LEFT:
+	case DIR_LEFT:
 	{
-		obj->ChangeTriangleDirection(LEFT);
+		obj->ChangeTriangleDirection(DIR_LEFT);
 		ChangeRSprialDirection();
 		moveCount = 0;
 		switchCount++;
@@ -330,11 +330,11 @@ void Anims::SetZigZag()
 	srand(time(0));
 	int temp = rand() % 2;
 	if (temp == 0)
-		ZigZagDir = LEFT;
+		ZigZagDir = DIR_LEFT;
 	else
-		ZigZagDir = RIGHT;
+		ZigZagDir = DIR_RIGHT;
 
-	ZigZagDir2 = DOWN;
+	ZigZagDir2 = DIR_DOWN;
 	ZigZagGoDown = false;
 	downCount = 0;
 }
@@ -360,20 +360,20 @@ void Anims::ChangeRSprialDirection()
 {
 	switch (RSP_dir)
 	{
-	case UP:
-		RSP_dir = RIGHT;
+	case DIR_UP:
+		RSP_dir = DIR_RIGHT;
 		break;
 
-	case RIGHT:
-		RSP_dir = DOWN;
+	case DIR_RIGHT:
+		RSP_dir = DIR_DOWN;
 		break;
 
-	case DOWN:
-		RSP_dir = LEFT;
+	case DIR_DOWN:
+		RSP_dir = DIR_LEFT;
 		break;
 
-	case LEFT:
-		RSP_dir = UP;
+	case DIR_LEFT:
+		RSP_dir = DIR_UP;
 		break;
 	}
 }

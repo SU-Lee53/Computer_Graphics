@@ -1,6 +1,7 @@
 #pragma once
 #include "pch.h"
 
+
 class Ex19 : protected Examples
 {
 public:
@@ -13,20 +14,22 @@ public:
 	virtual void Reshape(int w, int h) override;
 
 	virtual void MouseUpdate() override {}
-	virtual void KeyboardUpdate() override {};
+	virtual void KeyboardUpdate() override;
 	virtual void MotionUpdate() override {}
 	virtual void SpecialKeyUpdate() override {}
 
+	
 
 	void Render();
+
 	void SetOrbit();
 	void SetPlanet();
-
 
 	void RenderOrbit();
 	void RenderPlanet();
 
-
+	void MoveSystem(DIR dir);
+	void PlayAnim();
 private:
 	Projection* _projection;
 	Camera* _camera;
@@ -83,5 +86,26 @@ private:
 	float yDeg3 = 0.0f;
 
 
+	// 이하부터 조작키 토글 플래그
+	bool _perspective = true;
+	bool _yRotateAnim = false;
+	bool _zRotateAnim = false;
+	bool _yRotateDirection = false;
+	bool _zRotateDirection = false;
+
+	float _yAnimDeg = 0.0f;
+	float _zAnimDeg = 0.0f;
+	glm::mat4 _yAnimMat = glm::mat4(1.0f);
+	glm::mat4 _zAnimMat = glm::mat4(1.0f);
+
+
 };
 
+
+
+// p / P: 직각 투영 / 원근 투영
+// m / M : 솔리드 모델 / 와이어 모델
+// w / a / s / d : 위의 도형들을 좌 / 우 / 상 / 하로 이동(x축과 y축 값 이동 - 객체 이동)
+// + / -: 위의 도형들을 앞 / 뒤로 이동(z축 값 이동 - 객체 이동)
+// y / Y : 전체 객체들을 y축으로 양 / 음 방향으로 회전(중앙의 구의 y축에 대하여 회전)
+// z / Z : 중심의 구를 제외하고 행성, 달, 궤도가 z축에 대하여 양 / 음 방향으로 일제히 회전

@@ -60,6 +60,9 @@ public:
 	// 렌더링
 	void Render();
 	
+	void SetQuadricDrawType(GLenum drawType);
+
+
 	// Quadric Object인지 확인하는 flag 반환
 	bool isQuadric()
 	{

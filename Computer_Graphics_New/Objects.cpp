@@ -427,7 +427,12 @@ void Objects::CreateQuadricObject(GLenum drawType)
 {
 	_qObj = gluNewQuadric();
 	gluQuadricDrawStyle(_qObj, drawType);
+}
 
+void Objects::SetQuadricDrawType(GLenum drawType)
+{
+	_drawType = drawType;
+	gluQuadricDrawStyle(_qObj, drawType);
 }
 
 void Objects::Render()
@@ -454,7 +459,7 @@ void Objects::Render()
 		{
 		case QOBJ_SPHERE:
 		{
-			glColor3f(_rgb.Red, _rgb.Green, _rgb.Blue);
+			glColor4f(_rgb.Red, _rgb.Green, _rgb.Blue, 1.0f);
 			gluSphere(_qObj, _size, 20, 20);
 			break;
 		}
@@ -478,5 +483,7 @@ void Objects::Render()
 
 	glutPostRedisplay();
 }
+
+
 
 

@@ -6,6 +6,7 @@ enum VAO_TYPE
 	INDEXED
 };
 
+
 class VAO
 {
 public:

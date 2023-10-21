@@ -66,7 +66,7 @@ void VAO::InitVAO(VAO_TYPE type)	// elementMode가 true면 EBO를 사용하므로 버퍼 3
 	glBufferData(GL_ARRAY_BUFFER, _vBufSize * sizeof(float), _vbo.GetColorBuf(), GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 	glEnableVertexAttribArray(1);
-
+	
 }
 
 
