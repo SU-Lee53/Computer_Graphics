@@ -22,7 +22,7 @@ public:
 	void UseSpecialKeyCallback();
 
 	int GetShaderID() { return shader->GetShaderID(); }
-
+	int GetuShaderID() { return shader->GetuShaderID(); }
 
 private:
 	Core();

@@ -75,4 +75,6 @@ private:
 	float _backOpenDegree = 0.0f;
 	float _openSpeed = 0.08f;
 	int _openOrder = 0;
+
+	unsigned int shaderID;
 };

@@ -98,7 +98,8 @@ private:
 	glm::mat4 _yAnimMat = glm::mat4(1.0f);
 	glm::mat4 _zAnimMat = glm::mat4(1.0f);
 
-
+	unsigned int colorLocation;
+	unsigned int shaderID;
 };
 
 

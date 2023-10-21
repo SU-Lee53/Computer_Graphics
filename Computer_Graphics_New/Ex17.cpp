@@ -61,8 +61,8 @@ void Ex17::drawScene()
 {
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	_camera->Bind();
-	_projection->Bind();
+	_camera->Bind(GET_SINGLE(Core).GetuShaderID());
+	_projection->Bind(GET_SINGLE(Core).GetuShaderID());
 
 	KeyboardUpdate();
 	AnimPlayer();

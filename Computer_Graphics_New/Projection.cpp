@@ -41,8 +41,8 @@ void Projection::SetOrthoProjection(float left, float right, float bottom, float
 	_projMatrix = glm::ortho(_left, _right, _bottom, _top, _near, _far);
 }
 
-void Projection::Bind()
+void Projection::Bind(unsigned int ShaderID)
 {
-	unsigned int projectionLocation = glGetUniformLocation(Core::GetInstance().GetShaderID(), "projection");
+	unsigned int projectionLocation = glGetUniformLocation(ShaderID, "projection");
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &_projMatrix[0][0]);
 }

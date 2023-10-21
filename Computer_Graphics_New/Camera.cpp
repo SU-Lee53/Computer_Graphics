@@ -41,8 +41,8 @@ void Camera::SetCamera()
 	//	|	  0	      0	      0			1		|
 }
 
-void Camera::Bind()
+void Camera::Bind(unsigned int shaderID)
 {
-	unsigned int viewLocation = glGetUniformLocation(Core::GetInstance().GetShaderID(), "view");
+	unsigned int viewLocation = glGetUniformLocation(shaderID, "view");
 	glUniformMatrix4fv(viewLocation, 1, GL_FALSE, &_cameraMatrix[0][0]);
 }

@@ -48,24 +48,29 @@ void Ex19::InitEx()
 
 	_camera = new Camera(glm::vec3(0.0, 0.0, 2.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
 	_projection = new Projection(45.0f, 1.0f, 0.1f, 50.0f, -8.0f);
+
+	
 }
 
 void Ex19::drawScene()
 {
+	shaderID = GET_SINGLE(Core).GetuShaderID();
+	glUseProgram(shaderID);
+	colorLocation = glGetUniformLocation(GET_SINGLE(Core).GetuShaderID(), "uniformColor");
 	KeyboardUpdate();
-	_camera->Bind();
+	_camera->Bind(GET_SINGLE(Core).GetuShaderID());
 	if (_perspective)
 	{
 		_projection->SetPerspectiveProjection(45.0f, 1.0f, 0.1f, 50.0f, -7.0f);
-		_projection->Bind();
+		_projection->Bind(GET_SINGLE(Core).GetuShaderID());
 	}
 	else
 	{
 		_projection->SetOrthoProjection(-5.0f, 5.0f, -5.0f, 5.0f, -5.0f, 5.0f);
-		_projection->Bind();
+		_projection->Bind(GET_SINGLE(Core).GetuShaderID());
 	}
 	
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yAnimMat * _zAnimMat);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yAnimMat * _zAnimMat, shaderID);
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -257,22 +262,28 @@ void Ex19::SetPlanet()
 
 void Ex19::RenderOrbit()
 {
+	glUseProgram(GET_SINGLE(Core).GetuShaderID());
+	unsigned int uniformLoc = glGetUniformLocation(GET_SINGLE(Core).GetuShaderID(), "uniformColor");
+
 	glBindVertexArray(_bigOrbit->GetVAOHandle());
 	int bufSize = _bigOrbit->GetVertexCount();
 
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yAnimMat * _zAnimMat * _orbit1);
-	for (int i = 0; i < (bufSize / 3) - 1; i++)
-	{
-		glDrawArrays(GL_LINES, i, 2);
-	}
-	
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yAnimMat * _zAnimMat * _orbit2);
-	for (int i = 0; i < (bufSize / 3) - 1; i++)
-	{
-		glDrawArrays(GL_LINES, i, 2);
-	}
-	
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yAnimMat * _zAnimMat * _orbit3);
+	float color[] = { 1.0f, 0.0f, 0.0f };
+	glUniform3f(uniformLoc, color[0], color[1], color[2]);
+
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yAnimMat * _zAnimMat * _orbit1, shaderID);
+	for (int i = 0; i < (bufSize / 3) - 1; i++)													
+	{																							
+		glDrawArrays(GL_LINES, i, 2);															
+	}																							
+																								
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yAnimMat * _zAnimMat * _orbit2, shaderID);
+	for (int i = 0; i < (bufSize / 3) - 1; i++)													
+	{																							
+		glDrawArrays(GL_LINES, i, 2);															
+	}																							
+																								
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yAnimMat * _zAnimMat * _orbit3, shaderID);
 	for (int i = 0; i < (bufSize / 3) - 1; i++)
 	{
 		glDrawArrays(GL_LINES, i, 2);
@@ -281,19 +292,19 @@ void Ex19::RenderOrbit()
 	glBindVertexArray(_smallOrbit->GetVAOHandle());
 	bufSize = _smallOrbit->GetVertexCount();
 
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yAnimMat * _zAnimMat * yRot2 * _parentMat1);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yAnimMat * _zAnimMat * yRot2 * _parentMat1, shaderID);
 	for (int i = 0; i < (bufSize / 3) - 1; i++)
 	{
 		glDrawArrays(GL_LINES, i, 2);
 	}
 	
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yAnimMat * _zAnimMat * (_orbit2 * yRot2) * _parentMat2);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yAnimMat * _zAnimMat * (_orbit2 * yRot2) * _parentMat2, shaderID);
 	for (int i = 0; i < (bufSize / 3) - 1; i++)
 	{
 		glDrawArrays(GL_LINES, i, 2);
 	}
 	
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yAnimMat * _zAnimMat * (_orbit3 * yRot2) * _parentMat3);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yAnimMat * _zAnimMat * (_orbit3 * yRot2) * _parentMat3, shaderID);
 	for (int i = 0; i < (bufSize / 3) - 1; i++)
 	{
 		glDrawArrays(GL_LINES, i, 2);
@@ -304,33 +315,40 @@ void Ex19::RenderOrbit()
 void Ex19::RenderPlanet()
 {
 	glm::mat4 currMat = _worldMat * _yAnimMat * _ancestorMat * yRot1;
-	GET_SINGLE(TransformManager).BindTransformMatrix(currMat);
+	GET_SINGLE(TransformManager).BindTransformMatrix(currMat, shaderID);
 	_planet->Render();
 	
+	glUseProgram(GET_SINGLE(Core).GetuShaderID());
+	unsigned int uniformLoc = glGetUniformLocation(GET_SINGLE(Core).GetuShaderID(), "uniformColor");
+
+	float color[] = { 1.0f, 0.0f, 0.0f };
+	glUniform3f(uniformLoc, color[0], color[1], color[2]);
+
+
 	// 부모;
 	currMat = _worldMat * _yAnimMat * _zAnimMat * (_orbit1 * yRot2) * (_parentMat1 * yRot1) * _scaleMat1;
-	GET_SINGLE(TransformManager).BindTransformMatrix(currMat);
+	GET_SINGLE(TransformManager).BindTransformMatrix(currMat, shaderID);
 	_planet->Render();
 
 	currMat = _worldMat * _yAnimMat * _zAnimMat * (_orbit2 * yRot2) * (_parentMat2 * yRot1) * _scaleMat1;
-	GET_SINGLE(TransformManager).BindTransformMatrix(currMat);
+	GET_SINGLE(TransformManager).BindTransformMatrix(currMat, shaderID);
 	_planet->Render();
 
 	currMat = _worldMat * _yAnimMat * _zAnimMat * (_orbit3 * yRot2) * (_parentMat3 * yRot1) * _scaleMat1;
-	GET_SINGLE(TransformManager).BindTransformMatrix(currMat);
+	GET_SINGLE(TransformManager).BindTransformMatrix(currMat, shaderID);
 	_planet->Render();
 	
 	// 자식
 	currMat = _worldMat * _yAnimMat * _zAnimMat * (_orbit1 * yRot2) * _parentMat1 * (yRot3) * (_lastMat1 * yRot1) * _scaleMat2;
-	GET_SINGLE(TransformManager).BindTransformMatrix(currMat);
+	GET_SINGLE(TransformManager).BindTransformMatrix(currMat, shaderID);
 	_planet->Render();
 
 	currMat = _worldMat * _yAnimMat * _zAnimMat * (_orbit2 * yRot2) * _parentMat2 * (yRot3) * (_lastMat2 * yRot1) * _scaleMat2;
-	GET_SINGLE(TransformManager).BindTransformMatrix(currMat);
+	GET_SINGLE(TransformManager).BindTransformMatrix(currMat, shaderID);
 	_planet->Render();
 
 	currMat = _worldMat * _yAnimMat * _zAnimMat * (_orbit3 * yRot2) * _parentMat3 * (yRot3) * (_lastMat3 * yRot1) * _scaleMat2;
-	GET_SINGLE(TransformManager).BindTransformMatrix(currMat);
+	GET_SINGLE(TransformManager).BindTransformMatrix(currMat, shaderID);
 	_planet->Render();
 
 

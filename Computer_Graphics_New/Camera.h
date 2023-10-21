@@ -12,7 +12,7 @@ public:
 	void CameraRevoluion(float degree, AXIS axis);
 
 	glm::mat4 GetCameraMatrix() { return _cameraMatrix; }
-	void Bind();
+	void Bind(unsigned int shaderID);
 
 private:
 	void SetCamera();

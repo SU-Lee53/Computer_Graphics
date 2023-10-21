@@ -4,7 +4,8 @@ using namespace std;
 
 Shaders::Shaders()
 {
-	makeShaderProgram();
+	makeShaderProgram1();
+	makeShaderProgram2();
 }
 
 Shaders::~Shaders()
@@ -58,7 +59,27 @@ void Shaders::makeFragmentShaders()
 	}
 }
 
-GLuint Shaders::makeShaderProgram()
+void Shaders::makeUniformVertexShader()
+{
+	GLchar* vertexSource;
+
+	vertexSource = filetobuf("uniformVertex.glsl");
+	uniformShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(uniformShader, 1, &vertexSource, NULL);
+	glCompileShader(uniformShader);
+
+	GLint result;
+	GLchar errorLog[512];
+	glGetShaderiv(uniformShader, GL_COMPILE_STATUS, &result);
+	if (!result)
+	{
+		glGetShaderInfoLog(uniformShader, 512, NULL, errorLog);
+		cerr << "ERROR: Failed to compile vertex shader\n" << errorLog << endl;
+		return;
+	}
+}
+
+GLuint Shaders::makeShaderProgram1()
 {
 	
 	makeVertexShaders();
@@ -84,9 +105,35 @@ GLuint Shaders::makeShaderProgram()
 		return false;
 	}
 
-	glUseProgram(shaderID);
-
 	return shaderID;
 
+}
+
+GLuint Shaders::makeShaderProgram2()
+{
+	makeVertexShaders();
+	makeUniformVertexShader();
+
+	uShaderID = glCreateProgram();
+
+	glAttachShader(uShaderID, uniformShader);
+	glAttachShader(uShaderID, fragmentShader);
+
+	glLinkProgram(uShaderID);
+
+	glDeleteShader(uniformShader);
+	glDeleteShader(fragmentShader);
+
+	GLint result;
+	GLchar errorLog[512];
+	glGetProgramiv(uShaderID, GL_LINK_STATUS, &result);
+	if (!result)
+	{
+		glGetProgramInfoLog(uShaderID, 512, NULL, errorLog);
+		cerr << "ERROR: Failed to link shader program\n" << errorLog << endl;
+		return false;
+	}
+
+	return uShaderID;
 }
 

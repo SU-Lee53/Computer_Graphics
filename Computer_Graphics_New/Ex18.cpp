@@ -31,20 +31,22 @@ void Ex18::InitEx()
 
 void Ex18::drawScene()
 {
+	shaderID = GET_SINGLE(Core).GetuShaderID();
+	glUseProgram(Core::GetInstance().GetuShaderID());
 	// 월드 좌표, 카메라, 투영 바인드
-	_camera->Bind();
+	_camera->Bind(shaderID);
 	if (_perspective)
 	{
 		_projection->SetPerspectiveProjection(45.0f, 1.0f, 0.1f, 50.0f, -5.0f);
-		_projection->Bind();
+		_projection->Bind(shaderID);
 	}
 	else
 	{
 		_projection->SetOrthoProjection(-5.0f, 5.0f, -5.0f, 5.0f, -5.0f, 5.0f);
-		_projection->Bind();
+		_projection->Bind(shaderID);
 	}
 	
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat, shaderID);
 
 	// 화면 리셋
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -456,6 +458,8 @@ void Ex18::Render()
 		_pyramid = new Objects(OBJ_PYRAMID, { 0,0,0 }, _objSize, NON_INDEXED);
 	}
 
+
+
 	if (objType == true)
 		RenderCube();
 	else
@@ -472,64 +476,65 @@ void Ex18::RenderCube()
 
 	// 0. 윗면
 	start = 0;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[0]);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[0], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
 	// 1. 왼쪽면
 	start += 6;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[1]);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[1], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
 	// 2. 앞면
 	start += 6;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[2]);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[2], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
 	// 3. 오른쪽면
 	start += 6;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[3]);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[3], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
 	// 4. 뒷면
 	start += 6;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[4]);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[4], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
 	// 5. 밑면
 	start += 6;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[5]);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[5], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
 }
 
 void Ex18::RenderPyramid()
 {
+	
 	glBindVertexArray(_pyramid->GetVAO().GetVAOHandle());
 
 	int start;
 
 	// 0. 왼쪽면
 	start = 0;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _pyramidMat[0]);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _pyramidMat[0], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 3);
 
 	// 1. 앞면
 	start += 3;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _pyramidMat[1]);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _pyramidMat[1], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 3);
 
 	// 2. 오른쪽면
 	start += 3;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _pyramidMat[2]);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _pyramidMat[2], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 3);
 
 	// 3. 뒷면
 	start += 3;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _pyramidMat[3]);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _pyramidMat[3], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 3);
 
 	// 4. 밑면
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _pyramidMat[4]);
+	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _pyramidMat[4], shaderID);
 	start += 3;
 	glDrawArrays(GL_TRIANGLES, start, 3);
 	start += 3;

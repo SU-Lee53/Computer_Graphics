@@ -171,7 +171,9 @@
     <ClCompile Include="Ex16.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="Ex17.cpp" />
+    <ClCompile Include="Ex17.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Ex18.cpp" />
     <ClCompile Include="Ex19.cpp" />
     <ClCompile Include="Examples.cpp" />
@@ -210,7 +212,9 @@
     <ClInclude Include="Ex16.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="Ex17.h" />
+    <ClInclude Include="Ex17.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Ex18.h" />
     <ClInclude Include="Ex19.h" />
     <ClInclude Include="Projection.h" />
@@ -236,6 +240,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.glsl" />
+    <None Include="uniformVertex.glsl" />
     <None Include="vertex.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

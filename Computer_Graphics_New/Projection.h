@@ -9,7 +9,7 @@ public:
 	void SetPerspectiveProjection(float fovy, float aspect, float Near, float Far, float move);
 	void SetOrthoProjection(float left, float right, float bottom, float top, float Near, float Far);
 
-	void Bind();
+	void Bind(unsigned int ShaderID);
 
 	glm::mat4 GetProjectionMatrix() { return _projMatrix; }
 
