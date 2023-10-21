@@ -173,6 +173,7 @@
     </ClCompile>
     <ClCompile Include="Ex17.cpp" />
     <ClCompile Include="Ex18.cpp" />
+    <ClCompile Include="Ex19.cpp" />
     <ClCompile Include="Examples.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main_core.cpp" />
@@ -211,6 +212,7 @@
     </ClInclude>
     <ClInclude Include="Ex17.h" />
     <ClInclude Include="Ex18.h" />
+    <ClInclude Include="Ex19.h" />
     <ClInclude Include="Projection.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="TransformManager.h" />

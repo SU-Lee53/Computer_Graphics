@@ -44,14 +44,14 @@ public:
 	// 3D NON-INDEXED 생성자, INDEXED로도 생성 가능하므로 가능하면 이걸 사용
 	Objects(OBJ_TYPE_3D type, Coord pos, float size, VAO_TYPE indexType);
 	// Quadric Objects 전용 생성자
-	Objects(QOBJ_TYPE type, Coord pos, float size);
+	Objects(QOBJ_TYPE type, Coord pos, float size, GLenum drawType, RGB rgb);
 	~Objects();
 
 private:
 	void CreateObject2D(OBJ_TYPE_2D type);
 	void CreateObject3D(OBJ_TYPE_3D type);
 	void CreateNonIndexedObject3D(OBJ_TYPE_3D type);
-	void CreateQuadricObject();
+	void CreateQuadricObject(GLenum drawType);
 
 public:
 	// 유틸함수
@@ -73,8 +73,14 @@ private:
 	VAO* _vao;
 	Coord _centerPos;
 	float _size;
+
+	// Quadric Object를 위한 변수
 	QOBJ_TYPE _qType = NONE;
 	GLUquadricObj* _qObj = nullptr;
+	GLenum _drawType = GL_NONE;
+	RGB _rgb = { 0.0f, 0.0f, 0.0f };
+
+
 
 	VAO_TYPE _indexType = NON_INDEXED;
 

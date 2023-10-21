@@ -411,7 +411,7 @@ void Ex17::RenderWorld()
 
 	if (_obj2 == nullptr)
 	{
-		_obj2 = new Objects(QOBJ_SPHERE, { 0.0f, 0.0f, 0.0f }, 0.3);
+		_obj2 = new Objects(QOBJ_SPHERE, { 0.0f, 0.0f, 0.0f }, 0.3, GL_LINES, {0.0f, 0.0f, 0.0f});
 	}
 
 	glEnable(GL_CULL_FACE);
@@ -474,7 +474,7 @@ void Ex17::Reset()
 	delete _obj2;
 
 	_obj1 = new Objects(OBJ_CUBE, { 0.0f, 0.0f , 0.0f }, 0.15);
-	_obj2 = new Objects(QOBJ_SPHERE, { 0.0f, 0.0f, 0.0f }, 0.3);
+
 
 	_objPos1 = _originPos1;
 	_objPos2 = _originPos2;

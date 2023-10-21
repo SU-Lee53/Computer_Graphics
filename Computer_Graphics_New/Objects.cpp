@@ -20,9 +20,10 @@ Objects::Objects(OBJ_TYPE_3D type, Coord pos, float size, VAO_TYPE indexType) : 
 		CreateObject3D(type);
 }
 
-Objects::Objects(QOBJ_TYPE type, Coord pos, float size) : _qType(type), _centerPos(pos), _size(size)
+Objects::Objects(QOBJ_TYPE type, Coord pos, float size, GLenum drawType, RGB rgb) 
+	: _qType(type), _centerPos(pos), _size(size), _drawType(drawType), _rgb(rgb)
 {
-	CreateQuadricObject();
+	CreateQuadricObject(drawType);
 }
 
 Objects::~Objects()
@@ -422,10 +423,11 @@ void Objects::CreateNonIndexedObject3D(OBJ_TYPE_3D type)
 	}
 }
 
-void Objects::CreateQuadricObject()
+void Objects::CreateQuadricObject(GLenum drawType)
 {
 	_qObj = gluNewQuadric();
-	gluQuadricDrawStyle(_qObj, GLU_LINE);
+	gluQuadricDrawStyle(_qObj, drawType);
+
 }
 
 void Objects::Render()
@@ -451,19 +453,25 @@ void Objects::Render()
 		switch (_qType)
 		{
 		case QOBJ_SPHERE:
-			gluSphere(_qObj, 0.2, 20, 20);
+		{
+			glColor3f(_rgb.Red, _rgb.Green, _rgb.Blue);
+			gluSphere(_qObj, _size, 20, 20);
 			break;
+		}
 
 		case QOBJ_CYLINDER:
-			gluCylinder(_qObj, 0.2, 0.2, 0.5, 20, 8);
+			glColor3f(_rgb.Red, _rgb.Green, _rgb.Blue);
+			gluCylinder(_qObj, _size, 0.2, 0.5, 20, 8);
 			break;
 
 		case QOBJ_CONE:
-			gluCylinder(_qObj, 0.2, 0.0, 0.5, 20, 8);
+			glColor3f(_rgb.Red, _rgb.Green, _rgb.Blue);
+			gluCylinder(_qObj, _size, 0.0, 0.5, 20, 8);
 			break;
 
 		case QOBJ_DISK:
-			gluDisk(_qObj, 0.2, 0.4, 20, 3);
+			glColor3f(_rgb.Red, _rgb.Green, _rgb.Blue);
+			gluDisk(_qObj, _size, 0.4, 20, 3);
 			break;
 		}
 	}
