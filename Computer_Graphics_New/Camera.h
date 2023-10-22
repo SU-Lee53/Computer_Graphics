@@ -15,9 +15,11 @@ public:
 	void Bind(unsigned int shaderID);
 
 	void SetWorldMat(glm::mat4 worldMat);
+	void ResetCamera(glm::vec3 EYE, glm::vec3 AT, glm::vec3 UP);
 
 private:
 	void SetCamera();
+	
 
 	
 

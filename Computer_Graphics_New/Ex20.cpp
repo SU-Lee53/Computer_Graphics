@@ -32,7 +32,6 @@ void Ex20::InitEx()
 	cout << "Q : 프로그램 종료하기																								" << endl;
 
 	_camera = new Camera(glm::vec3(-2.0, 2.0, 2.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
-	_camera->SetWorldMat(_worldMat);
 	_projection = new Projection(45.0f, 1.0f, 0.1f, 50.0f, -5.0f);
 }
 
@@ -185,11 +184,13 @@ void Ex20::KeyboardUpdate()
 		break;
 		
 	case 'y':
+		_camYRev += 3.0f;
 		_camYRot += 3.0f;
 		_camera->CameraRotation(_camYRot, Y_AXIS);
 		break;
 
 	case 'Y':
+		_camYRev -= 3.0f;
 		_camYRot -= 3.0f;
 		_camera->CameraRotation(_camYRot, Y_AXIS);
 		break;
@@ -369,6 +370,7 @@ void Ex20::PlayCameraAnim()
 	{
 		if (_camYRevAnim)
 		{
+			_camYRot += 0.1f;
 			_camYRev += 0.1f;
 			_camera->CameraRevolution(_camYRev, Y_AXIS);
 		}
@@ -482,7 +484,7 @@ void Ex20::ResetAll()
 	_camYRot = 90.0f + 45.0f;
 	_camera->CameraRotation(_camYRot, Y_AXIS);
 	
-
+	_camera->ResetCamera(glm::vec3(-2.0, 2.0, 2.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
 
 
 }
