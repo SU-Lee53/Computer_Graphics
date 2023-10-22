@@ -37,7 +37,7 @@ void Ex16::drawScene()
 	unsigned int projectionLocation = glGetUniformLocation(Core::GetInstance().GetShaderID(), "projection");
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
 
-	TransformManager::GetInstance().BindTransformMatrix(&_worldMat);
+	TransformManager::GetInstance().Bind(&_worldMat);
 	DrawAxis();
 
 	RenderWorld();
@@ -359,13 +359,13 @@ void Ex16::RenderWorld()
 	if(_obj1 != nullptr)
 	{
 		
-		TransformManager::GetInstance().BindTransformMatrix(&objMatUse1);
+		TransformManager::GetInstance().Bind(&objMatUse1);
 		_obj1->Render();
 	}
 	
 	if(_obj2 != nullptr)
 	{
-		TransformManager::GetInstance().BindTransformMatrix(&objMatUse2);
+		TransformManager::GetInstance().Bind(&objMatUse2);
 		_obj2->Render();
 	}
 

@@ -5,7 +5,11 @@
 // 전역 실습 로드 매크로: __defines 에 정의되어있음
 // ()안에 이름만 바꿔끼워넣으면 로드 완료
 
-LOAD_EX(Ex20);
+LOAD_EX(Ex18);
+// LOAD_EX(Ex19);
+// LOAD_EX(Ex20);
+
+
 
 void drawScene()
 {

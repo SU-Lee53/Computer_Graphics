@@ -19,7 +19,7 @@ public:
 
 	glm::mat4 GetScaleMatrix(glm::vec3 scale);
 
-	void BindTransformMatrix(glm::mat4 matrix, unsigned int shaderID);
+	void Bind(glm::mat4 matrix, unsigned int shaderID);
 
 private:
 	TransformManager();

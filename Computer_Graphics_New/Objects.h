@@ -64,6 +64,7 @@ private:
 public:
 	// 유틸함수
 	VAO& GetVAO() { return *_vao; }
+	Coord GetCenter() { return _centerPos; }
 
 	// 렌더링
 	void Render();

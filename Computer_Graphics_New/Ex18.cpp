@@ -46,7 +46,7 @@ void Ex18::drawScene()
 		_projection->Bind(shaderID);
 	}
 	
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat, shaderID);
+	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat, shaderID);
 
 	// È­¸é ¸®¼Â
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -477,32 +477,32 @@ void Ex18::RenderCube()
 
 	// 0. À­¸é
 	start = 0;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[0], shaderID);
+	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _cubeMat[0], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
 	// 1. ¿ÞÂÊ¸é
 	start += 6;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[1], shaderID);
+	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _cubeMat[1], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
 	// 2. ¾Õ¸é
 	start += 6;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[2], shaderID);
+	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _cubeMat[2], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
 	// 3. ¿À¸¥ÂÊ¸é
 	start += 6;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[3], shaderID);
+	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _cubeMat[3], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
 	// 4. µÞ¸é
 	start += 6;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[4], shaderID);
+	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _cubeMat[4], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
 	// 5. ¹Ø¸é
 	start += 6;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _cubeMat[5], shaderID);
+	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _cubeMat[5], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
 }
@@ -516,26 +516,26 @@ void Ex18::RenderPyramid()
 
 	// 0. ¿ÞÂÊ¸é
 	start = 0;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _pyramidMat[0], shaderID);
+	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _pyramidMat[0], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 3);
 
 	// 1. ¾Õ¸é
 	start += 3;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _pyramidMat[1], shaderID);
+	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _pyramidMat[1], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 3);
 
 	// 2. ¿À¸¥ÂÊ¸é
 	start += 3;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _pyramidMat[2], shaderID);
+	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _pyramidMat[2], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 3);
 
 	// 3. µÞ¸é
 	start += 3;
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _pyramidMat[3], shaderID);
+	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _pyramidMat[3], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 3);
 
 	// 4. ¹Ø¸é
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat * _yrotateMat * _pyramidMat[4], shaderID);
+	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _pyramidMat[4], shaderID);
 	start += 3;
 	glDrawArrays(GL_TRIANGLES, start, 3);
 	start += 3;

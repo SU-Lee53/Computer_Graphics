@@ -67,7 +67,7 @@ void Ex17::drawScene()
 	KeyboardUpdate();
 	AnimPlayer();
 
-	GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat);
+	GET_SINGLE(TransformManager).Bind(_worldMat);
 	DrawAxis(1.0f);
 
 	RenderWorld();
@@ -421,20 +421,20 @@ void Ex17::RenderWorld()
 
 	if (_obj1 != nullptr)
 	{
-		GET_SINGLE(TransformManager).BindTransformMatrix(objMatUse1);
+		GET_SINGLE(TransformManager).Bind(objMatUse1);
 		_obj1->Render();
 	}
 
 	if (_obj2 != nullptr)
 	{
-		GET_SINGLE(TransformManager).BindTransformMatrix(objMatUse2);
+		GET_SINGLE(TransformManager).Bind(objMatUse2);
 		_obj2->Render();
 	}
 
 	
 	if (_animType == ANIM_SPIRAL)
 	{
-		GET_SINGLE(TransformManager).BindTransformMatrix(_worldMat);
+		GET_SINGLE(TransformManager).Bind(_worldMat);
 		glBindVertexArray(_spiralVAO->GetVAOHandle());
 		glLineWidth(1.0);
 		for (int i = 0; i < (256 / 3) - 1; i++)

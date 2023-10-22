@@ -29,9 +29,10 @@ Objects::Objects(QOBJ_TYPE type, Coord pos, float size, GLenum drawType, RGB rgb
 Objects::Objects(float left, float top, float right, float bottom, float floorHeight, float height)
 {
 	Coord center;
-	center.x = (right - left) / 2;
-	center.y = (top - bottom) / 2;
-	center.z = (height - floorHeight) / 2;
+	center.x = (right + left) / 2;
+	center.y = (height + floorHeight) / 2;
+	center.z = (top + bottom) / 2;
+
 
 	_centerPos = center;
 

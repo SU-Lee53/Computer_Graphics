@@ -9,13 +9,17 @@ public:
 
 	// 밑에 2개 지금 문제있음
 	void CameraRotation(float degree, AXIS axis);
-	void CameraRevoluion(float degree, AXIS axis);
+	void CameraRevolution(float degree, AXIS axis);
 
 	glm::mat4 GetCameraMatrix() { return _cameraMatrix; }
 	void Bind(unsigned int shaderID);
 
+	void SetWorldMat(glm::mat4 worldMat);
+
 private:
 	void SetCamera();
+
+	
 
 
 private:
@@ -28,5 +32,8 @@ private:
 
 	glm::mat4 _cameraMatrix;
 
+	glm::mat4 _worldMat = glm::mat4(1.0f);
+
+	float EYE2ATDistance = 0.0f;
 };
 

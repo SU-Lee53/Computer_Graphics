@@ -31,7 +31,7 @@ void Ex15::drawScene()
 	unsigned int projectionLocation = glGetUniformLocation(Core::GetInstance().GetShaderID(), "projection");
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &_projection[0][0]);
 
-	TransformManager::GetInstance().BindTransformMatrix(&tMatrix);
+	TransformManager::GetInstance().Bind(&tMatrix);
 	DrawAxis();
 	RenderWorld();
 

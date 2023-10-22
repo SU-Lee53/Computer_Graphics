@@ -52,7 +52,7 @@ RGB GetRandomRGB()
 	return rgb;
 }
 
-void DrawAxis(float length)
+void DrawUniformAxis(float length)
 {
 	glUseProgram(GET_SINGLE(Core).GetuShaderID());
 	unsigned int uLocation = glGetUniformLocation(GET_SINGLE(Core).GetuShaderID(), "uniformColor");
@@ -87,6 +87,24 @@ void DrawAxis(float length)
 
 
 
+}
+
+void DrawAxis(float length)
+{
+	glBegin(GL_LINES);
+
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glVertex3f(-length, 0.0, 0.0);
+	glVertex3f(length, 0.0, 0.0);
+
+	glColor3f(0.0f, 1.0f, 0.0f);
+	glVertex3f(0.0, -length, 0.0);
+	glVertex3f(0.0, length, 0.0);
+
+	glColor3f(0.0f, 0.0f, 1.0f);
+	glVertex3f(0.0, 0.0, -length);
+	glVertex3f(0.0, 0.0, length);
+	glEnd();
 }
 
 void SetBackground(RGB rgb)
