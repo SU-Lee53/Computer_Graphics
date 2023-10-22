@@ -230,10 +230,11 @@ void Ex20::KeyboardUpdate()
 		ResetAll();
 		break;
 
+
+	case 'Q':
+		exit(0);
+		break;
 	}
-
-
-
 
 	delete ks;
 }
