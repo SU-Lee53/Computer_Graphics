@@ -27,7 +27,7 @@ public:
 
 private:
 	void Render();
-	
+	void Reset();
 	
 	// 물체 생성 함수
 	void MakeStage();
@@ -44,6 +44,7 @@ private:
 	void RobotJump();
 	void RobotWalk();
 	void RobotWalkAnim();
+	void PlayCameraAnim();
 
 	// 충돌 -> 바닥 평면에서의 단순 겹침 판정만 하는 함수를 분리
 	// 이유 -> 바닥에 있을때랑 점프해서 공중에 있을때 판정이 다름
@@ -75,7 +76,7 @@ private:
 	glm::mat4 _openLeft = glm::mat4(1.0f);
 	glm::mat4 _openRight = glm::mat4(1.0f);
 	float _doorDeg = 0.0f;
-	float _doorSpeed = 0.03f;
+	float _doorSpeed = 0.3f;
 	bool _doorAnim = false;
 	bool _doorOpen = false;
 
@@ -104,6 +105,16 @@ private:
 	float walkDeg = 0.0f;
 	float _maxWalkDeg = 40.0f;
 
-	
+
+	// 카메라 변환
+	float _camMoveDistZ = 0.0f;
+	float _camMoveDistX = 0.0f;
+	float _camRotateDeg = 0.0f;
+	float _camMoveSpeed = 0.2f;
+	float _camRotateSpeed = 0.5f;
+	bool _camRotatePlay = false;
+	bool _camRotateDir = true;
+
+
 };
 

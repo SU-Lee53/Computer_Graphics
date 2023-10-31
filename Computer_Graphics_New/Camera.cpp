@@ -14,7 +14,11 @@ Camera::~Camera()
 
 void Camera::CameraMove(glm::vec3 move)
 {
-	_cameraMatrix = _cameraMatrix * GET_SINGLE(TransformManager).GetTranslateMatrix(move);
+	// _cameraMatrix = _cameraMatrix * GET_SINGLE(TransformManager).GetTranslateMatrix(move);
+
+	_EYE = _EYE + move;
+	_AT = _AT + move;
+	_cameraMatrix = glm::lookAt(_EYE, _AT, _UP);
 }
 
 void Camera::CameraRotation(float degree, AXIS axis)

@@ -35,7 +35,7 @@ void Ex22::InitEx()
 		_stage[i] = nullptr;
 	}
 
-	_camera = new Camera(glm::vec3(0.0, 4.0, 7.0), glm::vec3(0.0, 1.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+	_camera = new Camera(glm::vec3(0.0, 4.0, 10.0), glm::vec3(0.0, 4.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
 	_projection = new Projection(45.0f, 1.0f, 0.1f, 50.0f, -5.0f);
 	
 }
@@ -57,6 +57,7 @@ void Ex22::drawScene()
 		RobotJump();
 		RobotWalk();
 		RobotWalkAnim();
+		PlayCameraAnim();
 	}
 
 	Render();
@@ -137,7 +138,49 @@ void Ex22::KeyboardUpdate()
 		_maxWalkDeg -= 3.0f;
 		break;
 
+	case 'z':
+		_camera->CameraMove(glm::vec3(0.0f, 0.0f, _camMoveSpeed));
+		_camMoveDistZ += _camMoveSpeed;
+		break;
+		
+	case 'Z':
+		_camera->CameraMove(glm::vec3(0.0f, 0.0f, -(_camMoveSpeed)));
+		_camMoveDistZ -= _camMoveSpeed;
+		break;
+		
+	case 'x':
+		_camera->CameraMove(glm::vec3(_camMoveSpeed, 0.0f, 0.0f));
+		_camMoveDistX += _camMoveSpeed;
+		break;
+		
+	case 'X':
+		_camera->CameraMove(glm::vec3(-(_camMoveSpeed), 0.0f, 0.0f));
+		_camMoveDistX -= _camMoveSpeed;
+		break;
+		
+	case 'y':
+		if (!_camRotatePlay)
+		{
+			_camRotatePlay = true;
+			_camRotateDir = true;
+		}
+		else
+			_camRotatePlay = false;
+		break;
+		
+	case 'Y':
+		if (!_camRotatePlay)
+		{
+			_camRotatePlay = true;
+			_camRotateDir = false;
+		}
+		else
+			_camRotatePlay = false;
+		break;
 
+	case 'i':
+		Reset();
+		break;
 
 	}
 
@@ -166,6 +209,40 @@ void Ex22::Render()
 	RenderObstacle();
 	RenderRobot();
 	
+}
+
+void Ex22::Reset()
+{
+	for (int i = 0; i < 3; i++)
+	{
+		delete _obstacle[i];
+	}
+	MakeObstacle();
+
+	_robotMoveX = glm::mat4(1.0f);
+	_robotMoveY = glm::mat4(1.0f);
+	_robotMoveZ = glm::mat4(1.0f);
+	_robotFace = glm::mat4(1.0f);
+	_direction = DIR_NONE;
+
+	_xMoveDist = 0.0f;
+	_yMoveDist = 0.0f;
+	_zMoveDist = 0.0f;
+
+	leftLeg = glm::mat4(1.0f);
+	rightLeg = glm::mat4(1.0f);
+	leftArm = glm::mat4(1.0f);
+	rightArm = glm::mat4(1.0f);
+
+	_camera->CameraMove(glm::vec3(-(_camMoveDistX), 0.0f, -(_camMoveDistZ)));
+	_camMoveDistZ = 0.0f;
+	_camMoveDistX = 0.0f;
+	_camRotateDeg = 0.0f;
+
+	
+	_camera->CameraRevolution(-(_camRotateDeg), Y_AXIS);
+	_camRotateDeg = 0.0f;
+	_camRotatePlay = false;
 }
 
 void Ex22::MakeStage()
@@ -294,11 +371,11 @@ void Ex22::RenderStage()
 	// 		_stage[i]->Render();
 	// }
 
-	// GET_SINGLE(TransformManager).Bind(_worldMat * _openLeft * _stageMat[0], _shaderID);
-	// _stage[0]->Render();
-	// 
-	// GET_SINGLE(TransformManager).Bind(_worldMat * _openRight * _stageMat[1], _shaderID);
-	// _stage[1]->Render();
+	GET_SINGLE(TransformManager).Bind(_worldMat * _openLeft * _stageMat[0], _shaderID);
+	_stage[0]->Render();
+	
+	GET_SINGLE(TransformManager).Bind(_worldMat * _openRight * _stageMat[1], _shaderID);
+	_stage[1]->Render();
 	
 	GET_SINGLE(TransformManager).Bind(_worldMat * _stageMat[2], _shaderID);
 	_stage[2]->Render();
@@ -363,15 +440,15 @@ void Ex22::OpenStage()
 		glm::mat4 move, rot, mvBack;
 
 		// 1. 왼쪽 문 열기
-		move = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(2.0f, 0.0f, -2.0f));
+		move = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(4.0f, 0.0f, -4.0f));
 		rot = GET_SINGLE(TransformManager).GetRotateMatrix(-_doorDeg, Y_AXIS);
-		mvBack = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(-2.0f, 0.0f, 2.0f));
+		mvBack = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(-4.0f, 0.0f, 4.0f));
 		_openLeft = mvBack * rot * move;
 
 		// 2. 오른쪽 문 열기
-		move = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(-2.0f, 0.0f, -2.0f));
+		move = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(-4.0f, 0.0f, -4.0f));
 		rot = GET_SINGLE(TransformManager).GetRotateMatrix(_doorDeg, Y_AXIS);
-		mvBack = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(2.0f, 0.0f, 2.0f));
+		mvBack = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(4.0f, 0.0f, 4.0f));
 		_openRight = mvBack * rot * move;
 
 		if(_doorOpen)
@@ -423,7 +500,7 @@ void Ex22::RobotJump()
 			_yMoveDist -= _jumpSpeed;
 			_robotMoveY = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(0.0f, _yMoveDist, 0.0f));
 
-			if (isColide && _yMoveDist <= _obstacle[colidedIdx]->GetCenter().y + _obstacle[colidedIdx]->GetSize() && _direction != DIR_NONE)
+			if (isColide && _yMoveDist <= _obstacle[colidedIdx]->GetCenter().y + _obstacle[colidedIdx]->GetSize() && _direction != DIR_NONE)	// DIR_NONE이면 올라가기전에 멈춘것 -> 굳이 위에다 올려줄 필요가 없다
 			{
 				_yMoveDist = _obstacle[colidedIdx]->GetCenter().y + _obstacle[colidedIdx]->GetSize();
 				_robotMoveY = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(0.0f, _yMoveDist, 0.0f));
@@ -534,6 +611,24 @@ void Ex22::RobotWalkAnim()
 		rightArm = GET_SINGLE(TransformManager).GetRotateMatrix(0.0f, X_AXIS);
 		walk = 0.0f;
 		walkDeg = 0.0f;
+	}
+
+}
+
+void Ex22::PlayCameraAnim()
+{
+	if (_camRotatePlay)
+	{
+		if (_camRotateDir)
+		{
+			_camRotateDeg += _camRotateSpeed;
+			_camera->CameraRevolution(_camRotateDeg, Y_AXIS);
+		}
+		else
+		{
+			_camRotateDeg -= _camRotateSpeed;
+			_camera->CameraRevolution(_camRotateDeg, Y_AXIS);
+		}
 	}
 
 }
