@@ -23,6 +23,7 @@ public:
 
 	int GetShaderID() { return shader->GetShaderID(); }
 	int GetuShaderID() { return shader->GetuShaderID(); }
+	int GetMultipleViewportShderID() { return shader->GetMultipleViewportShaderID(); }
 
 private:
 	Core();

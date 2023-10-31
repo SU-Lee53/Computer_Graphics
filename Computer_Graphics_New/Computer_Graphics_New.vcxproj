@@ -177,6 +177,8 @@
     <ClCompile Include="Ex18.cpp" />
     <ClCompile Include="Ex19.cpp" />
     <ClCompile Include="Ex20.cpp" />
+    <ClCompile Include="Ex21.cpp" />
+    <ClCompile Include="Ex22.cpp" />
     <ClCompile Include="Examples.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main_core.cpp" />
@@ -219,6 +221,8 @@
     <ClInclude Include="Ex18.h" />
     <ClInclude Include="Ex19.h" />
     <ClInclude Include="Ex20.h" />
+    <ClInclude Include="Ex21.h" />
+    <ClInclude Include="Ex22.h" />
     <ClInclude Include="Projection.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="TransformManager.h" />
@@ -242,6 +246,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.glsl" />
+    <None Include="multipleViewport.glsl" />
     <None Include="uniformFragment.glsl" />
     <None Include="vertex.glsl" />
   </ItemGroup>

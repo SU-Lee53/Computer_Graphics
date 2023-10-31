@@ -41,7 +41,6 @@ void Core::InitShader()
 	Core::GetInstance().shader = new Shaders();
 }
 
-
 void Core::BindDrawCallback(void (*funcptr)())
 {
 	glutDisplayFunc(funcptr);

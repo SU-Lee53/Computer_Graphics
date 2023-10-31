@@ -6,13 +6,14 @@ Shaders::Shaders()
 {
 	makeShaderProgram1();
 	makeShaderProgram2();
+	makeShaderProgram3();
 }
 
 Shaders::~Shaders()
 {
 	glDeleteShader(shaderID);
 	glDeleteShader(uShaderID);
-	
+	glDeleteShader(mvPortID);
 }
 
 void Shaders::makeVertexShaders()
@@ -81,6 +82,27 @@ void Shaders::makeUniformFragmentShader()
 	}
 }
 
+void Shaders::makeMViewportShader()
+{
+	GLchar* mvSource;
+
+	// 프래그먼트 셰이더 읽어 저장하고 컴파일하기
+	mvSource = filetobuf("multipleViewport.glsl");
+	mvPortShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(mvPortShader, 1, &mvSource, NULL);
+	glCompileShader(mvPortShader);
+
+	GLint result;
+	GLchar errorLog[512];
+	glGetShaderiv(mvPortShader, GL_COMPILE_STATUS, &result);
+	if (!result)
+	{
+		glGetShaderInfoLog(mvPortShader, 512, NULL, errorLog);
+		cerr << "ERROR: Failed to complie fragment shader\n" << errorLog << endl;
+		return;
+	}
+}
+
 GLuint Shaders::makeShaderProgram1()
 {
 	
@@ -138,5 +160,33 @@ GLuint Shaders::makeShaderProgram2()
 
 	return uShaderID;
 
+}
+
+GLuint Shaders::makeShaderProgram3()
+{
+	makeMViewportShader();
+	makeFragmentShaders();
+
+	mvPortID = glCreateProgram();
+
+	glAttachShader(mvPortID, mvPortShader);
+	glAttachShader(mvPortID, fragmentShader);
+
+	glLinkProgram(mvPortID);
+
+	glDeleteShader(mvPortShader);
+	glDeleteShader(fragmentShader);
+
+	GLint result;
+	GLchar errorLog[512];
+	glGetProgramiv(mvPortID, GL_LINK_STATUS, &result);
+	if (!result)
+	{
+		glGetProgramInfoLog(mvPortID, 512, NULL, errorLog);
+		cerr << "ERROR: Failed to link shader program\n" << errorLog << endl;
+		return false;
+	}
+
+	return mvPortID;
 }
 

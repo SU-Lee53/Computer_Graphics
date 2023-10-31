@@ -485,6 +485,9 @@ void Objects::CreateCubeUsingParams(float left, float top, float right, float bo
 		6, 5, 7
 	};
 	_vao = new VAO(vertex, color, element, 24, 36);
+	_centerPos.x = (left + right) / 2;
+	_centerPos.y = (floorHeight + ceilingHeight) / 2;
+	_centerPos.z = (top + bottom) / 2;
 	_indexType = INDEXED;
 
 }
@@ -493,6 +496,22 @@ void Objects::SetQuadricDrawType(GLenum drawType)
 {
 	_drawType = drawType;
 	gluQuadricDrawStyle(_qObj, drawType);
+}
+
+void Objects::ChangeColor(RGB rgb)
+{
+	float* cBuf = _vao->GetColorBuffer();
+	int bufSize = _vao->GetVertexCount();
+
+	for (int i = 0; i < bufSize; i += 3)
+	{
+		cBuf[i] = rgb.Red;
+		cBuf[i + 1] = rgb.Green;
+		cBuf[i + 2] = rgb.Blue;
+	}
+
+	_vao->InitVAO(INDEXED);
+
 }
 
 void Objects::Render()

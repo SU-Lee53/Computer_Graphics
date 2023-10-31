@@ -8,4 +8,5 @@ enum DIR
 	DIR_RIGHT,
 	DIR_FRONT,
 	DIR_BACK,
+	DIR_NONE
 };

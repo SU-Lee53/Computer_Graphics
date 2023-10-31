@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "Ex18.h"
 
 Ex18::Ex18()
@@ -12,6 +12,19 @@ Ex18::~Ex18()
 
 void Ex18::InitEx()
 {
+	cout << "h: 은면제거 설정/해제" << endl;
+	cout << "y: y축에 대하여 자전한다/멈춘다" << endl;
+	cout << "육면체 애니메이션		" << endl;
+	cout << "	t: 윗면 애니매이션" << endl;
+	cout << "	f: 앞면 애미매이션" << endl;
+	cout << "	s: 옆면 애니매이션" << endl;
+	cout << "	b: 뒷면 애미매이션" << endl;
+	cout << "사각뿔 애니메이션		" << endl;
+	cout << "	r: 면 뒤집기" << endl;
+	cout << "	o: 각 면 열기/닫기" << endl;
+	cout << "p: 직각투영/원근투영" << endl;
+	cout << endl;
+
 	_worldMat = GET_SINGLE(TransformManager).GetRotateMatrix(30.0f, X_AXIS)
 		* GET_SINGLE(TransformManager).GetRotateMatrix(30.0f, Y_AXIS);
 
@@ -33,7 +46,7 @@ void Ex18::drawScene()
 {
 	shaderID = GET_SINGLE(Core).GetShaderID();
 	glUseProgram(Core::GetInstance().GetShaderID());
-	// ���� ��ǥ, ī�޶�, ���� ���ε�
+	// 월드 좌표, 카메라, 투영 바인드
 	_camera->Bind(shaderID);
 	if (_perspective)
 	{
@@ -48,20 +61,21 @@ void Ex18::drawScene()
 	
 	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat, shaderID);
 
-	// ȭ�� ����
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glEnable(GL_DEPTH_TEST);
+
+	// 화면 리셋
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// ������Ʈ
+	// 업데이트
 	KeyboardUpdate();
 	AnimUpdate();
 
-	// ������
-	DrawAxis(2.0f);
+	// 렌더링
 	Render();
 
 
-	// ����
+	// 스왑
 	glutSwapBuffers();
 	glutPostRedisplay();
 }
@@ -177,11 +191,11 @@ void Ex18::AnimUpdate()
 {
 	if (_depthTestMode)
 	{
-		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_CULL_FACE);
 	}
 	else
 	{
-		glDisable(GL_DEPTH_TEST);
+		glDisable(GL_CULL_FACE);
 	}
 
 	if (_yRotate)
@@ -246,6 +260,9 @@ void Ex18::AnimUpdate()
 			_cubeMat[4] = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(0.f, 0.f, -_objSize)) *
 				GET_SINGLE(TransformManager).GetScaleMatrix(glm::vec3(_backScaleSize, _backScaleSize, _backScaleSize))
 					* GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(0.f, 0.f, _objSize));
+			_cubeMat[5] = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(0.f, -_objSize, 0.f)) *
+				GET_SINGLE(TransformManager).GetScaleMatrix(glm::vec3(_backScaleSize, _backScaleSize, _backScaleSize))
+					* GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(0.f, _objSize, 0.f));
 		}
 	}
 	else
@@ -255,6 +272,10 @@ void Ex18::AnimUpdate()
 			_cubeMat[4] = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(0.f, 0.f, -_objSize)) *
 				GET_SINGLE(TransformManager).GetScaleMatrix(glm::vec3(_backScaleSize, _backScaleSize, _backScaleSize))
 				* GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(0.f, 0.f, _objSize));
+			_backScaleSize += 0.001;
+			_cubeMat[5] = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(0.f, -_objSize, 0.f)) *
+				GET_SINGLE(TransformManager).GetScaleMatrix(glm::vec3(_backScaleSize, _backScaleSize, _backScaleSize))
+				* GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(0.f, _objSize, 0.f));
 			_backScaleSize += 0.001;
 		}
 	}
@@ -475,32 +496,32 @@ void Ex18::RenderCube()
 
 	int start;
 
-	// 0. ����
+	// 0. 윗면
 	start = 0;
 	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _cubeMat[0], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
-	// 1. ���ʸ�
+	// 1. 왼쪽면
 	start += 6;
 	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _cubeMat[1], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
-	// 2. �ո�
+	// 2. 앞면
 	start += 6;
 	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _cubeMat[2], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
-	// 3. �����ʸ�
+	// 3. 오른쪽면
 	start += 6;
 	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _cubeMat[3], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
-	// 4. �޸�
+	// 4. 뒷면
 	start += 6;
 	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _cubeMat[4], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 6);
 
-	// 5. �ظ�
+	// 5. 밑면
 	start += 6;
 	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _cubeMat[5], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 6);
@@ -514,27 +535,27 @@ void Ex18::RenderPyramid()
 
 	int start;
 
-	// 0. ���ʸ�
+	// 0. 왼쪽면
 	start = 0;
 	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _pyramidMat[0], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 3);
 
-	// 1. �ո�
+	// 1. 앞면
 	start += 3;
 	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _pyramidMat[1], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 3);
 
-	// 2. �����ʸ�
+	// 2. 오른쪽면
 	start += 3;
 	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _pyramidMat[2], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 3);
 
-	// 3. �޸�
+	// 3. 뒷면
 	start += 3;
 	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _pyramidMat[3], shaderID);
 	glDrawArrays(GL_TRIANGLES, start, 3);
 
-	// 4. �ظ�
+	// 4. 밑면
 	GET_SINGLE(TransformManager).Bind(_worldMat * _yrotateMat * _pyramidMat[4], shaderID);
 	start += 3;
 	glDrawArrays(GL_TRIANGLES, start, 3);

@@ -38,6 +38,7 @@ Coord GetRandomCoord()
 	Coord pos;
 	pos.x = static_cast<float>(rand()) / (RAND_MAX / 2) - 1.0f;
 	pos.y = static_cast<float>(rand()) / (RAND_MAX / 2) - 1.0f;
+	pos.z = static_cast<float>(rand()) / (RAND_MAX / 2) - 1.0f;
 
 	return pos;
 }

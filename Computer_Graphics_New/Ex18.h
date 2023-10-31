@@ -56,7 +56,7 @@ private:
 	bool _playReverse = false;
 	bool _reverseOpen = false;
 
-	bool objType = false;
+	bool objType = true;
 
 	// y축 회전시 사용
 	glm::mat4 _yrotateMat = glm::mat4(1.0);

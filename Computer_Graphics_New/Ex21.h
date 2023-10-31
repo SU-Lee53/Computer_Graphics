@@ -2,11 +2,11 @@
 #include "pch.h"
 
 
-class Ex20 : protected Examples
+class Ex21 : protected Examples
 {
 public:
-	Ex20();
-	virtual ~Ex20() override;
+	Ex21();
+	virtual ~Ex21() override;
 
 	virtual void InitEx() override;
 
@@ -26,16 +26,37 @@ private:
 	void Render();
 
 	void MakeCrane();
-	// 각 부분의 중앙을 행렬로 만들어줌 -> 회전시 사용가능
-	// 다 돌려보고 나니 별 쓸모없고 그냥 마지막 z회전을 위한 행렬만 만듬
-	void SetCraneMatrix();	
-	void RenderCrane();
 	
+	void SetCraneMatrix();
+	void RenderCrane();
+
 	void ResetAll();
 
+	void DrawViewport1();
+	void DrawViewport2();
+	void DrawViewport3();
+
+
 private:
-	Projection* _projection;
-	Camera* _camera;
+	// 원근투영
+	Projection* _projection1;
+	Camera* _camera1;
+
+	// xz 직각투영
+	Projection* _projection2;
+	Camera* _camera2;
+
+	// xy 직각투영
+	Projection* _projection3;
+	Camera* _camera3;
+
+
+
+
+
+
+	// 이하는 21번에서는 신경쓰지 말자
+
 	glm::mat4 _worldMat = glm::mat4(1.0);
 	unsigned int _shaderID;
 
@@ -68,7 +89,7 @@ private:
 	glm::mat4 _yRotBarrelRight = glm::mat4(1.0f);
 	float _yDegBarrelLeft = 0.0f;
 	float _yDegBarrelRight = 0.0f;
-	
+
 	bool _xMoveDBarrelAnim = false;
 	bool _xMoveDBarrelDir = true;
 	glm::mat4 _xMoveBarrelLeft = glm::mat4(1.0f);
@@ -90,11 +111,17 @@ private:
 	float _camZDist = 0.0f;
 
 	float _camYRot = 90.0f + 45.0f;
+	float _camYRot2 = 0.0f;
+	float _camYRot3 = 0.0f;
 	float _camYRev = -45.0f;
+	float _camYRev2 = 0.0f;
+	float _camYRev3 = 0.0f;
 	bool _camYRevAnim = false;
 
 	// 전체 애니메이션 컨트롤 플래그
 	bool AnimPlayAll = true;
 
 };
+
+
 

@@ -408,13 +408,13 @@ void Ex19::PlayAnim()
 		if(_yRotateDirection)
 		{
 			_yAnimMat = GET_SINGLE(TransformManager).GetRotateMatrix(_yAnimDeg, Y_AXIS);
-			_yAnimDeg += 0.05f;
+			_yAnimDeg += 0.08f;
 		}
 
 		if(!_yRotateDirection)
 		{
 			_yAnimMat = GET_SINGLE(TransformManager).GetRotateMatrix(_yAnimDeg, Y_AXIS);
-			_yAnimDeg -= 0.05f;
+			_yAnimDeg -= 0.08f;
 		}
 	}
 	

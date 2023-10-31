@@ -65,6 +65,8 @@ public:
 	// 유틸함수
 	VAO& GetVAO() { return *_vao; }
 	Coord GetCenter() { return _centerPos; }
+	void ChangeColor(RGB rgb);	// 색을 바꾸거나 지정, 단색으로만 가능함
+	float GetSize() { return _size; }
 
 	// 렌더링
 	void Render();

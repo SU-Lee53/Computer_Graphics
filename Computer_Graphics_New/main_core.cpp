@@ -2,10 +2,10 @@
 #include "Ex18.h"
 #include "Ex19.h"
 #include "Ex20.h"
-// 전역 실습 로드 매크로: __defines 에 정의되어있음
-// ()안에 이름만 바꿔끼워넣으면 로드 완료
+#include "Ex21.h"
+#include "Ex22.h"
 
- LOAD_EX(Ex20);
+LOAD_EX(Ex22);
 
 
 

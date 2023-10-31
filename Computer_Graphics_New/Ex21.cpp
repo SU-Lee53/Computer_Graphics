@@ -1,16 +1,16 @@
 #include "pch.h"
-#include "Ex20.h"
+#include "Ex21.h"
 
-Ex20::Ex20()
+Ex21::Ex21()
 {
 	InitEx();
 }
 
-Ex20::~Ex20()
+Ex21::~Ex21()
 {
 }
 
-void Ex20::InitEx()
+void Ex21::InitEx()
 {
 	cout << "b / B: 크레인의 아래 몸체가 x축 방향으로 양 / 음 방향으로 이동한다.다시 누르면 멈춘다.								" << endl;
 	cout << "	아래 몸체가 이동하면 중앙 몸체와 맨 위의 팔은 같이 이동한다.													" << endl;
@@ -31,18 +31,22 @@ void Ex20::InitEx()
 	cout << "c / C : 모든 움직임이 초기화된다.																					" << endl;
 	cout << "Q : 프로그램 종료하기																								" << endl;
 
-	_camera = new Camera(glm::vec3(-2.0, 2.0, 2.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
-	_projection = new Projection(45.0f, 1.0f, 0.1f, 50.0f, -5.0f);
+	_camera1 = new Camera(glm::vec3(-2.0, 2.0, 2.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+	_projection1 = new Projection(45.0f, 1.0f, 0.1f, 50.0f, -5.0f);
+
+	_camera2 = new Camera(glm::vec3(0.0, 0.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+	_projection2 = new Projection(-5.0f, 5.0f, -5.0f, 5.0f, -5.0f, 5.0f);
+
+	_camera3 = new Camera(glm::vec3(0.0, 4.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+	_projection3 = new Projection(-10.0f, 10.0f, -10.0f, 10.0f, -10.0f, 10.0f);
+	
+
 }
 
-void Ex20::drawScene()
+void Ex21::drawScene()
 {
 	_shaderID = GET_SINGLE(Core).GetShaderID();
 	glUseProgram(_shaderID);
-
-	_projection->Bind(_shaderID);
-	_camera->Bind(_shaderID);
-	GET_SINGLE(TransformManager).Bind(_worldMat, _shaderID);
 
 	KeyboardUpdate();
 	PlayCraneAnim();
@@ -51,19 +55,59 @@ void Ex20::drawScene()
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	DrawAxis(2.0f);
-	Render();
+	DrawViewport1();
+	DrawViewport2();
+	DrawViewport3();
 
 	glutSwapBuffers();
 	glutPostRedisplay();
 }
 
-void Ex20::Reshape(int w, int h)
+void Ex21::Reshape(int w, int h)
 {
 	glViewport(0, 0, w, h);
 }
 
-void Ex20::KeyboardUpdate()
+void Ex21::DrawViewport1()
+{
+	GLint width = glutGet(GLUT_WINDOW_WIDTH);
+	GLint height = glutGet(GLUT_WINDOW_HEIGHT);
+	glViewport(0, 0, width / 2, height);
+
+	_camera1->Bind(_shaderID);
+	_projection1->Bind(_shaderID);
+	GET_SINGLE(TransformManager).Bind(_worldMat, _shaderID);
+
+	Render();
+}
+
+void Ex21::DrawViewport2()
+{
+	GLint width = glutGet(GLUT_WINDOW_WIDTH);
+	GLint height = glutGet(GLUT_WINDOW_HEIGHT);
+	glViewport(width / 2, height / 2, width / 2, height / 2);
+
+	_camera2->Bind(_shaderID);
+	_projection2->Bind(_shaderID);
+	GET_SINGLE(TransformManager).Bind(_worldMat, _shaderID);
+
+	Render();
+}
+
+void Ex21::DrawViewport3()
+{
+	GLint width = glutGet(GLUT_WINDOW_WIDTH);
+	GLint height = glutGet(GLUT_WINDOW_HEIGHT);
+	glViewport(width / 2, 0, width / 2, height / 2);
+
+	_camera3->Bind(_shaderID);
+	_projection3->Bind(_shaderID);
+	GET_SINGLE(TransformManager).Bind(_worldMat, _shaderID);
+
+	Render();
+}
+
+void Ex21::KeyboardUpdate()
 {
 	KeyboardState* ks = GET_SINGLE(InputManager).DequeueKeyboardBuf();
 	if (ks == nullptr)
@@ -80,7 +124,7 @@ void Ex20::KeyboardUpdate()
 		_xMoveAllDir = true;
 
 		break;
-		
+
 	case 'B':
 		if (!_xMoveAllAnim)
 			_xMoveAllAnim = true;
@@ -90,7 +134,7 @@ void Ex20::KeyboardUpdate()
 		_xMoveAllDir = false;
 
 		break;
-		
+
 	case 'm':
 		if (!_yRotUpperAnim)
 			_yRotUpperAnim = true;
@@ -100,7 +144,7 @@ void Ex20::KeyboardUpdate()
 		_yRotUpperDir = true;
 
 		break;
-		
+
 	case 'M':
 		if (!_yRotUpperAnim)
 			_yRotUpperAnim = true;
@@ -110,7 +154,7 @@ void Ex20::KeyboardUpdate()
 		_yRotUpperDir = false;
 
 		break;
-		
+
 	case 'f':
 		if (!_yRotBarrelAnim)
 			_yRotBarrelAnim = true;
@@ -120,7 +164,7 @@ void Ex20::KeyboardUpdate()
 		_yRotBarrelDir = true;
 
 		break;
-		
+
 	case 'F':
 		if (!_yRotBarrelAnim)
 			_yRotBarrelAnim = true;
@@ -130,7 +174,7 @@ void Ex20::KeyboardUpdate()
 		_yRotBarrelDir = false;
 
 		break;
-		
+
 	case 'e':
 		if (!_xMoveDBarrelAnim)
 			_xMoveDBarrelAnim = true;
@@ -140,7 +184,7 @@ void Ex20::KeyboardUpdate()
 		_xMoveDBarrelDir = true;
 
 		break;
-		
+
 	case 'E':
 		if (!_xMoveDBarrelAnim)
 			_xMoveDBarrelAnim = true;
@@ -150,13 +194,13 @@ void Ex20::KeyboardUpdate()
 		_xMoveDBarrelDir = false;
 
 		break;
-		
+
 	case 't':
 		if (!_zRotArmAnim)
 			_zRotArmAnim = true;
 
 		break;
-		
+
 	case 'T':
 		if (_zRotArmAnim)
 			_zRotArmAnim = false;
@@ -164,53 +208,77 @@ void Ex20::KeyboardUpdate()
 		break;
 
 	case 'x':
-		_camera->CameraMove(glm::vec3(-_camXMove, 0.0f, 0.0f));
+		_camera1->CameraMove(glm::vec3(-_camXMove, 0.0f, 0.0f));
+		_camera2->CameraMove(glm::vec3(-_camXMove, 0.0f, 0.0f));
+		_camera3->CameraMove(glm::vec3(-_camXMove, 0.0f, 0.0f));
 		_camXDist -= _camXMove;
 		break;
 
 	case 'X':
-		_camera->CameraMove(glm::vec3(_camXMove, 0.0f, 0.0f));
+		_camera1->CameraMove(glm::vec3(_camXMove, 0.0f, 0.0f));
+		_camera2->CameraMove(glm::vec3(_camXMove, 0.0f, 0.0f));
+		_camera3->CameraMove(glm::vec3(_camXMove, 0.0f, 0.0f));
 		_camXDist += _camXMove;
 		break;
-		
+
 	case 'z':
-		_camera->CameraMove(glm::vec3(0.0f, 0.0f, _camZMove));
+		_camera1->CameraMove(glm::vec3(0.0f, 0.0f, _camZMove));
+		_camera2->CameraMove(glm::vec3(0.0f, 0.0f, _camZMove));
+		_camera3->CameraMove(glm::vec3(0.0f, 0.0f, _camZMove));
 		_camZDist += _camZMove;
 		break;
 
 	case 'Z':
-		_camera->CameraMove(glm::vec3(0.0f, 0.0f, -_camZMove));
+		_camera1->CameraMove(glm::vec3(0.0f, 0.0f, -_camZMove));
+		_camera2->CameraMove(glm::vec3(0.0f, 0.0f, -_camZMove));
+		_camera3->CameraMove(glm::vec3(0.0f, 0.0f, -_camZMove));
 		_camZDist -= _camZMove;
 		break;
-		
+
 	case 'y':
 		_camYRev += 3.0f;
 		_camYRot += 3.0f;
-		_camera->CameraRotation(_camYRot, Y_AXIS);
+		_camera1->CameraRotation(_camYRot, Y_AXIS);
+		_camera2->CameraRotation(_camYRot, Y_AXIS);
+		_camera3->CameraRotation(_camYRot, Y_AXIS);
 		break;
 
 	case 'Y':
 		_camYRev -= 3.0f;
 		_camYRot -= 3.0f;
-		_camera->CameraRotation(_camYRot, Y_AXIS);
+		_camera1->CameraRotation(_camYRot, Y_AXIS);
+		_camera2->CameraRotation(_camYRot, Y_AXIS);
+		_camera3->CameraRotation(_camYRot, Y_AXIS);
 		break;
 
 	case 'r':
-		_camYRev += 3.0f;
 		_camYRot += 3.0f;
-		_camera->CameraRevolution(_camYRev, Y_AXIS);
+		_camYRot2 += 3.0f;
+		_camYRot3 += 3.0f;
+		_camYRev += 3.0f;
+		_camYRev2 += 3.0f;
+		_camYRev3 += 3.0f;
+		_camera1->CameraRevolution(_camYRev, Y_AXIS);
+		_camera2->CameraRevolution(_camYRev2, Y_AXIS);
+		_camera3->CameraRevolution(_camYRev3, Y_AXIS);
 		break;
 
 	case 'R':
-		_camYRev -= 3.0f;
 		_camYRot -= 3.0f;
-		_camera->CameraRevolution(_camYRev, Y_AXIS);
+		_camYRot2 -= 3.0f;
+		_camYRot3 -= 3.0f;
+		_camYRev -= 3.0f;
+		_camYRev2 -= 3.0f;
+		_camYRev3 -= 3.0f;
+		_camera1->CameraRevolution(_camYRev, Y_AXIS);
+		_camera2->CameraRevolution(_camYRev2, Y_AXIS);
+		_camera3->CameraRevolution(_camYRev3, Y_AXIS);
 		break;
-		
+
 	case 'a':
 		_camYRevAnim = true;
 		break;
-		
+
 	case 'A':
 		_camYRevAnim = false;
 		break;
@@ -220,7 +288,7 @@ void Ex20::KeyboardUpdate()
 		cout << "All Anim Started" << endl;
 		AnimPlayAll = true;
 		break;
-		
+
 	case 'S':
 		cout << "All Anim Stopped" << endl;
 		AnimPlayAll = false;
@@ -239,10 +307,10 @@ void Ex20::KeyboardUpdate()
 	delete ks;
 }
 
-void Ex20::PlayCraneAnim()
+void Ex21::PlayCraneAnim()
 {
 
-	if(AnimPlayAll)
+	if (AnimPlayAll)
 	{
 		if (_xMoveAllAnim)
 		{
@@ -290,6 +358,7 @@ void Ex20::PlayCraneAnim()
 				_yDegBarrelLeft = 0.0f;
 				_yDegBarrelRight = 0.0f;
 			}
+
 			// if (_yRotBarrelDir && _yDegBarrelLeft >= -90.0f)
 			// {
 			// 	_yDegBarrelLeft -= 0.1f;
@@ -385,21 +454,27 @@ void Ex20::PlayCraneAnim()
 
 }
 
-void Ex20::PlayCameraAnim()
+void Ex21::PlayCameraAnim()
 {
-	if(AnimPlayAll)
+	if (AnimPlayAll)
 	{
 		if (_camYRevAnim)
 		{
 			_camYRot += 0.1f;
+			_camYRot2 += 0.1f;
+			_camYRot3 += 0.1f;
 			_camYRev += 0.1f;
-			_camera->CameraRevolution(_camYRev, Y_AXIS);
+			_camYRev2 += 0.1f;
+			_camYRev3 += 0.1f;
+			_camera1->CameraRevolution(_camYRev, Y_AXIS);
+			_camera2->CameraRevolution(_camYRev2, Y_AXIS);
+			_camera3->CameraRevolution(_camYRev3, Y_AXIS);
 		}
 	}
 
 }
 
-void Ex20::Render()
+void Ex21::Render()
 {
 	if (_floor == nullptr)
 	{
@@ -415,7 +490,7 @@ void Ex20::Render()
 
 }
 
-void Ex20::MakeCrane()
+void Ex21::MakeCrane()
 {
 	_crane[0] = new Objects(-1.0f, 1.0f, 1.0f, -1.0f, 0.0f, 0.7f);
 	_crane[0]->ChangeColor({ 1.0f, 0.0f, 0.0f });
@@ -434,24 +509,24 @@ void Ex20::MakeCrane()
 	_crane[5]->ChangeColor({ 1.0f, 0.0f, 1.0f });
 }
 
-void Ex20::SetCraneMatrix()
+void Ex21::SetCraneMatrix()
 {
 
 	Coord center = _crane[4]->GetCenter();
 	_armLeft = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(center.x, 1.1f, center.z));
-	
+
 	center = _crane[5]->GetCenter();
 	_armRight = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(center.x, 1.1f, center.z));
-	
+
 	center = _crane[4]->GetCenter();
 	_armLeft2 = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(-center.x, -1.1f, -center.z));
-	
+
 	center = _crane[5]->GetCenter();
 	_armRight2 = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(-center.x, -1.1f, -center.z));
 
 }
 
-void Ex20::RenderCrane()
+void Ex21::RenderCrane()
 {
 	// 아랫몸
 	GET_SINGLE(TransformManager).Bind(_worldMat * _xMoveAll, _shaderID);
@@ -474,7 +549,7 @@ void Ex20::RenderCrane()
 	_crane[5]->Render();
 }
 
-void Ex20::ResetAll()
+void Ex21::ResetAll()
 {
 	_xMoveAll = GET_SINGLE(TransformManager).GetTranslateMatrix(glm::vec3(0.0f, 0.0f, 0.0f));
 	_xDistAll = 0.0f;
@@ -498,20 +573,24 @@ void Ex20::ResetAll()
 	_zDegArmRight = 0.0f;
 	_zRotArmDir = true;
 
-	_camera->CameraMove(glm::vec3(-_camXDist, 0.0f, 0.0f));
+	_camera1->CameraMove(glm::vec3(-_camXDist, 0.0f, 0.0f));
 	_camXDist = 0.0f;
-	
-	_camera->CameraMove(glm::vec3(0.0f, 0.0f, -_camZDist));
+
+	_camera1->CameraMove(glm::vec3(0.0f, 0.0f, -_camZDist));
 	_camZDist = 0.0f;
 
 	_camYRev = -45.0f;
-	_camera->CameraRevolution(_camYRev, Y_AXIS);
+	_camera1->CameraRevolution(_camYRev, Y_AXIS);
 
 	_camYRot = 90.0f + 45.0f;
-	_camera->CameraRotation(_camYRot, Y_AXIS);
-	
-	_camera->ResetCamera(glm::vec3(-2.0, 2.0, 2.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+	_camYRot2 = 0.0f;
+	_camYRot3 = 0.0f;
+	_camera1->CameraRotation(_camYRot, Y_AXIS);
+	_camera2->CameraRotation(_camYRot2, Y_AXIS);
+	_camera3->CameraRotation(_camYRot3, Y_AXIS);
 
+	_camera1->ResetCamera(glm::vec3(-2.0, 2.0, 2.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
 
+	// 카메라 회전 수정 필요
 }
 

@@ -164,6 +164,12 @@
     <ClCompile Include="Ex20.cpp">
       <Filter>소스 파일\Examples</Filter>
     </ClCompile>
+    <ClCompile Include="Ex21.cpp">
+      <Filter>소스 파일\Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Ex22.cpp">
+      <Filter>소스 파일\Examples</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -242,6 +248,12 @@
     <ClInclude Include="Ex20.h">
       <Filter>소스 파일\Examples</Filter>
     </ClInclude>
+    <ClInclude Include="Ex21.h">
+      <Filter>소스 파일\Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Ex22.h">
+      <Filter>소스 파일\Examples</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertex.glsl">
@@ -251,6 +263,9 @@
       <Filter>소스 파일\Shaders\GLSL</Filter>
     </None>
     <None Include="uniformFragment.glsl">
+      <Filter>소스 파일\Shaders\GLSL</Filter>
+    </None>
+    <None Include="multipleViewport.glsl">
       <Filter>소스 파일\Shaders\GLSL</Filter>
     </None>
   </ItemGroup>
