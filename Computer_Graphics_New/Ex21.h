@@ -111,8 +111,8 @@ private:
 	float _camZDist = 0.0f;
 
 	float _camYRot = 90.0f + 45.0f;
-	float _camYRot2 = 0.0f;
-	float _camYRot3 = 0.0f;
+	float _camYRot2 = 180.0f;
+	float _camYRot3 = 180.0f;
 	float _camYRev = -45.0f;
 	float _camYRev2 = 0.0f;
 	float _camYRev3 = 0.0f;

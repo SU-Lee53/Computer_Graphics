@@ -63,6 +63,9 @@
     <Filter Include="소스 파일\Projection">
       <UniqueIdentifier>{80a1b8e2-1798-4347-b77e-2bfb12001cb2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Examples\14~20">
+      <UniqueIdentifier>{8710ed9b-d30e-445e-adbd-3cd6950f7549}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -122,9 +125,6 @@
     <ClCompile Include="InputManager.cpp">
       <Filter>소스 파일\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Ex14.cpp">
-      <Filter>소스 파일\Examples</Filter>
-    </ClCompile>
     <ClCompile Include="VAO.cpp">
       <Filter>소스 파일\Vertex_Objects</Filter>
     </ClCompile>
@@ -140,35 +140,44 @@
     <ClCompile Include="TransformManager.cpp">
       <Filter>소스 파일\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Ex15.cpp">
-      <Filter>소스 파일\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Ex16.cpp">
-      <Filter>소스 파일\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Ex17.cpp">
-      <Filter>소스 파일\Examples</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>소스 파일\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Ex18.cpp">
-      <Filter>소스 파일\Examples</Filter>
-    </ClCompile>
     <ClCompile Include="Projection.cpp">
       <Filter>소스 파일\Projection</Filter>
-    </ClCompile>
-    <ClCompile Include="Ex19.cpp">
-      <Filter>소스 파일\Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="Ex20.cpp">
-      <Filter>소스 파일\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Ex21.cpp">
       <Filter>소스 파일\Examples</Filter>
     </ClCompile>
     <ClCompile Include="Ex22.cpp">
       <Filter>소스 파일\Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Ex23.cpp">
+      <Filter>소스 파일\Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="Ex14.cpp">
+      <Filter>소스 파일\Examples\14~20</Filter>
+    </ClCompile>
+    <ClCompile Include="Ex15.cpp">
+      <Filter>소스 파일\Examples\14~20</Filter>
+    </ClCompile>
+    <ClCompile Include="Ex16.cpp">
+      <Filter>소스 파일\Examples\14~20</Filter>
+    </ClCompile>
+    <ClCompile Include="Ex17.cpp">
+      <Filter>소스 파일\Examples\14~20</Filter>
+    </ClCompile>
+    <ClCompile Include="Ex18.cpp">
+      <Filter>소스 파일\Examples\14~20</Filter>
+    </ClCompile>
+    <ClCompile Include="Ex19.cpp">
+      <Filter>소스 파일\Examples\14~20</Filter>
+    </ClCompile>
+    <ClCompile Include="Ex20.cpp">
+      <Filter>소스 파일\Examples\14~20</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>소스 파일\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -202,9 +211,6 @@
     <ClInclude Include="InputManager.h">
       <Filter>소스 파일\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Ex14.h">
-      <Filter>소스 파일\Examples</Filter>
-    </ClInclude>
     <ClInclude Include="VAO.h">
       <Filter>소스 파일\Vertex_Objects</Filter>
     </ClInclude>
@@ -223,36 +229,45 @@
     <ClInclude Include="TransformManager.h">
       <Filter>소스 파일\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Ex15.h">
-      <Filter>소스 파일\Examples</Filter>
-    </ClInclude>
-    <ClInclude Include="Ex16.h">
-      <Filter>소스 파일\Examples</Filter>
-    </ClInclude>
-    <ClInclude Include="Ex17.h">
-      <Filter>소스 파일\Examples</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>소스 파일\Camera</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Ex18.h">
-      <Filter>소스 파일\Examples</Filter>
-    </ClInclude>
     <ClInclude Include="Projection.h">
       <Filter>소스 파일\Projection</Filter>
-    </ClInclude>
-    <ClInclude Include="Ex19.h">
-      <Filter>소스 파일\Examples</Filter>
-    </ClInclude>
-    <ClInclude Include="Ex20.h">
-      <Filter>소스 파일\Examples</Filter>
     </ClInclude>
     <ClInclude Include="Ex21.h">
       <Filter>소스 파일\Examples</Filter>
     </ClInclude>
     <ClInclude Include="Ex22.h">
       <Filter>소스 파일\Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Ex23.h">
+      <Filter>소스 파일\Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="Ex14.h">
+      <Filter>소스 파일\Examples\14~20</Filter>
+    </ClInclude>
+    <ClInclude Include="Ex15.h">
+      <Filter>소스 파일\Examples\14~20</Filter>
+    </ClInclude>
+    <ClInclude Include="Ex16.h">
+      <Filter>소스 파일\Examples\14~20</Filter>
+    </ClInclude>
+    <ClInclude Include="Ex17.h">
+      <Filter>소스 파일\Examples\14~20</Filter>
+    </ClInclude>
+    <ClInclude Include="Ex18.h">
+      <Filter>소스 파일\Examples\14~20</Filter>
+    </ClInclude>
+    <ClInclude Include="Ex19.h">
+      <Filter>소스 파일\Examples\14~20</Filter>
+    </ClInclude>
+    <ClInclude Include="Ex20.h">
+      <Filter>소스 파일\Examples\14~20</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>소스 파일\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

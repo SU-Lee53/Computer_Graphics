@@ -1,7 +1,5 @@
 #pragma once
 
-// inputManager와 VAO, VBO에서 메모리가 세고있는것으로 추정됨
-
 struct MouseState
 {
 	int button;
@@ -14,7 +12,6 @@ struct KeyboardState
 	unsigned char key;
 	Coord pos;
 };
-
 
 struct SpecialState
 {

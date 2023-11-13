@@ -37,7 +37,7 @@ void Ex21::InitEx()
 	_camera2 = new Camera(glm::vec3(0.0, 0.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
 	_projection2 = new Projection(-5.0f, 5.0f, -5.0f, 5.0f, -5.0f, 5.0f);
 
-	_camera3 = new Camera(glm::vec3(0.0, 4.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+	_camera3 = new Camera(glm::vec3(0.0, 4.0, 0.5), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
 	_projection3 = new Projection(-10.0f, 10.0f, -10.0f, 10.0f, -10.0f, 10.0f);
 	
 
@@ -238,17 +238,25 @@ void Ex21::KeyboardUpdate()
 	case 'y':
 		_camYRev += 3.0f;
 		_camYRot += 3.0f;
+		_camYRev2 += 3.0f;
+		_camYRot2 += 3.0f;
+		_camYRev3 += 3.0f;
+		_camYRot3 += 3.0f;
 		_camera1->CameraRotation(_camYRot, Y_AXIS);
-		_camera2->CameraRotation(_camYRot, Y_AXIS);
-		_camera3->CameraRotation(_camYRot, Y_AXIS);
+		_camera2->CameraRotation(_camYRot2, Y_AXIS);
+		_camera3->CameraRotation(_camYRot3, Y_AXIS);
 		break;
 
 	case 'Y':
 		_camYRev -= 3.0f;
 		_camYRot -= 3.0f;
+		_camYRev2 -= 3.0f;
+		_camYRot2 -= 3.0f;
+		_camYRev3 -= 3.0f;
+		_camYRot3 -= 3.0f;
 		_camera1->CameraRotation(_camYRot, Y_AXIS);
-		_camera2->CameraRotation(_camYRot, Y_AXIS);
-		_camera3->CameraRotation(_camYRot, Y_AXIS);
+		_camera2->CameraRotation(_camYRot2, Y_AXIS);
+		_camera3->CameraRotation(_camYRot3, Y_AXIS);
 		break;
 
 	case 'r':
@@ -574,17 +582,21 @@ void Ex21::ResetAll()
 	_zRotArmDir = true;
 
 	_camera1->CameraMove(glm::vec3(-_camXDist, 0.0f, 0.0f));
+	_camera2->CameraMove(glm::vec3(-_camXDist, 0.0f, 0.0f));
+	_camera3->CameraMove(glm::vec3(-_camXDist, 0.0f, 0.0f));
 	_camXDist = 0.0f;
 
 	_camera1->CameraMove(glm::vec3(0.0f, 0.0f, -_camZDist));
+	_camera2->CameraMove(glm::vec3(0.0f, 0.0f, -_camZDist));
+	_camera3->CameraMove(glm::vec3(0.0f, 0.0f, -_camZDist));
 	_camZDist = 0.0f;
 
 	_camYRev = -45.0f;
 	_camera1->CameraRevolution(_camYRev, Y_AXIS);
 
 	_camYRot = 90.0f + 45.0f;
-	_camYRot2 = 0.0f;
-	_camYRot3 = 0.0f;
+	_camYRot2 = 180.0f;
+	_camYRot3 = 180.0f;
 	_camera1->CameraRotation(_camYRot, Y_AXIS);
 	_camera2->CameraRotation(_camYRot2, Y_AXIS);
 	_camera3->CameraRotation(_camYRot3, Y_AXIS);

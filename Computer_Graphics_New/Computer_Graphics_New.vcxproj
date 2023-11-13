@@ -179,6 +179,7 @@
     <ClCompile Include="Ex20.cpp" />
     <ClCompile Include="Ex21.cpp" />
     <ClCompile Include="Ex22.cpp" />
+    <ClCompile Include="Ex23.cpp" />
     <ClCompile Include="Examples.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main_core.cpp" />
@@ -195,6 +196,7 @@
     <ClCompile Include="shader_test.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="TransformManager.cpp" />
     <ClCompile Include="Utills.cpp" />
     <ClCompile Include="VAO.cpp" />
@@ -223,8 +225,10 @@
     <ClInclude Include="Ex20.h" />
     <ClInclude Include="Ex21.h" />
     <ClInclude Include="Ex22.h" />
+    <ClInclude Include="Ex23.h" />
     <ClInclude Include="Projection.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="TimeManager.h" />
     <ClInclude Include="TransformManager.h" />
     <ClInclude Include="__defines.h" />
     <ClInclude Include="Ex14.h">

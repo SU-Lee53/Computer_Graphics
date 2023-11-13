@@ -1,11 +1,12 @@
 #include "pch.h"
-#include "Ex18.h"
-#include "Ex19.h"
-#include "Ex20.h"
-#include "Ex21.h"
 #include "Ex22.h"
+#include "Ex23.h"
 
-LOAD_EX(Ex22);
+#include "Ex19.h"	
+#include "Ex15.h"
+
+// LOAD_EX(Ex21);
+LOAD_EX(Ex23);
 
 
 
@@ -27,11 +28,15 @@ int main(int argc, char** argv)
 	Core::GetInstance().BindDrawCallback(drawScene);
 	Core::GetInstance().BindReshapeCallback(Reshape);
 	Core::GetInstance().UseKeyboardCallback();
+	Core::GetInstance().UseMouseCallback();
+	Core::GetInstance().UseMotionCallback();
 	Core::GetInstance().UseSpecialKeyCallback();
-	
+	GET_SINGLE(TimeManager).Init();
+
 
 	while (true)
 	{
+		GET_SINGLE(TimeManager).Update();
 		glutMainLoopEvent();
 	}
 

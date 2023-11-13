@@ -185,8 +185,8 @@ void Objects::CreateObject3D(OBJ_TYPE_3D type)
 		{
 			_centerPos.x - _size, _centerPos.y, _centerPos.z - _size,
 			_centerPos.x + _size, _centerPos.y, _centerPos.z - _size,
-			_centerPos.x - _size, _centerPos.y, _centerPos.z + _size,
-			_centerPos.x + _size, _centerPos.y, _centerPos.z + _size
+			_centerPos.x + _size, _centerPos.y, _centerPos.z + _size,
+			_centerPos.x - _size, _centerPos.y, _centerPos.z + _size
 		};
 		float color[] =
 		{
@@ -197,8 +197,8 @@ void Objects::CreateObject3D(OBJ_TYPE_3D type)
 		};
 		unsigned int element[] =
 		{
-			0, 2, 1,
-			1, 2, 3
+			0, 1, 2,
+			0, 2, 3
 		};
 		_vao = new VAO(vertex, color, element, 12, 6);
 		_indexType = INDEXED;

@@ -59,7 +59,6 @@ private:
 	glm::mat4 _worldMat = glm::mat4(1.0);
 	unsigned int _shaderID;
 
-	// 무대-> 0,1: 앞문 왼쪽, 오른쪽, 2: 위, 3: 아래, 4: 왼쪽, 5: 오른쪽, 6: 뒷면
 	Objects* _stage[7];
 	glm::mat4 _stageMat[7];
 	float _stageOpenDeg = 0.0f;
@@ -76,7 +75,7 @@ private:
 	glm::mat4 _openLeft = glm::mat4(1.0f);
 	glm::mat4 _openRight = glm::mat4(1.0f);
 	float _doorDeg = 0.0f;
-	float _doorSpeed = 0.3f;
+	float _doorSpeed = 0.03f;
 	bool _doorAnim = false;
 	bool _doorOpen = false;
 
@@ -90,8 +89,8 @@ private:
 	float _xMoveDist = 0.0f;
 	float _yMoveDist = 0.0f;
 	float _zMoveDist = 0.0f;
-	float _mvSpeed = 0.02f;
-	float _jumpSpeed = 0.05f;
+	float _mvSpeed = 0.002f;
+	float _jumpSpeed = 0.005f;
 	bool isJumped = false;
 	bool jump = false;
 
@@ -100,7 +99,7 @@ private:
 	glm::mat4 rightLeg = glm::mat4(1.0f);
 	glm::mat4 leftArm = glm::mat4(1.0f);
 	glm::mat4 rightArm = glm::mat4(1.0f);
-	float swingSpeed = 3.0f;
+	float swingSpeed = 0.5f;
 	float walk = 0.0f;
 	float walkDeg = 0.0f;
 	float _maxWalkDeg = 40.0f;
@@ -111,7 +110,7 @@ private:
 	float _camMoveDistX = 0.0f;
 	float _camRotateDeg = 0.0f;
 	float _camMoveSpeed = 0.2f;
-	float _camRotateSpeed = 0.5f;
+	float _camRotateSpeed = 0.05f;
 	bool _camRotatePlay = false;
 	bool _camRotateDir = true;
 

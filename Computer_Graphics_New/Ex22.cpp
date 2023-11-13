@@ -129,12 +129,12 @@ void Ex22::KeyboardUpdate()
 		break;
 
 	case '+':
-		_mvSpeed += 0.005f;
+		_mvSpeed += 0.0005f;
 		_maxWalkDeg += 3.0f;
 		break;
 		
 	case '-':
-		_mvSpeed -= 0.005f;
+		_mvSpeed -= 0.0005f;
 		_maxWalkDeg -= 3.0f;
 		break;
 
@@ -365,11 +365,6 @@ void Ex22::MakeObstacle()
 
 void Ex22::RenderStage()
 {
-	// for (int i = 0; i < 6; i++)
-	// {
-	// 		GET_SINGLE(TransformManager).Bind(_worldMat * _stageMat[i], _shaderID);
-	// 		_stage[i]->Render();
-	// }
 
 	GET_SINGLE(TransformManager).Bind(_worldMat * _openLeft * _stageMat[0], _shaderID);
 	_stage[0]->Render();

@@ -29,5 +29,6 @@
 #include "Core.h"
 #include "InputManager.h"
 #include "TransformManager.h"
+#include "TimeManager.h"
 
 #include "Examples.h"
