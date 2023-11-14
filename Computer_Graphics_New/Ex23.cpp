@@ -32,6 +32,7 @@ void Ex23::drawScene()
 	MotionUpdate();
 
 	RotateScreenAnim();
+	CubeMove();
 	BallMoveAnim();
 	OpenDoorAnim();
 
@@ -174,15 +175,19 @@ void Ex23::BallMoveAnim()
 		if(_ballState == Bounce)
 		{
 			_ballList.at(i).posVector += _ballList.at(i).dirVector * _ballSpeed * GET_SINGLE(TimeManager).GetDeltaTime();
-			_ballList.at(i).ballMat = GET_SINGLE(TransformManager).GetTranslateMatrix(_ballList.at(i).posVector);
 
-			
+			// 무대가 돌아가있음도 고려
+			glm::mat4 rot = GET_SINGLE(TransformManager).GetRotateMatrix(_planeRotDeg, Z_AXIS);
+			_ballList.at(i).ballMat = rot * GET_SINGLE(TransformManager).GetTranslateMatrix(_ballList.at(i).posVector);
 		}
 		else if(_ballState == Falling)
 		{
 			_ballList.at(i).posVector += glm::vec3(0.0f, -1.0f, 0.0f) * _ballList.at(i).ballFallingSpeed * GET_SINGLE(TimeManager).GetDeltaTime();
 			_ballList.at(i).ballFallingSpeed += _gravity * GET_SINGLE(TimeManager).GetDeltaTime();
-			_ballList.at(i).ballMat = GET_SINGLE(TransformManager).GetTranslateMatrix(_ballList.at(i).posVector);
+
+			// 무대가 돌아가있음도 고려
+			glm::mat4 rot = GET_SINGLE(TransformManager).GetRotateMatrix(_planeRotDeg, Z_AXIS);
+			_ballList.at(i).ballMat = rot * GET_SINGLE(TransformManager).GetTranslateMatrix(_ballList.at(i).posVector);
 		}
 
 
@@ -268,14 +273,22 @@ void Ex23::RotateCube(float dx)
 	_planeRotMat = GET_SINGLE(TransformManager).GetRotateMatrix(_planeRotDeg, Z_AXIS);
 	
 	// 법선벡터와 평면위의 점도 회전시켜주어야함
-	for (int i = 0; i < _planeList.size(); i++)
-	{
-		NormalUpdate(static_cast<PlaneIndex>(i), _planeRotMat);
-	}
+	//	for (int i = 0; i < _planeList.size(); i++)
+	//	{
+	//		NormalUpdate(static_cast<PlaneIndex>(i), _planeRotMat);
+	//	}
 
 	
 
 
+}
+
+void Ex23::CubeMove()
+{
+	//	for (int i = 0; i < _cubeList.size(); i++)
+	//	{
+	//		
+	//	}
 }
 
 void Ex23::Render()
@@ -283,6 +296,7 @@ void Ex23::Render()
 	if (_planeList.size() == 0)
 	{
 		MakeStage();
+		MakeCube();
 	}
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -291,7 +305,7 @@ void Ex23::Render()
 
 	RenderStage();
 	RenderBall();
-
+	RenderCube();
 }
 
 void Ex23::MakeStage()
@@ -400,7 +414,7 @@ void Ex23::MakeBall()
 		return;
 	}
 
-	ballInfo temp;
+	BallInfo temp;
 	temp.ballObj = new Objects(QOBJ_SPHERE, { 0.0f,0.0f,0.0f }, _ballRadius, GLU_FILL, _ballColor);
 	
 	temp.dirVector[0] = static_cast<float>(rand()) / (RAND_MAX / 2) - 1.0f;
@@ -411,6 +425,27 @@ void Ex23::MakeBall()
 
 	_ballList.push_back(temp);
 	
+}
+
+void Ex23::MakeCube()
+{
+	CubeInfo temp1;
+	temp1.cubeObj = new Objects(0.7, 0.7, -0.7, -0.7, 0.0, 1.4);
+	temp1.posVector = { 0.0f, -4.0f, -2.0f };
+	temp1.cubeMat = GET_SINGLE(TransformManager).GetTranslateMatrix(temp1.posVector);
+	_cubeList.push_back(temp1);
+
+	CubeInfo temp2;
+	temp2.cubeObj = new Objects(0.5, 0.5, -0.5, -0.5, 0.0, 1.0);
+	temp2.posVector = { 0.0f, -4.0f, 0.0f };
+	temp2.cubeMat = GET_SINGLE(TransformManager).GetTranslateMatrix(temp2.posVector);
+	_cubeList.push_back(temp2);
+
+	CubeInfo temp3;
+	temp3.cubeObj = new Objects(0.3, 0.3, -0.3, -0.3, 0.0, 0.6);
+	temp3.posVector = { 0.0f, -4.0f, 2.0f };
+	temp3.cubeMat = GET_SINGLE(TransformManager).GetTranslateMatrix(temp3.posVector);
+	_cubeList.push_back(temp3);
 }
 
 void Ex23::RenderStage()
@@ -448,6 +483,19 @@ void Ex23::RenderBall()
 	}
 
 
+}
+
+void Ex23::RenderCube()
+{
+	unsigned int uniformLoc = glGetUniformLocation(GET_SINGLE(Core).GetuShaderID(), "uniformColor");
+
+	for (int i = 0; i < _cubeList.size(); i++)
+	{
+		glUniform3f(uniformLoc, _cubeColor.Red, _cubeColor.Green, _cubeColor.Blue);
+
+		GET_SINGLE(TransformManager).Bind(_worldMat * _planeRotMat * _cubeList.at(i).cubeMat, _shaderID);
+		_cubeList.at(i).cubeObj->Render();
+	}
 }
 
 void Ex23::CheckCollision()

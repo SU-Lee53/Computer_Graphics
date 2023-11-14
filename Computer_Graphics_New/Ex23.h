@@ -39,20 +39,23 @@ public:
 	// 물체 생성 함수
 	void MakeStage();
 	void MakeBall();
+	void MakeCube();
 
 	// 물체 렌더 함수
 	void RenderStage();
 	void RenderBall();
+	void RenderCube();
 
 	// 애니메이션 함수
 	void RotateScreenAnim();
 	void BallMoveAnim();
 	void OpenDoorAnim();
 
-
 	// 육면체 회전
 	void RotateCube(float dx);
 
+	// 큐브 이동
+	void CubeMove();
 
 	// 충돌체크
 	void CheckCollision();
@@ -99,7 +102,7 @@ private:
 
 
 	// 공
-	struct ballInfo
+	struct BallInfo
 	{
 		Objects* ballObj = nullptr;
 		glm::mat4 ballMat = glm::mat4(1.0f);
@@ -108,14 +111,28 @@ private:
 		float ballFallingSpeed = 0.0f;
 	};
 
-	vector<ballInfo> _ballList;
+	vector<BallInfo> _ballList;
 	RGB _ballColor = { 0.0,0.0,1.0 };
 	float _ballRadius = 0.5f;
-	float _ballSpeed = 13.0f;
+	float _ballSpeed = 5.0f;
 	BallState _ballState = Bounce;
 
-	// 바닥이 열리고 공이 떨어질때 사용
+
+	// 바닥의 육면체
+	struct CubeInfo
+	{
+		Objects* cubeObj = nullptr;
+		glm::mat4 cubeMat = glm::mat4(1.0f);
+		glm::vec3 dirVector = { 0.0, 0.0, 0.0 };
+		glm::vec3 posVector = { 0.0f, 0.0f, 0.0f };
+	};
+
+	vector<CubeInfo> _cubeList;
+	RGB _cubeColor = { 1.0f, 0.0f, 0.0f };
+	
+
 	float _gravity = 9.8f;
+	glm::vec3 _gravityVector = glm::vec3(0.0f, -1.0f, 0.0f);
 
 	float _rotation = 0.0f;
 	bool _rotPlay = false;
