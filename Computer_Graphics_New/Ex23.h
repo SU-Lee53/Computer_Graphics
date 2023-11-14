@@ -125,6 +125,7 @@ private:
 		glm::mat4 cubeMat = glm::mat4(1.0f);
 		glm::vec3 dirVector = { 0.0, 0.0, 0.0 };
 		glm::vec3 posVector = { 0.0f, 0.0f, 0.0f };
+		float CubeMovingSpeed = 0.0f;
 	};
 
 	vector<CubeInfo> _cubeList;

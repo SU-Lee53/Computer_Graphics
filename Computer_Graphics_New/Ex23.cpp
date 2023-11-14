@@ -285,10 +285,40 @@ void Ex23::RotateCube(float dx)
 
 void Ex23::CubeMove()
 {
-	//	for (int i = 0; i < _cubeList.size(); i++)
-	//	{
-	//		
-	//	}
+	if(_planeRotDeg != 0.0)
+	{
+		for (int i = 0; i < _cubeList.size(); i++)
+		{
+			// 1. 기울어진대로 내려갈 방향벡터: 중력방향벡터를 회전 (90-회전각)
+			glm::vec3 slopeVec;
+			glm::vec4 gravityVec4 = glm::vec4(_gravityVector, 1.0);
+			float vecRotDeg;
+			if (_planeRotDeg > 0)
+			{
+				vecRotDeg = -(90 - glm::abs(_planeRotDeg));
+			}
+			else
+			{
+				vecRotDeg = 90 - glm::abs(_planeRotDeg);
+			}
+			glm::mat4 vecRotMat = GET_SINGLE(TransformManager).GetRotateMatrix(vecRotDeg, Z_AXIS);
+			glm::vec4 temp = vecRotMat * gravityVec4;
+			slopeVec = glm::vec3(temp[0], temp[1], temp[2]);
+			slopeVec = glm::normalize(slopeVec);
+			// 현재 이부분에서 원래 필요한 만큼보다 회전이 덜되는것으로 보임
+
+
+			// 2. 기울어진 방향대로 내려갈 가속도: 중력가속도 * sin
+			float slopeAcc = _gravity * glm::sin(glm::radians(_planeRotDeg));
+			_cubeList.at(i).CubeMovingSpeed += slopeAcc * GET_SINGLE(TimeManager).GetDeltaTime();
+
+			// 3. 무대가 돌아가있음도 고려
+			glm::mat4 rot = GET_SINGLE(TransformManager).GetRotateMatrix(_planeRotDeg, Z_AXIS);
+
+			_cubeList.at(i).posVector += slopeVec * glm::abs(_cubeList.at(i).CubeMovingSpeed) * GET_SINGLE(TimeManager).GetDeltaTime();
+			_cubeList.at(i).cubeMat = rot * GET_SINGLE(TransformManager).GetTranslateMatrix(_cubeList.at(i).posVector);
+		}
+	}
 }
 
 void Ex23::Render()
@@ -493,7 +523,7 @@ void Ex23::RenderCube()
 	{
 		glUniform3f(uniformLoc, _cubeColor.Red, _cubeColor.Green, _cubeColor.Blue);
 
-		GET_SINGLE(TransformManager).Bind(_worldMat * _planeRotMat * _cubeList.at(i).cubeMat, _shaderID);
+		GET_SINGLE(TransformManager).Bind(_worldMat * _cubeList.at(i).cubeMat, _shaderID);
 		_cubeList.at(i).cubeObj->Render();
 	}
 }
